@@ -1,4 +1,4 @@
 id|name|url|isSubclassOf
-1|Holiday resorts||
-2|Ski resorts||1
-3|Sports||
+1|Holiday resorts|http://dbpedia.org/resource/Holiday_resorts|
+2|Ski resorts|http://dbpedia.org/resource/Ski_resorts|1
+3|Sports|http://dbpedia.org/resource/Sports|

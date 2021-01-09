@@ -1,3 +1,3 @@
 id|type|name|url|place
-1|University|Cambridge|
-2|Company|SoftEngCo|
+1|University|Cambridge|http://dbpedia.org/resource/Cambridge/|0
+2|Company|SoftEngCo|http://dbpedia.org/resource/SoftEngCo/|0
