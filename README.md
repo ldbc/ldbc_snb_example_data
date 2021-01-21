@@ -1,6 +1,12 @@
-# ldbc-example-graph
+# LDBC SNB Data Converter
 
-The example data is in `CsvMergeForeignRaw` format which contains the entire temporal graph without filtering/batching.
+Scripts to convert from raw graphs (produced by Datagen) to graph data sets using various layouts (e.g. storing edges as merged foreign keys).
+
+We use a mix of Bash, Python, and [DuckDB](https://duckdb.org) SQL scripts to perform these operations.
+
+## Data set
+
+The example graph is in `CsvCompositeMergeForeignRaw` format which contains the entire temporal graph without filtering/batching.
 
 The `duckdb` directory contains Python and SQL scripts to convert data to other formats (e.g. `CsvComposite` and `CsvMergeForeign`).
 
