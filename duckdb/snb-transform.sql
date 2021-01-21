@@ -1,42 +1,39 @@
 -- basic
+-- INSERT INTO Organisation SELECT * FROM Organisation;
+-- INSERT INTO Place        SELECT * FROM Place;
+-- INSERT INTO Tag          SELECT * FROM Tag;
+-- INSERT INTO TagClass     SELECT * FROM TagClass;
+
+-- create table MergedFK_Organisation (id, type, name, url, isLocatedIn_Place, 
+-- create table MergedFK_Place (id, name, url, type, isPartOf_Place, );
+-- create table MergedFK_TagClass (id, name, url, hasType_TagClass, 
+-- create table MergedFK_Tag (id, name, url, isSubclassOf_TagClass
+
 -- static
-INSERT INTO Basic_Organisation                   SELECT id, type, name, url                                                              FROM Organisation;
-INSERT INTO Basic_Organisation_isLocatedIn_Place SELECT id, isLocatedIn_Place                                                            FROM Organisation;
-INSERT INTO Basic_Place                          SELECT id, name, url, type                                                              FROM Place;
-INSERT INTO Basic_Place_isPartOf_Place           SELECT id, isPartOf_Place                                                               FROM Place;
-INSERT INTO Basic_TagClass                       SELECT id, name, url                                                                    FROM TagClass;
-INSERT INTO Basic_TagClass_hasType_TagClass      SELECT id, hasType_TagClass                                                             FROM TagClass;
-INSERT INTO Basic_Tag                            SELECT id, name, url                                                                    FROM Tag;
-INSERT INTO Basic_Tag_isSubclassOf_TagClass      SELECT id, isSubclassOf_TagClass                                                        FROM Tag;
+INSERT INTO MergedFK_Organisation SELECT * FROM Raw_Organisation;       
+INSERT INTO MergedFK_Place        SELECT * FROM Raw_Place;      
+INSERT INTO MergedFK_TagClass     SELECT * FROM Raw_TagClass;
+INSERT INTO MergedFK_Tag          SELECT * FROM Raw_Tag;   
+
+-- CsvCompositeMergeForeign = many-to-many edges + merge-foreign tables + person-composite-merge-foreign
 
 -- dynamic
-INSERT INTO Basic_Comment                        SELECT creationDate, id, locationIP, browserUsed, content, length                       FROM Comment WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Comment_hasCreator_Person      SELECT creationDate, id, hasCreator_Person                                              FROM Comment WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Comment_isLocatedIn_Place      SELECT creationDate, id, isLocatedIn_Place                                              FROM Comment WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Comment_replyOf_Post           SELECT creationDate, id, replyOf_Post                                                   FROM Comment WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Comment_replyOf_Comment        SELECT creationDate, id, replyOf_Comment                                                FROM Comment WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Forum                          SELECT creationDate, id, title                                                          FROM Forum   WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Forum_hasModerator_Person      SELECT creationDate, id, hasModerator_Person                                            FROM Forum   WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Post                           SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length  FROM Post    WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Post_hasCreator_Person         SELECT creationDate, id, hasCreator_Person                                              FROM Post    WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Post_Forum_containerOf         SELECT creationDate, id, Forum_containerOf                                              FROM Post    WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Post_isLocatedIn_Place         SELECT creationDate, id, isLocatedIn_Place                                              FROM Post    WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Person                         SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed FROM Person  WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Person_isLocatedIn_Place       SELECT creationDate, id, isLocatedIn_Place                                              FROM Person  WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Person_speaks                  SELECT creationDate, id, speaks                                                         FROM Person  WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Basic_Person_email                   SELECT creationDate, id, email                                                          FROM Person  WHERE deletionDate >= :bulkLoadTime;
+-- many-to-many-edges
+INSERT INTO Edge_Comment_hasTag_Tag        SELECT creationDate, id, hasTag_Tag                    FROM Raw_Comment_hasTag_Tag        WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Post_hasTag_Tag           SELECT creationDate, id, hasTag_Tag                    FROM Raw_Post_hasTag_Tag           WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Forum_hasMember_Person    SELECT creationDate, id, hasMember_Person              FROM Raw_Forum_hasMember_Person    WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Forum_hasTag_Tag          SELECT creationDate, id, hasTag_Tag                    FROM Raw_Forum_hasTag_Tag          WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Person_hasInterest_Tag    SELECT creationDate, id, hasInterest_Tag               FROM Raw_Person_hasInterest_Tag    WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Person_likes_Comment      SELECT creationDate, id, likes_Comment                 FROM Raw_Person_likes_Comment      WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Person_likes_Post         SELECT creationDate, id, likes_Post                    FROM Raw_Person_likes_Post         WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Person_studyAt_University SELECT creationDate, id, studyAt_University, classYear FROM Raw_Person_studyAt_University WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Person_workAt_Company     SELECT creationDate, id, workAt_Company, workFrom      FROM Raw_Person_workAt_Company     WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO Edge_Person_knows_Person       SELECT creationDate, Person1id, Person2id              FROM Raw_Person_knows_Person       WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
 
--- merge-foreign plus composite variants for persons
--- static
-INSERT INTO MergeForeign_Organisation     SELECT id, type, name, url, isLocatedIn_Place                                                                                                   FROM Organisation;
-INSERT INTO MergeForeign_Place            SELECT id, name, url, type, isPartOf_Place                                                                                                      FROM Place;
-INSERT INTO MergeForeign_TagClass         SELECT id, name, url, hasType_TagClass                                                                                                          FROM TagClass;
-INSERT INTO MergeForeign_Tag              SELECT id, name, url, isSubclassOf_TagClass                                                                                                     FROM Tag;
+-- Forums/Messages and their many-to-one edges
+INSERT INTO MergedFK_Comment SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment          FROM Raw_Comment WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO MergedFK_Forum   SELECT creationDate, id, title, hasModerator_Person                                                                                             FROM Raw_Forum   WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
+INSERT INTO MergedFK_Post    SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Place FROM Raw_Post    WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;
 
--- dynamic
-INSERT INTO MergeForeign_Comment          SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment          FROM Comment      WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO MergeForeign_Forum            SELECT creationDate, id, title, hasModerator_Person                                                                                             FROM Forum        WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO MergeForeign_Post             SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Place FROM Post         WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO MergeForeign_Person           SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email                       FROM Person       WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Composite_Person              SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, speaks, email                                          FROM Person       WHERE deletionDate >= :bulkLoadTime;
-INSERT INTO Composite_MergeForeign_Person SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email                       FROM Person       WHERE deletionDate >= :bulkLoadTime;
+-- Persons
+INSERT INTO Composite_MergedFK_Person SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email FROM Raw_Person WHERE creationDate < :bulkLoadTime AND deletionDate >= :bulkLoadTime;

@@ -2,15 +2,19 @@
 
 set -e
 
-export PATHVAR=/home/szarnyasg/git/snb/ldbc-example-graph/snb-example-graph-csv-composite-merge-foreign-raw
+export PATHVAR=`pwd`/../snb-example-graph
 export POSTFIX=_0_0.csv
 
 rm -rf ldbc.duckdb
-cat schema-*.sql      | ./duckdb ldbc.duckdb
-cat snb-load.sql      | sed "s|PATHVAR|$PATHVAR|g" | sed "s|POSTFIX|$POSTFIX|g" | ./duckdb ldbc.duckdb
+cat schema/raw.sql        | ./duckdb ldbc.duckdb
+cat schema/person-*.sql   | ./duckdb ldbc.duckdb
+cat schema/edges-*.sql    | ./duckdb ldbc.duckdb
+cat schema/entities-*.sql | ./duckdb ldbc.duckdb
+cat snb-load.sql      | sed "s|\${PATHVAR}|${PATHVAR}|g" | sed "s|\${POSTFIX}|${POSTFIX}|g" | ./duckdb ldbc.duckdb
 #skip batching for now
-#cat snb-transform.sql | sed "s|:bulkLoadTime|''|g" | ./duckdb ldbc.duckdb
-cat snb-export.sql    | ./duckdb ldbc.duckdb
+cat snb-transform.sql | sed "s|:bulkLoadTime|'2014-01-01T00:00:00.000+00:00'|g" | ./duckdb ldbc.duckdb
+
+#cat snb-export.sql    | ./duckdb ldbc.duckdb
 
 # collect data:
 #
@@ -22,3 +26,5 @@ cat snb-export.sql    | ./duckdb ldbc.duckdb
 # CsvComposite             = many-to-many edges + basic tables         + person-composite
 # CsvMergeForeign          = many-to-many edges + merge-foreign tables + person-merge-foreign
 # CsvCompositeMergeForeign = many-to-many edges + merge-foreign tables + person-composite-merge-foreign
+
+# TODO: load to Neo4j

@@ -1,6 +1,6 @@
 -- static tables
 
-create table Organisation (
+create table Raw_Organisation (
     id bigint not null,
     type varchar(12) not null,
     name varchar(256) not null,
@@ -8,7 +8,7 @@ create table Organisation (
     isLocatedIn_Place bigint
 );
 
-create table Place (
+create table Raw_Place (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
@@ -16,14 +16,14 @@ create table Place (
     isPartOf_Place bigint
 );
 
-create table TagClass (
+create table Raw_TagClass (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
     hasType_TagClass bigint
 );
 
-create table Tag (
+create table Raw_Tag (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
@@ -32,7 +32,7 @@ create table Tag (
 
 -- dynamic tables
 
-create table Comment (
+create table Raw_Comment (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -47,14 +47,14 @@ create table Comment (
     replyOf_Comment bigint
 );
 
-create table Comment_hasTag_Tag (
+create table Raw_Comment_hasTag_Tag (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,
     hasTag_Tag bigint not null
 );
 
-create table Forum (
+create table Raw_Forum (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -63,7 +63,7 @@ create table Forum (
     hasModerator_Person bigint not null
 );
 
-create table Forum_hasMember_Person (
+create table Raw_Forum_hasMember_Person (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -71,14 +71,14 @@ create table Forum_hasMember_Person (
     hasMember_Person bigint not null
 );
 
-create table Forum_hasTag_Tag (
+create table Raw_Forum_hasTag_Tag (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,
     hasTag_Tag bigint not null
 );
 
-create table Person (
+create table Raw_Person (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,
@@ -93,14 +93,14 @@ create table Person (
     email varchar(8192) not null
 );
 
-create table Person_hasInterest_Tag (
+create table Raw_Person_hasInterest_Tag (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,
     hasInterest_Tag bigint not null
 );
 
-create table Person_knows_Person (
+create table Raw_Person_knows_Person (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -108,7 +108,7 @@ create table Person_knows_Person (
     Person2id bigint not null
 );
 
-create table Person_likes_Comment (
+create table Raw_Person_likes_Comment (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -116,7 +116,7 @@ create table Person_likes_Comment (
     likes_Comment bigint not null
 );
 
-create table Person_likes_Post (
+create table Raw_Person_likes_Post (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -124,7 +124,7 @@ create table Person_likes_Post (
     likes_Post bigint not null
 );
 
-create table Person_studyAt_University (
+create table Raw_Person_studyAt_University (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,
@@ -132,7 +132,7 @@ create table Person_studyAt_University (
     classYear int not null
 );
 
-create table Person_workAt_Company (
+create table Raw_Person_workAt_Company (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,
@@ -140,7 +140,7 @@ create table Person_workAt_Company (
     workFrom int not null
 );
 
-create table Post (
+create table Raw_Post (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     explicitlyDeleted boolean not null,
@@ -156,7 +156,7 @@ create table Post (
     isLocatedIn_Place bigint not null
 );
 
-create table Post_hasTag_Tag (
+create table Raw_Post_hasTag_Tag (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
     id bigint not null,

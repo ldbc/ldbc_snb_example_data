@@ -1,4 +1,4 @@
-create table Composite_MergeForeign_Person (
+create table Composite_MergedFK_Person (
     creationDate timestamp without time zone not null,
     id bigint not null,
     firstName varchar(40) not null,

@@ -1,6 +1,6 @@
 -- static tables
 
-create table MergeForeign_Organisation (
+create table MergedFK_Organisation (
     id bigint not null,
     type varchar(12) not null,
     name varchar(256) not null,
@@ -8,7 +8,7 @@ create table MergeForeign_Organisation (
     isLocatedIn_Place bigint
 );
 
-create table MergeForeign_Place (
+create table MergedFK_Place (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
@@ -16,14 +16,14 @@ create table MergeForeign_Place (
     isPartOf_Place bigint
 );
 
-create table MergeForeign_TagClass (
+create table MergedFK_TagClass (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
     hasType_TagClass bigint
 );
 
-create table MergeForeign_Tag (
+create table MergedFK_Tag (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
@@ -32,7 +32,7 @@ create table MergeForeign_Tag (
 
 -- dynamic tables
 
-create table MergeForeign_Comment (
+create table MergedFK_Comment (
     creationDate timestamp without time zone not null,
     id bigint not null,
     locationIP varchar(40) not null,
@@ -45,13 +45,13 @@ create table MergeForeign_Comment (
     replyOf_Comment bigint
 );
 
-create table MergeForeign_Forum (
+create table MergedFK_Forum (
     creationDate timestamp without time zone not null,
     id bigint not null,
     title varchar(256) not null,
     hasModerator_Person bigint not null
 );
-create table MergeForeign_Post (
+create table MergedFK_Post (
     creationDate timestamp without time zone not null,
     id bigint not null,
     imageFile varchar(40),

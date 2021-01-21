@@ -1,4 +1,4 @@
-create table Composite_Person (
+create table Singular_MergedFK_Person (
     creationDate timestamp without time zone not null,
     id bigint not null,
     firstName varchar(40) not null,
@@ -7,11 +7,15 @@ create table Composite_Person (
     birthday date not null,
     locationIP varchar(40) not null,
     browserUsed varchar(40) not null,
-    speaks varchar(640) not null,
-    email varchar(8192) not null
+    isLocatedIn_Place bigint not null
 );
-create table Composite_Person_isLocatedIn_Place (
+create table Singular_MergedFK_speaks (
     creationDate timestamp without time zone not null,
     id bigint not null,
-    isLocatedIn_Place bigint not null
+    speaks varchar(40) not null
+);
+create table Singular_MergedFK_email (
+    creationDate timestamp without time zone not null,
+    id bigint not null,
+    email varchar(256) not null
 );
