@@ -14,7 +14,8 @@ jobs:
           ./proc.sh
       - name: Compress data sets
         run: |
-          zip -r snb-example-graph-raw.zip snb-example-graph/*
+          mkdir data
+          zip -r data/snb-example-graph-raw.zip snb-example-graph/*
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
         with:
@@ -23,5 +24,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           SSH: true
-          BRANCH: 
-          FOLDER: build
+          BRANCH: gh-pages
+          FOLDER: data
