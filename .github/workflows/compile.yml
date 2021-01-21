@@ -15,7 +15,6 @@ jobs:
       - name: Compress data sets
         run: |
           zip -r snb-example-graph-raw.zip snb-example-graph/*
-          ./proc.sh
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
         with:
