@@ -14,11 +14,11 @@ jobs:
       - name: Compress data sets
         run: |
           mkdir compressed
-          zip -r compressed/raw.zip                        data/raw/*
-          zip -r compressed/csv-composite-merged-fk.zip    data/csv-composite-merged-fk/*
-          zip -r compressed/csv-composite-projected-fk.zip data/csv-composite-projected-fk/*
-          zip -r compressed/csv-singular-merged-fk.zip     data/csv-singular-merged-fk/*
-          zip -r compressed/csv-singular-projected-fk.zip  data/csv-singular-projected-fk/*
+          zip -r -j compressed/raw.zip                        data/raw/*
+          zip -r -j compressed/csv-composite-merged-fk.zip    data/csv-composite-merged-fk/*
+          zip -r -j compressed/csv-composite-projected-fk.zip data/csv-composite-projected-fk/*
+          zip -r -j compressed/csv-singular-merged-fk.zip     data/csv-singular-merged-fk/*
+          zip -r -j compressed/csv-singular-projected-fk.zip  data/csv-singular-projected-fk/*
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
         with:
