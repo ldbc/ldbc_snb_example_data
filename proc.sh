@@ -2,7 +2,7 @@
 
 set -e
 
-export PATHVAR=`pwd`/../snb-example-graph
+export PATHVAR=`pwd`/data/raw
 export POSTFIX=_0_0.csv
 
 rm -rf ldbc.duckdb
