@@ -201,13 +201,8 @@ COPY (SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP
   TO 'data/csv-singular-merged-fk/Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, unnest(string_split_regex(email,  ';')) AS email FROM Person)
-  TO 'data/csv-singular-merged-fk/Person_email.csv'
-  WITH (HEADER, DELIMITER '|');
-
-COPY (SELECT id, unnest(string_split_regex(speaks, ';')) AS email FROM Person)
-  TO 'data/csv-singular-merged-fk/Person_speaks.csv'
-  WITH (HEADER, DELIMITER '|');
+COPY (SELECT id, unnest(string_split_regex(email,  ';')) AS email FROM Person)  TO 'data/csv-singular-merged-fk/Person_email.csv' WITH (HEADER, DELIMITER '|');
+COPY (SELECT id, unnest(string_split_regex(speaks, ';')) AS speaks FROM Person) TO 'data/csv-singular-merged-fk/Person_speaks.csv' WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT creationDate, id, hasTag_Tag FROM Comment_hasTag_Tag)
   TO 'data/csv-singular-merged-fk/Comment_hasTag_Tag.csv'
@@ -459,13 +454,8 @@ COPY (SELECT creationDate, id, isLocatedIn_Place FROM Person)
   TO 'data/csv-singular-projected-fk/Person_isLocatedIn_Place.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, unnest(string_split_regex(email,  ';')) AS email FROM Person)
-  TO 'data/csv-singular-projected-fk/Person_email.csv'
-  WITH (HEADER, DELIMITER '|');
-
-COPY (SELECT id, unnest(string_split_regex(speaks, ';')) AS email FROM Person)
-  TO 'data/csv-singular-projected-fk/Person_speaks.csv'
-  WITH (HEADER, DELIMITER '|');
+COPY (SELECT id, unnest(string_split_regex(email,  ';')) AS email FROM Person)  TO 'data/csv-singular-projected-fk/Person_email.csv'  WITH (HEADER, DELIMITER '|');
+COPY (SELECT id, unnest(string_split_regex(speaks, ';')) AS speaks FROM Person) TO 'data/csv-singular-projected-fk/Person_speaks.csv' WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT creationDate, id, hasTag_Tag FROM Comment_hasTag_Tag)
   TO 'data/csv-singular-projected-fk/Comment_hasTag_Tag.csv'
