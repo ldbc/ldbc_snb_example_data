@@ -13,11 +13,12 @@ jobs:
           ./proc.sh
       - name: Compress data sets
         run: |
-          zip -r data/raw.zip                        raw/*
-          zip -r data/csv-composite-merged-fk.zip    csv-composite-merged-fk/*
-          zip -r data/csv-composite-projected-fk.zip csv-composite-projected-fk/*
-          zip -r data/csv-singular-merged-fk.zip     csv-singular-merged-fk/*
-          zip -r data/csv-singular-projected-fk.zip  csv-singular-projected-fk/*
+          mkdir compressed
+          zip -r data/raw.zip                        compressed/raw/*
+          zip -r data/csv-composite-merged-fk.zip    compressed/csv-composite-merged-fk/*
+          zip -r data/csv-composite-projected-fk.zip compressed/csv-composite-projected-fk/*
+          zip -r data/csv-singular-merged-fk.zip     compressed/csv-singular-merged-fk/*
+          zip -r data/csv-singular-projected-fk.zip  compressed/csv-singular-projected-fk/*
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
         with:
@@ -27,4 +28,4 @@ jobs:
         with:
           SSH: true
           BRANCH: gh-pages
-          FOLDER: data
+          FOLDER: compressed
