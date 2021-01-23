@@ -90,7 +90,7 @@ INSERT INTO Post
     AND deletionDate >= :bulkLoadTime;
 
 -- Persons
-INSERT INTO Person  SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
+INSERT INTO Person SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
  FROM Raw_Person
   WHERE creationDate < :bulkLoadTime
     AND deletionDate >= :bulkLoadTime;
@@ -169,23 +169,23 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   WITH (HEADER, DELIMITER '|');
 
 -- singular-merged-fk
-COPY (SELECT * FROM Organisation)      
+COPY (SELECT * FROM Organisation)
   TO 'data/csv-singular-merged-fk/Organisation.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT * FROM Place)             
+COPY (SELECT * FROM Place)
   TO 'data/csv-singular-merged-fk/Place.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT * FROM Tag)               
+COPY (SELECT * FROM Tag)
   TO 'data/csv-singular-merged-fk/Tag.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT * FROM TagClass)          
+COPY (SELECT * FROM TagClass)
   TO 'data/csv-singular-merged-fk/TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title, hasModerator_Person FROM Forum)      
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title, hasModerator_Person FROM Forum)
   TO 'data/csv-singular-merged-fk/Forum.csv'
   WITH (HEADER, DELIMITER '|');
 
