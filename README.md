@@ -1,6 +1,6 @@
 # LDBC SNB Data Converter
 
-![https://github.com/ldbc/ldbc_snb_data_converter/workflows/Convert%20data/badge.svg]()
+[![](https://github.com/ldbc/ldbc_snb_data_converter/workflows/Convert%20data/badge.svg)](https://github.com/ldbc/ldbc_snb_data_converter/actions)
 
 Scripts to convert from raw graphs (produced by Datagen) to graph data sets using various layouts (e.g. storing edges as merged foreign keys).
 
