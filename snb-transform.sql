@@ -4,10 +4,10 @@ INSERT INTO Organisation
   SELECT * FROM Raw_Organisation;
 INSERT INTO Place
   SELECT * FROM Raw_Place;
-INSERT INTO TagClass
-  SELECT * FROM Raw_TagClass;
 INSERT INTO Tag
   SELECT * FROM Raw_Tag;
+INSERT INTO TagClass
+  SELECT * FROM Raw_TagClass;
 
 -- dynamic
 -- many-to-many-edges
@@ -265,16 +265,16 @@ COPY (SELECT id, name, url FROM Tag)
   TO 'data/csv-composite-projected-fk/Tag.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isSubclassOf_TagClass FROM Tag)
-  TO 'data/csv-composite-projected-fk/Tag_isSubclassOf_TagClass.csv'
+COPY (SELECT id, hasType_TagClass FROM Tag)
+  TO 'data/csv-composite-projected-fk/Tag_hasType_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, name, url FROM TagClass)
   TO 'data/csv-composite-projected-fk/TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, hasType_TagClass FROM TagClass)
-  TO 'data/csv-composite-projected-fk/TagClass_hasType_TagClass.csv'
+COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
+  TO 'data/csv-composite-projected-fk/TagClass_subclassOf_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title FROM Forum)
@@ -313,8 +313,8 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-composite-projected-fk/Post_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, Forum_containerOf FROM Post)
-  TO 'data/csv-composite-projected-fk/Post_Forum_containerOf.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Forum_containerOf, id FROM Post)
+  TO 'data/csv-composite-projected-fk/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Post)
@@ -390,16 +390,16 @@ COPY (SELECT id, name, url FROM Tag)
   TO 'data/csv-singular-projected-fk/Tag.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isSubclassOf_TagClass FROM Tag)
-  TO 'data/csv-singular-projected-fk/Tag_isSubclassOf_TagClass.csv'
+COPY (SELECT id, hasType_TagClass FROM Tag)
+  TO 'data/csv-singular-projected-fk/Tag_hasType_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, name, url FROM TagClass)
   TO 'data/csv-singular-projected-fk/TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, hasType_TagClass FROM TagClass)
-  TO 'data/csv-singular-projected-fk/TagClass_hasType_TagClass.csv'
+COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
+  TO 'data/csv-singular-projected-fk/TagClass_subclassOf_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title FROM Forum)
@@ -438,8 +438,8 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-singular-projected-fk/Post_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, Forum_containerOf FROM Post)
-  TO 'data/csv-singular-projected-fk/Post_Forum_containerOf.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Forum_containerOf, id FROM Post)
+  TO 'data/csv-singular-projected-fk/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Post)

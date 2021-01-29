@@ -16,18 +16,18 @@ create table Raw_Place (
     isPartOf_Place bigint
 );
 
-create table Raw_TagClass (
-    id bigint not null,
-    name varchar(256) not null,
-    url varchar(256) not null,
-    hasType_TagClass bigint
-);
-
 create table Raw_Tag (
     id bigint not null,
     name varchar(256) not null,
     url varchar(256) not null,
-    isSubclassOf_TagClass bigint not null
+    hasType_TagClass bigint not null
+);
+
+create table Raw_TagClass (
+    id bigint not null,
+    name varchar(256) not null,
+    url varchar(256) not null,
+    isSubclassOf_TagClass bigint
 );
 
 -- dynamic tables
