@@ -1,5 +1,5 @@
 
-name: Build LaTeX document
+name: Convert data
 on: [push]
 jobs:
   build_latex:
