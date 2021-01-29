@@ -313,7 +313,7 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-composite-projected-fk/Post_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Forum_containerOf, id FROM Post)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Forum_containerOf AS forumId, id AS postId FROM Post)
   TO 'data/csv-composite-projected-fk/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
@@ -438,7 +438,7 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-singular-projected-fk/Post_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Forum_containerOf, id FROM Post)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Forum_containerOf AS forumId, id AS postId FROM Post)
   TO 'data/csv-singular-projected-fk/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
