@@ -323,7 +323,7 @@ Paris<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:Mode
         <node id="n10::n1">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="940.5114744786467" y="299.3291512865834"/>
+              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="886.5114744786467" y="299.3291512865834"/>
               <y:Fill color="#FFFFB3" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="51.671875" x="16.884062500000027" xml:space="preserve" y="5.431249999999977">Country
@@ -383,7 +383,7 @@ Pyrenees<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:M
         <node id="n10::n6">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="1080.6082314048585" y="299.3291512865834"/>
+              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="1110.6082314048585" y="299.3291512865834"/>
               <y:Fill color="#FFFFB3" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="51.671875" x="16.884062500000027" xml:space="preserve" y="5.431249999999977">Country
@@ -395,7 +395,7 @@ Spain<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:Mode
         <node id="n10::n7">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="1080.6082314048585" y="389.7291512865834"/>
+              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="1098.104432225126" y="386.5988863952664"/>
               <y:Fill color="#8DD3C7" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="45.208984375" x="20.115507812500027" xml:space="preserve" y="5.431249999999977">City
@@ -448,6 +448,18 @@ resorts<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:Mo
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="32.734375" x="26.352812500000027" xml:space="preserve" y="5.431249999999977">City
 Lyon<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
+              <y:Shape type="ellipse"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n10::n12">
+          <data key="d6">
+            <y:ShapeNode>
+              <y:Geometry height="42.799999999999955" width="85.44000000000017" x="1001.951474478647" y="299.3291512865834"/>
+              <y:Fill color="#D9D9D9" transparent="false"/>
+              <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="62.6640625" x="11.387968750000027" xml:space="preserve" y="5.431249999999977">Continent
+Europe<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
               <y:Shape type="ellipse"/>
             </y:ShapeNode>
           </data>
@@ -1956,6 +1968,26 @@ Lyon<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:Model
           <y:Arrows source="none" target="standard"/>
           <y:Arc height="0.0" ratio="1.0" type="fixedRatio"/>
         </y:ArcEdge>
+      </data>
+    </edge>
+    <edge id="n10::e6" source="n10::n1" target="n10::n12">
+      <data key="d9"/>
+      <data key="d10">
+        <y:BezierEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+        </y:BezierEdge>
+      </data>
+    </edge>
+    <edge id="n10::e7" source="n10::n6" target="n10::n12">
+      <data key="d9"/>
+      <data key="d10">
+        <y:BezierEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+        </y:BezierEdge>
       </data>
     </edge>
   </graph>

@@ -1,6 +1,7 @@
 id|name|url|type|isPartOf
-1|Spain|http://dbpedia.org/resource/Spain|Country|
-2|Madrid|http://dbpedia.org/resource/Madrid|City|1
-3|France|http://dbpedia.org/resource/France|Country|
-4|Paris|http://dbpedia.org/resource/Paris|City|2
-5|Lyon|http://dbpedia.org/resource/Lyon|City|2
+1|Europe|http://dbpedia.org/resource/Europe|Continent|
+2|Spain|http://dbpedia.org/resource/Spain|Country|1
+3|France|http://dbpedia.org/resource/France|Country|1
+4|Madrid|http://dbpedia.org/resource/Madrid|City|2
+5|Paris|http://dbpedia.org/resource/Paris|City|3
+6|Lyon|http://dbpedia.org/resource/Lyon|City|3
