@@ -25,8 +25,8 @@ To make the schema easier to comprehend, the conversion code performs a bit of e
 
 ## Deployed data sets
 
-* [raw.zip](https://ldbc.github.io/ldbc_snb_data_converter/raw.zip)
-* [csv-composite-merged-fk.zip](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-merged-fk.zip)  
-* [csv-composite-projected-fk.zip](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-projected-fk.zip)  
-* [csv-singular-merged-fk.zip](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-merged-fk.zip)  
-* [csv-singular-projected-fk.zip](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-projected-fk.zip)
+* [`raw.zip`](https://ldbc.github.io/ldbc_snb_data_converter/raw.zip)
+* [`csv-composite-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-merged-fk.zip)
+* [`csv-composite-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-projected-fk.zip)
+* [`csv-singular-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-merged-fk.zip)
+* [`csv-singular-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-projected-fk.zip)
