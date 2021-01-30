@@ -25,20 +25,27 @@ cat snb-transform.sql | sed "s|:bulkLoadTime|'2014-01-01T00:00:00.000+00:00'|g" 
 
 # for testing with Neo4j
 cd data/csv-composite-projected-fk/
-prename -f 's/^TagClass/tagclass/g' *
-prename -f 's/^Tag/tag/g' *
-prename -f 's/TagClass\./tagclass./g' *
-prename -f 's/Tag\./tag./g' *
-prename -f 's/Place/place/g' *
-prename -f 's/Organisation/organisation/g' *
 
-prename -f 's/University/organisation/g' *
-prename -f 's/Company/organisation/g' *
+if [ -f /etc/redhat-release ]; then
+  RENAME=prename
+else
+  RENAME=rename
+fi
 
-prename -f 's/Comment/comment/g' *
-prename -f 's/Post/post/g' *
-prename -f 's/Forum/forum/g' *
-prename -f 's/Person/person/g' *
+${RENAME} -f 's/^TagClass/tagclass/g' *
+${RENAME} -f 's/^Tag/tag/g' *
+${RENAME} -f 's/TagClass\./tagclass./g' *
+${RENAME} -f 's/Tag\./tag./g' *
+${RENAME} -f 's/Place/place/g' *
+${RENAME} -f 's/Organisation/organisation/g' *
+
+${RENAME} -f 's/University/organisation/g' *
+${RENAME} -f 's/Company/organisation/g' *
+
+${RENAME} -f 's/Comment/comment/g' *
+${RENAME} -f 's/Post/post/g' *
+${RENAME} -f 's/Forum/forum/g' *
+${RENAME} -f 's/Person/person/g' *
 
 mkdir -p static
 mv {tag,place,organisation}*.csv static
