@@ -23,4 +23,24 @@ cat snb-transform.sql | sed "s|:bulkLoadTime|'2014-01-01T00:00:00.000+00:00'|g" 
 # CsvMergeForeign          = many-to-many edges + merge-foreign tables + person-merge-foreign
 # CsvCompositeMergeForeign = many-to-many edges + merge-foreign tables + person-composite-merge-foreign
 
-# TODO: load to Neo4j
+# for testing with Neo4j
+cd data/csv-composite-projected-fk/
+prename -f 's/^TagClass/tagclass/g' *
+prename -f 's/^Tag/tag/g' *
+prename -f 's/TagClass\./tagclass./g' *
+prename -f 's/Tag\./tag./g' *
+prename -f 's/Place/place/g' *
+prename -f 's/Organisation/organisation/g' *
+
+prename -f 's/University/organisation/g' *
+prename -f 's/Company/organisation/g' *
+
+prename -f 's/Comment/comment/g' *
+prename -f 's/Post/post/g' *
+prename -f 's/Forum/forum/g' *
+prename -f 's/Person/person/g' *
+
+mkdir -p static
+mv {tag,place,organisation}*.csv static
+mkdir -p dynamic
+mv {comment,post,forum,person}*.csv dynamic
