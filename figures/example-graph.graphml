@@ -1831,7 +1831,7 @@ Europe<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:Mod
           <y:Path sx="0.0" sy="0.0" tx="17.49367514716323" ty="19.517825473131552">
             <y:Point x="1205.7440471298999" y="1018.0674840086099"/>
             <y:Point x="1494.3400000000001" y="1026.38748400861"/>
-            <y:Point x="1660.8064" y="995.24"/>
+            <y:Point x="1670.4063999999998" y="1008.68"/>
             <y:Point x="1703.9399999999996" y="907.0800000000002"/>
             <y:Point x="1703.9399999999996" y="546.12"/>
           </y:Path>
@@ -1848,7 +1848,7 @@ Europe<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:Mod
             <y:Point x="1440.1" y="1056.36"/>
             <y:Point x="1729.8600000000006" y="1034.2800000000002"/>
             <y:Point x="1729.8600000000006" y="757.4799999999998"/>
-            <y:Point x="1706.980000000001" y="498.9200000000001"/>
+            <y:Point x="1706.980000000001" y="511.7200000000001"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
