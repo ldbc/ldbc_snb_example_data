@@ -2,13 +2,14 @@
 name: Convert data
 on: [push]
 jobs:
-  build_latex:
+  convert_data:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v1
       - name: Process data
         run: |
+          sudo apt install -y rename
           ./get.sh
           ./proc.sh
       - name: Compress data sets
