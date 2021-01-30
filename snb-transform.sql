@@ -274,7 +274,7 @@ COPY (SELECT id, name, url FROM TagClass)
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
-  TO 'data/csv-composite-projected-fk/TagClass_subclassOf_TagClass.csv'
+  TO 'data/csv-composite-projected-fk/TagClass_isSubclassOf_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title FROM Forum)
@@ -399,7 +399,7 @@ COPY (SELECT id, name, url FROM TagClass)
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
-  TO 'data/csv-singular-projected-fk/TagClass_subclassOf_TagClass.csv'
+  TO 'data/csv-singular-projected-fk/TagClass_isSubclassOf_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title FROM Forum)
