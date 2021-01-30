@@ -257,7 +257,7 @@ COPY (SELECT id, name, url, type FROM Place)
   TO 'data/csv-composite-projected-fk/Place.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isPartOf_Place FROM Place)
+COPY (SELECT id, isPartOf_Place FROM Place WHERE isPartOf_Place IS NOT NULL)
   TO 'data/csv-composite-projected-fk/Place_isPartOf_Place.csv'
   WITH (HEADER, DELIMITER '|');
 
@@ -273,7 +273,7 @@ COPY (SELECT id, name, url FROM TagClass)
   TO 'data/csv-composite-projected-fk/TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
+COPY (SELECT id, isSubclassOf_TagClass FROM TagClass WHERE isSubclassOf_TagClass IS NOT NULL)
   TO 'data/csv-composite-projected-fk/TagClass_isSubclassOf_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
@@ -297,11 +297,11 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-composite-projected-fk/Comment_isLocatedIn_Place.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Post FROM Comment)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Post FROM Comment WHERE replyOf_Post IS NOT NULL)
   TO 'data/csv-composite-projected-fk/Comment_replyOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Comment FROM Comment)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Comment FROM Comment WHERE replyOf_Comment IS NOT NULL)
   TO 'data/csv-composite-projected-fk/Comment_replyOf_Comment.csv'
   WITH (HEADER, DELIMITER '|');
 
@@ -382,7 +382,7 @@ COPY (SELECT id, name, url, type FROM Place)
   TO 'data/csv-singular-projected-fk/Place.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isPartOf_Place FROM Place)
+COPY (SELECT id, isPartOf_Place FROM Place WHERE isPartOf_Place IS NOT NULL)
   TO 'data/csv-singular-projected-fk/Place_isPartOf_Place.csv'
   WITH (HEADER, DELIMITER '|');
 
@@ -398,7 +398,7 @@ COPY (SELECT id, name, url FROM TagClass)
   TO 'data/csv-singular-projected-fk/TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
+COPY (SELECT id, isSubclassOf_TagClass FROM TagClass WHERE isSubclassOf_TagClass IS NOT NULL)
   TO 'data/csv-singular-projected-fk/TagClass_isSubclassOf_TagClass.csv'
   WITH (HEADER, DELIMITER '|');
 
@@ -422,11 +422,11 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-singular-projected-fk/Comment_isLocatedIn_Place.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Post FROM Comment)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Post FROM Comment WHERE replyOf_Post IS NOT NULL)
   TO 'data/csv-singular-projected-fk/Comment_replyOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Comment FROM Comment)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Comment FROM Comment WHERE replyOf_Comment IS NOT NULL)
   TO 'data/csv-singular-projected-fk/Comment_replyOf_Comment.csv'
   WITH (HEADER, DELIMITER '|');
 
