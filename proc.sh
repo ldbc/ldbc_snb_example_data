@@ -24,6 +24,8 @@ cat snb-transform.sql | sed "s|:bulkLoadTime|'2014-01-01T00:00:00.000+00:00'|g" 
 # CsvCompositeMergeForeign = many-to-many edges + merge-foreign tables + person-composite-merge-foreign
 
 # for testing with Neo4j
+echo "Change filenames to use lowercase node label names in csv-composite-projected-fk"
+
 cd data/csv-composite-projected-fk/
 
 if [ -f /etc/redhat-release ]; then
