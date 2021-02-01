@@ -8,7 +8,10 @@ We use a mix of Bash, Python, and [DuckDB](https://duckdb.org) SQL scripts to pe
 
 ## Data set
 
-The example graph is in `CsvCompositeMergeForeignRaw` format which contains the entire temporal graph without filtering/batching.
+* Example graph without refresh operations: [[PDF](https://ldbc.github.io/ldbc_snb_docs/example-graph-without-refreshes.pdf)]
+* Example graph with refresh operations: [[PDF](https://ldbc.github.io/ldbc_snb_docs/example-graph-with-refreshes.pdf)]
+
+The example graph is serialized using the `CsvCompositeMergeForeignRaw` layout which contains the entire temporal graph without filtering/batching.
 
 ## Processing data sets
 
