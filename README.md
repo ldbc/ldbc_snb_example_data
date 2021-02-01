@@ -34,3 +34,17 @@ To make the schema easier to comprehend, the conversion code performs a bit of e
 * [`csv-singular-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-merged-fk.zip)
 * [`csv-singular-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-projected-fk.zip)
 * [`static-data-projected-fk-separate-labels.zip`](https://ldbc.github.io/ldbc_snb_data_converter/static-data-projected-fk-separate-labels.zip)
+
+## Test with Neo4j
+
+To test with Neo4j, use the following instructions:
+
+```bash
+# set the env vars in this repository
+export NEO4J_CSV_DIR=`pwd`/data/csv-composite-projected-fk
+export NEO4J_CSV_POSTFIX=.csv
+
+# go to the Neo4j directory in the ldbc_snb_implementations repository (dev branch)
+. scripts/environment-variables-default.sh
+scripts/load-in-one-step.sh
+```
