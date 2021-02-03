@@ -23,7 +23,7 @@ jobs:
           zip -r -j compressed/csv-singular-projected-fk.zip  data/csv-singular-projected-fk/*
           zip -r -j compressed/static-data-projected-fk-separate-labels.zip data/static-data-projected-fk-separate-labels/*
           cd compressed
-          zip -r csv-composite-projected-fk-legacy-filenames.zip data/csv-composite-projected-fk-legacy-filenames/*
+          zip -r csv-composite-projected-fk-legacy-filenames.zip csv-composite-projected-fk-legacy-filenames/
           cd ..
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
