@@ -8,8 +8,8 @@ We use a mix of Bash, Python, and [DuckDB](https://duckdb.org) SQL scripts to pe
 
 ## Data set
 
-* Example graph without refresh operations: [[PDF](https://ldbc.github.io/ldbc_snb_docs/example-graph-without-refreshes.pdf)]
-* Example graph with refresh operations: [[PDF](https://ldbc.github.io/ldbc_snb_docs/example-graph-with-refreshes.pdf)]
+* [Example graph without refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-without-refreshes.pdf)
+* [Example graph with refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-with-refreshes.pdf)
 
 The example graph is serialized using the `CsvCompositeMergeForeignRaw` layout which contains the entire temporal graph without filtering/batching.
 
@@ -20,6 +20,7 @@ To process the data sets, get DuckDB and run the processing script:
 ```bash
 ./get.sh
 ./proc.sh
+./rename.sh
 ```
 
 The `duckdb` directory contains Python and SQL scripts to convert data to other formats (e.g. `CsvComposite` and `CsvMergeForeign`).
@@ -31,6 +32,7 @@ To make the schema easier to comprehend, the conversion code performs a bit of e
 * [`raw.zip`](https://ldbc.github.io/ldbc_snb_data_converter/raw.zip)
 * [`csv-composite-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-merged-fk.zip)
 * [`csv-composite-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-projected-fk.zip)
+* [`csv-composite-projected-fk-legacy-filenames.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-projected-fk-legacy-filenames.zip)
 * [`csv-singular-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-merged-fk.zip)
 * [`csv-singular-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-projected-fk.zip)
 * [`static-data-projected-fk-separate-labels.zip`](https://ldbc.github.io/ldbc_snb_data_converter/static-data-projected-fk-separate-labels.zip)
@@ -41,10 +43,10 @@ To test with Neo4j, use the following instructions:
 
 ```bash
 # set the env vars in this repository
-export NEO4J_CSV_DIR=`pwd`/data/csv-composite-projected-fk
+export NEO4J_CSV_DIR=`pwd`/data/csv-composite-projected-fk-legacy-filenames
 export NEO4J_CSV_POSTFIX=.csv
 
-# go to the Neo4j directory in the ldbc_snb_implementations repository (dev branch)
+# go to the cypher directory in the ldbc_snb_implementations repository (dev branch)
 . scripts/environment-variables-default.sh
 scripts/load-in-one-step.sh
 ```
