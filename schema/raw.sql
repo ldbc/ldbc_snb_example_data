@@ -81,6 +81,7 @@ create table Raw_Forum_hasTag_Tag (
 create table Raw_Person (
     creationDate timestamp without time zone not null,
     deletionDate timestamp without time zone not null,
+    explicitlyDeleted boolean not null,
     id bigint not null,
     firstName varchar(40) not null,
     lastName varchar(40) not null,
