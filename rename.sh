@@ -6,6 +6,7 @@ set -o pipefail
 # for testing with Neo4j
 echo "Change filenames to use lowercase node label names in csv-composite-projected-fk"
 
+rm -rf data/csv-composite-projected-fk-legacy-filenames/
 cp -r data/csv-composite-projected-fk/ data/csv-composite-projected-fk-legacy-filenames/
 cd data/csv-composite-projected-fk-legacy-filenames/
 

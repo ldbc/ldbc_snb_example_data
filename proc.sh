@@ -24,6 +24,6 @@ cat snb-load.sql | \
   sed "s|\${HEADER}|${HEADER}|g" | \
   ./duckdb ldbc.duckdb
 echo transform data
-cat snb-transform.sql | sed "s|:bulkLoadTime|'2014-01-01T00:00:00.000+00:00'|g" | ./duckdb ldbc.duckdb
+cat snb-transform.sql | sed "s|:bulkLoadTime|DATE '2013-01-01T00:00:00.000+00:00'|g" | ./duckdb ldbc.duckdb
 echo export data
 cat snb-export.sql | ./duckdb ldbc.duckdb
