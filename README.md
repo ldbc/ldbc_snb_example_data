@@ -39,14 +39,17 @@ To make the schema easier to comprehend, the conversion code performs a bit of e
 
 ## Test with Neo4j
 
-To test with Neo4j, use the following instructions:
+To test with Neo4j, run the following commands in this repository:
 
 ```bash
 # set the env vars in this repository
 export NEO4J_CSV_DIR=`pwd`/data/csv-composite-projected-fk-legacy-filenames
 export NEO4J_CSV_POSTFIX=.csv
+```
 
-# go to the cypher directory in the ldbc_snb_implementations repository (dev branch)
+Then, go to the [`cypher/ directory in the ldbc_snb_implementations repository`](https://github.com/ldbc/ldbc_snb_implementations/tree/dev/cypher) and run:
+
+```bash
 . scripts/environment-variables-default.sh
 scripts/load-in-one-step.sh
 ```
