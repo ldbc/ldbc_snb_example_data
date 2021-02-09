@@ -20,7 +20,4 @@ COPY Raw_Person_studyAt_University FROM '${PATHVAR}/dynamic/person_studyAt_organ
 COPY Raw_Person_workAt_Company     FROM '${PATHVAR}/dynamic/person_workAt_organisation${POSTFIX}'  (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
 COPY Raw_Person_likes_Post         FROM '${PATHVAR}/dynamic/person_likes_post${POSTFIX}'           (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
 COPY Raw_Person_likes_Comment      FROM '${PATHVAR}/dynamic/person_likes_comment${POSTFIX}'        (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
-
--- Person-KNOWS-Person edges are undirected so they should exist in both ways
-COPY Raw_Person_knows_Person ( creationDate, deletionDate, explicitlyDeleted, person1id, person2id) FROM '${PATHVAR}/dynamic/person_knows_person${POSTFIX}' (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
-COPY Raw_Person_knows_Person ( creationDate, deletionDate, explicitlyDeleted, person2id, person1id) FROM '${PATHVAR}/dynamic/person_knows_person${POSTFIX}' (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Raw_Person_knows_Person       FROM '${PATHVAR}/dynamic/person_knows_person${POSTFIX}'         (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
