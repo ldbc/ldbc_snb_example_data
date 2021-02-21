@@ -15,6 +15,8 @@ jobs:
           ./rename.sh
       - name: Compress data sets
         run: |
+          # get rid of duplicate .gitignore files
+          find . -name .gitignore | xargs rm
           mkdir compressed
           zip -r -j compressed/raw.zip                        data/raw/*
           zip -r -j compressed/csv-composite-merged-fk.zip    data/csv-composite-merged-fk/*
