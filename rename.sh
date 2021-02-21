@@ -16,22 +16,17 @@ else
   RENAME=rename
 fi
 
-${RENAME} -f 's/^TagClass/tagclass/g' *
-${RENAME} -f 's/^Tag/tag/g' *
-${RENAME} -f 's/TagClass\./tagclass./g' *
-${RENAME} -f 's/Tag\./tag./g' *
-${RENAME} -f 's/Place/place/g' *
-${RENAME} -f 's/Organisation/organisation/g' *
+${RENAME} -f 's/^TagClass/tagclass/g' static/*
+${RENAME} -f 's/^Tag/tag/g' static/*
+${RENAME} -f 's/TagClass\./tagclass./g' static/*
+${RENAME} -f 's/Tag\./tag./g' static/*
+${RENAME} -f 's/Place/place/g' static/*
+${RENAME} -f 's/Organisation/organisation/g' static/*
 
-${RENAME} -f 's/University/organisation/g' *
-${RENAME} -f 's/Company/organisation/g' *
+${RENAME} -f 's/University/organisation/g' static*
+${RENAME} -f 's/Company/organisation/g' static*
 
-${RENAME} -f 's/Comment/comment/g' *
-${RENAME} -f 's/Post/post/g' *
-${RENAME} -f 's/Forum/forum/g' *
-${RENAME} -f 's/Person/person/g' *
-
-mkdir -p static
-mv {tag,place,organisation}*.csv static
-mkdir -p dynamic
-mv {comment,post,forum,person}*.csv dynamic
+${RENAME} -f 's/Comment/comment/g' dynamic/*
+${RENAME} -f 's/Post/post/g' dynamic/*
+${RENAME} -f 's/Forum/forum/g' dynamic/*
+${RENAME} -f 's/Person/person/g' dynamic/*
