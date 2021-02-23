@@ -21,6 +21,7 @@ To process the data sets, get DuckDB and run the processing script:
 ./get.sh
 ./proc.sh
 ./rename.sh
+./export.sh
 ```
 
 The `duckdb` directory contains Python and SQL scripts to convert data to other formats (e.g. `CsvComposite` and `CsvMergeForeign`).

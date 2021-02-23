@@ -25,8 +25,3 @@ cat snb-load.sql | \
   ./duckdb ldbc.duckdb
 echo transform data
 cat snb-transform.sql | sed "s|:bulkLoadTime|DATE '2013-01-01T00:00:00.000+00:00'|g" | ./duckdb ldbc.duckdb
-echo export data
-for export_script in snb-export-*.sql; do
-  echo ${export_script}
-  cat ${export_script} | ./duckdb ldbc.duckdb
-done
