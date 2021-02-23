@@ -1,4 +1,9 @@
 -- csv-only-ids-merged-fk
+
+-- static
+
+-- Organisation
+
 COPY (SELECT id, isLocatedIn_Place AS isLocatedIn_Country FROM Organisation WHERE type = 'Company')
   TO 'data/csv-only-ids-merged-fk/Company.csv'
   WITH (HEADER, DELIMITER '|');
@@ -6,6 +11,8 @@ COPY (SELECT id, isLocatedIn_Place AS isLocatedIn_Country FROM Organisation WHER
 COPY (SELECT id, isLocatedIn_Place AS isLocatedIn_City FROM Organisation WHERE type = 'University')
   TO 'data/csv-only-ids-merged-fk/University.csv'
   WITH (HEADER, DELIMITER '|');
+
+-- Place
 
 COPY (SELECT id FROM Place WHERE type = 'Continent')
   TO 'data/csv-only-ids-merged-fk/Continent.csv'
@@ -18,6 +25,20 @@ COPY (SELECT id, isPartOf_Place AS isPartOf_Continent FROM Place WHERE type = 'C
 COPY (SELECT id, isPartOf_Place AS isPartOf_Country FROM Place WHERE type = 'City')
   TO 'data/csv-only-ids-merged-fk/City.csv'
   WITH (HEADER, DELIMITER '|');
+
+-- Tag
+
+COPY (SELECT id, hasType_TagClass FROM Tag)
+  TO 'data/csv-only-ids-merged-fk/Tag.csv'
+  WITH (HEADER, DELIMITER '|');
+
+-- TagClass
+
+COPY (SELECT id, isSubclassOf_TagClass FROM TagClass)
+  TO 'data/csv-only-ids-merged-fk/TagClass.csv'
+  WITH (HEADER, DELIMITER '|');
+
+-- dynamic
 
 COPY (SELECT id, hasModerator_Person FROM Forum)
   TO 'data/csv-only-ids-merged-fk/Forum.csv'
