@@ -13,6 +13,7 @@ jobs:
           ./get.sh
           ./proc.sh
           ./rename.sh
+          ./export.sh
       - name: Compress data sets
         run: |
           # get rid of duplicate .gitignore files
