@@ -30,3 +30,7 @@ ${RENAME} -f 's/Comment/comment/g' dynamic/*
 ${RENAME} -f 's/Post/post/g' dynamic/*
 ${RENAME} -f 's/Forum/forum/g' dynamic/*
 ${RENAME} -f 's/Person/person/g' dynamic/*
+${RENAME} -f 's/_University/_organisation/g' dynamic/*
+${RENAME} -f 's/_Company/_organisation/g' dynamic/*
+${RENAME} -f 's/_Tag/_tag/g' dynamic/*
+${RENAME} -f 's/_Place/_place/g' dynamic/*
