@@ -12,8 +12,8 @@ jobs:
           sudo apt install -y rename
           ./get.sh
           ./proc.sh
-          ./rename.sh
           ./export.sh
+          ./rename.sh
       - name: Compress data sets
         run: |
           # get rid of duplicate .gitignore files
