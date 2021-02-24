@@ -16,8 +16,8 @@ else
   RENAME=rename
 fi
 
-${RENAME} -f 's/^TagClass/tagclass/g' static/*
-${RENAME} -f 's/^Tag/tag/g' static/*
+${RENAME} -f 's/TagClass_/tagclass_/g' static/*
+${RENAME} -f 's/Tag_/tag_/g' static/*
 ${RENAME} -f 's/TagClass\./tagclass./g' static/*
 ${RENAME} -f 's/Tag\./tag./g' static/*
 ${RENAME} -f 's/Place/place/g' static/*
