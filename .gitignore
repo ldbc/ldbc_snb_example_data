@@ -1,4 +1,5 @@
 csvs*/
+compressed/
 *.duckdb*
 duckdb
 duckdb*.zip
