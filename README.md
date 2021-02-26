@@ -11,14 +11,14 @@ We use a mix of Bash, Python, and [DuckDB](https://duckdb.org) SQL scripts to pe
 * [Example graph without refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-without-refreshes.pdf)
 * [Example graph with refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-with-refreshes.pdf)
 
-The example graph is serialized using the `CsvCompositeMergeForeignRaw` layout which contains the entire temporal graph without filtering/batching.
+The example graph is serialized using the `raw` serializer (composite-merged-fk layout) which contains the entire temporal graph without filtering/batching.
 
 ## Generate data sets
 
 ```bash
-./spark-concat.sh ${DATAGEN_OUTPUT_DIR}/csv/raw/composite_merge_foreign
-mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite_merge_foreign/dynamic/*.csv data/raw/dynamic
-mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite_merge_foreign/static/*.csv data/raw/static
+./spark-concat.sh ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk
+mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk/dynamic/*.csv data/raw/dynamic
+mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk/static/*.csv data/raw/static
 ```
 
 ## Processing data sets
