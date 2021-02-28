@@ -11,6 +11,8 @@ else
     HEADER=", HEADER"
 fi
 
+./get.sh
+
 POSTFIX=_0_0.csv
 
 rm -rf ldbc.duckdb
