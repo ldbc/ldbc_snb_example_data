@@ -63,3 +63,11 @@ Then, go to the [`cypher/ directory in the ldbc_snb_implementations repository`]
 . scripts/environment-variables-default.sh
 scripts/load-in-one-step.sh
 ```
+
+## Parameter generation
+
+Run
+
+```bash
+./paramgen.sh
+```
