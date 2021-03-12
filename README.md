@@ -26,7 +26,8 @@ mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk/static/*.csv data/raw/stati
 To process the data sets, run the processing script (it downloads DuckDB on the first run):
 
 ```bash
-./proc.sh
+./load.sh
+./transform.sh
 ./rename.sh
 ./export.sh
 ```

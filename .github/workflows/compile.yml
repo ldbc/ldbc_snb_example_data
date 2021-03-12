@@ -11,7 +11,8 @@ jobs:
         run: |
           sudo apt install -y rename
           ./get.sh
-          ./proc.sh
+          ./load.sh
+          ./transform.sh
           ./export.sh
           ./rename.sh
       - name: Compress data sets
