@@ -13,70 +13,69 @@ INSERT INTO TagClass
 -- many-to-many-edges
 INSERT INTO Comment_hasTag_Tag
   SELECT creationDate, id, hasTag_Tag
- FROM Raw_Comment_hasTag_Tag
+  FROM Raw_Comment_hasTag_Tag
 ;
 
 INSERT INTO Post_hasTag_Tag
   SELECT creationDate, id, hasTag_Tag
- FROM Raw_Post_hasTag_Tag
+  FROM Raw_Post_hasTag_Tag
 ;
 
 INSERT INTO Forum_hasMember_Person
   SELECT creationDate, id, hasMember_Person
- FROM Raw_Forum_hasMember_Person
+  FROM Raw_Forum_hasMember_Person
 ;
 
 INSERT INTO Forum_hasTag_Tag
   SELECT creationDate, id, hasTag_Tag
- FROM Raw_Forum_hasTag_Tag
+  FROM Raw_Forum_hasTag_Tag
 ;
 
 INSERT INTO Person_hasInterest_Tag
   SELECT creationDate, id, hasInterest_Tag
- FROM Raw_Person_hasInterest_Tag
+  FROM Raw_Person_hasInterest_Tag
 ;
 
 INSERT INTO Person_likes_Comment
   SELECT creationDate, id, likes_Comment
- FROM Raw_Person_likes_Comment
+  FROM Raw_Person_likes_Comment
 ;
 
 INSERT INTO Person_likes_Post
   SELECT creationDate, id, likes_Post
- FROM Raw_Person_likes_Post
+  FROM Raw_Person_likes_Post
 ;
 
 INSERT INTO Person_studyAt_University
   SELECT creationDate, id, studyAt_University, classYear
- FROM Raw_Person_studyAt_University
+  FROM Raw_Person_studyAt_University
 ;
 
 INSERT INTO Person_workAt_Company
   SELECT creationDate, id, workAt_Company, workFrom
- FROM Raw_Person_workAt_Company
+  FROM Raw_Person_workAt_Company
 ;
 
 INSERT INTO Person_knows_Person
   SELECT creationDate, Person1id, Person2id
- FROM Raw_Person_knows_Person
+  FROM Raw_Person_knows_Person
 ;
-
 
 -- Forums/Messages and their many-to-one edges
 INSERT INTO Comment
   SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment
- FROM Raw_Comment
+  FROM Raw_Comment
 ;
 INSERT INTO Forum
   SELECT creationDate, id, title, hasModerator_Person
- FROM Raw_Forum
+  FROM Raw_Forum
 ;
 INSERT INTO Post
   SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Place
- FROM Raw_Post
+  FROM Raw_Post
 ;
 
 -- Persons
 INSERT INTO Person SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
- FROM Raw_Person
+  FROM Raw_Person
 ;

@@ -15,18 +15,24 @@ The example graph is serialized using the `raw` serializer (composite-merged-fk 
 
 ## Generate data sets
 
+Use the data generator in raw mode to generate the data sets. Set the `$LDBC_DATA_DIRECTORY` environment variable to point to the directory of Datagen's output (containing the `static` and `dynamic` directories):
+
 ```bash
-./spark-concat.sh ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk
-mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk/dynamic/*.csv data/raw/dynamic
-mv ${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk/static/*.csv data/raw/static
+LDBC_DATA_DIRECTORY=${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk
+```
+
+Currently, you have to concatenate the CSVs using the following script:
+
+```bash
+./spark-concat.sh ${LDBC_DATA_DIRECTORY}
 ```
 
 ## Processing data sets
 
-To process the data sets, run the processing script (it downloads DuckDB on the first run):
+To process the data sets, run the following scripts (the first one downloads DuckDB if it's not yet available):
 
 ```bash
-./load.sh
+./load.sh ${LDBC_DATA_DIRECTORY}
 ./transform.sh
 ./rename.sh
 ./export.sh

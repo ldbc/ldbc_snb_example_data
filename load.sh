@@ -3,6 +3,8 @@
 set -e
 set -o pipefail
 
+# Usage: ./load.sh <PATHVAR> [--no-header]
+
 PATHVAR=${1:-"`pwd`/data/raw/"}
 
 if [ "$2" = "--no-header" ]; then
