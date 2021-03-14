@@ -8,6 +8,7 @@ DROP VIEW IF EXISTS Country_numMessages;
 DROP VIEW IF EXISTS CountryPairs_numFriends;
 
 DROP VIEW IF EXISTS Message_creationDates;
+DROP VIEW IF EXISTS Message_creationDays;
 DROP VIEW IF EXISTS Message_length;
 DROP VIEW IF EXISTS Message_Tags;
 DROP VIEW IF EXISTS Message_TagClasses;
@@ -67,13 +68,18 @@ CREATE VIEW CountryPairs_numFriends AS
 -- Message
 
 CREATE VIEW Message_creationDates AS
-    SELECT creationDate
+    SELECT DISTINCT creationDate
     FROM (
         SELECT creationDate FROM Comment
         UNION ALL
         SELECT creationDate FROM Post
     ) creationDates
     ORDER BY creationDate ASC;
+
+CREATE VIEW Message_creationDays AS
+    SELECT DISTINCT creationDate::date AS creationDay
+    FROM Message_creationDates
+    ORDER BY creationDay ASC;
 
 CREATE VIEW Message_length AS
     SELECT length, count(id) AS frequency
@@ -133,6 +139,7 @@ SELECT '-------- Country_numPersons --------' AS 'factor table'; SELECT * FROM C
 SELECT '-------- Country_numCities ---------' AS 'factor table'; SELECT * FROM Country_numCities       LIMIT 10;
 SELECT '------- Person_numFriends ----------' AS 'factor table'; SELECT * FROM Person_numFriends       LIMIT 10;
 SELECT '------ Message_creationDates -------' AS 'factor table'; SELECT * FROM Message_creationDates   LIMIT 10;
+SELECT '------- Message_creationDays -------' AS 'factor table'; SELECT * FROM Message_creationDays    LIMIT 10;
 SELECT '------------ Message_Tags ----------' AS 'factor table'; SELECT * FROM Message_Tags            LIMIT 10;
 SELECT '---------- Message_length ----------' AS 'factor table'; SELECT * FROM Message_length          LIMIT 10;
 SELECT '--------- Message_TagClasses -------' AS 'factor table'; SELECT * FROM Message_TagClasses      LIMIT 10;

@@ -1,0 +1,2 @@
+SELECT * FROM Message_TagClasses LIMIT 10 OFFSET 10;
+SELECT * FROM Message_creationDays LIMIT 10 OFFSET 10;
