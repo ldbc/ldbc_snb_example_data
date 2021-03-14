@@ -124,7 +124,7 @@ INSERT INTO Person_numFriends
     SELECT person1Id AS id, count(person2Id) AS numFriends
     FROM Person_knows_Person
     GROUP BY person1Id
-    ORDER BY degree DESC, person1Id ASC;
+    ORDER BY numFriends DESC, person1Id ASC;
 
 -- Post
 
