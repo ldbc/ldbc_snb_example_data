@@ -15,6 +15,7 @@ jobs:
           ./transform.sh
           ./export.sh
           ./rename.sh
+          ./paramgen.sh
       - name: Compress data sets
         run: |
           # get rid of duplicate .gitignore files
