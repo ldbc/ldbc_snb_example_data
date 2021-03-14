@@ -32,7 +32,7 @@ Currently, you have to concatenate the CSVs using the following script:
 To process the data sets, run the following scripts (the first one downloads DuckDB if it's not yet available):
 
 ```bash
-./load.sh ${LDBC_DATA_DIRECTORY}
+./load.sh ${LDBC_DATA_DIRECTORY} --no-header
 ./transform.sh
 ./rename.sh
 ./export.sh
@@ -76,7 +76,7 @@ scripts/load-in-one-step.sh
 Run paramgen as follows:
 
 ```bash
-./load.sh ${LDBC_DATA_DIRECTORY}
+./load.sh ${LDBC_DATA_DIRECTORY} --no-header
 ./transform.sh
 ./paramgen.sh
 ```

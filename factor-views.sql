@@ -15,10 +15,8 @@ DROP VIEW IF EXISTS Message_TagClasses;
 DROP VIEW IF EXISTS Person_numFriends;
 
 DROP VIEW IF EXISTS Post_languages;
-DROP VIEW IF EXISTS Post_TagClasses;
 
 DROP VIEW IF EXISTS TagClass_numTags;
-
 
 -- define views
 
@@ -33,7 +31,7 @@ CREATE VIEW Country_numCities AS
 CREATE VIEW Country_numPersons AS
     SELECT isPartOf_Country AS id, count(person.id) AS numPersons
     FROM Person
-    JOIN City 
+    JOIN City
       ON person.isLocatedIn_City = city.id
     GROUP BY isPartOf_Country
     ORDER BY numPersons DESC, id ASC;
