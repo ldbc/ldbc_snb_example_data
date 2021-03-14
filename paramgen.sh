@@ -4,9 +4,9 @@ set -e
 set -o pipefail
 
 ./duckdb ldbc.duckdb << EOF
-    SELECT ispartof_place, count(*) AS numPersons
-    FROM place
-    JOIN person ON person.isLocatedIn_Place = place.id
-    GROUP BY ispartof_place
+    SELECT isPartOf_Country, count(*) AS numPersons
+    FROM city
+    JOIN person ON person.isLocatedIn_City = city.id
+    GROUP BY isPartOf_Country
     ORDER BY numPersons DESC
 EOF

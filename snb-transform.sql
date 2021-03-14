@@ -2,12 +2,41 @@
 -- static
 INSERT INTO Organisation
   SELECT * FROM Raw_Organisation;
+
 INSERT INTO Place
   SELECT * FROM Raw_Place;
+
 INSERT INTO Tag
   SELECT * FROM Raw_Tag;
+
 INSERT INTO TagClass
   SELECT * FROM Raw_TagClass;
+
+-- static / separate labels
+INSERT INTO Company
+  SELECT id, name, url, isLocatedIn_Place AS isLocatedIn_Country
+  FROM Organisation
+  WHERE type = 'Company';
+
+INSERT INTO University
+  SELECT id, name, url, isLocatedIn_Place AS isLocatedIn_City
+  FROM Organisation
+  WHERE type = 'University';
+
+INSERT INTO Continent
+  SELECT id, name, url
+  FROM Place
+  WHERE type = 'Continent';
+
+INSERT INTO Country
+  SELECT id, name, url, isPartOf_Place AS isPartOf_Continent
+  FROM Place
+  WHERE type = 'Country';
+
+INSERT INTO City
+  SELECT id, name, url, isPartOf_Place AS isPartOf_Country
+  FROM Place
+  WHERE type = 'City';
 
 -- dynamic
 -- many-to-many-edges
