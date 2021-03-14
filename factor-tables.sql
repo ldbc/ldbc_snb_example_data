@@ -2,34 +2,43 @@
 
 -- cleanup
 
-DROP VIEW IF EXISTS Country_numCities;
-DROP VIEW IF EXISTS Country_numPersons;
-DROP VIEW IF EXISTS Country_numMessages;
-DROP VIEW IF EXISTS CountryPairs_numFriends;
+DROP TABLE IF EXISTS Country_numCities;
+DROP TABLE IF EXISTS Country_numPersons;
+DROP TABLE IF EXISTS Country_numMessages;
+DROP TABLE IF EXISTS CountryPairs_numFriends;
+DROP TABLE IF EXISTS Message_creationDates;
+DROP TABLE IF EXISTS Message_creationDays;
+DROP TABLE IF EXISTS Message_length;
+DROP TABLE IF EXISTS Message_Tags;
+DROP TABLE IF EXISTS Message_TagClasses;
+DROP TABLE IF EXISTS Person_numFriends;
+DROP TABLE IF EXISTS Post_languages;
+DROP TABLE IF EXISTS TagClass_numTags;
 
-DROP VIEW IF EXISTS Message_creationDates;
-DROP VIEW IF EXISTS Message_creationDays;
-DROP VIEW IF EXISTS Message_length;
-DROP VIEW IF EXISTS Message_Tags;
-DROP VIEW IF EXISTS Message_TagClasses;
-
-DROP VIEW IF EXISTS Person_numFriends;
-
-DROP VIEW IF EXISTS Post_languages;
-
-DROP VIEW IF EXISTS TagClass_numTags;
+CREATE TABLE Country_numCities(id BIGINT, numCities INT);
+CREATE TABLE Country_numPersons(id BIGINT, numPersons INT);
+CREATE TABLE Country_numMessages(countryId BIGINT, frequency INT);
+CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, frequency INT);
+CREATE TABLE Message_creationDates(creationDate DATETIME);
+CREATE TABLE Message_creationDays(creationDay DATE);
+CREATE TABLE Message_length(length INT, frequency INT);
+CREATE TABLE Message_Tags(tag BIGINT, frequency INT);
+CREATE TABLE Message_TagClasses(tagClass BIGINT, frequency INT);
+CREATE TABLE Person_numFriends(id BIGINT, numFriends INT);
+CREATE TABLE Post_languages(language VARCHAR, frequency INT);
+CREATE TABLE TagClass_numTags(tagClass BIGINT, frequency INT);
 
 -- define views
 
 -- Country
 
-CREATE VIEW Country_numCities AS
+INSERT INTO Country_numCities
     SELECT isPartOf_Country AS id, count(id) AS numCities
     FROM City
     GROUP BY isPartOf_Country
     ORDER BY numCities DESC, id ASC;
 
-CREATE VIEW Country_numPersons AS
+INSERT INTO Country_numPersons
     SELECT isPartOf_Country AS id, count(person.id) AS numPersons
     FROM Person
     JOIN City
@@ -37,7 +46,7 @@ CREATE VIEW Country_numPersons AS
     GROUP BY isPartOf_Country
     ORDER BY numPersons DESC, id ASC;
 
-CREATE VIEW Country_numMessages AS
+INSERT INTO Country_numMessages
     SELECT countryId, count(id) AS frequency
     FROM (
         SELECT id, isLocatedIn_Country AS countryId FROM Comment
@@ -47,7 +56,7 @@ CREATE VIEW Country_numMessages AS
     GROUP BY countryId
     ORDER BY frequency DESC, countryId ASC;
 
-CREATE VIEW CountryPairs_numFriends AS
+INSERT INTO CountryPairs_numFriends
     SELECT
         City1.isPartOf_Country AS country1Id,
         City2.isPartOf_Country AS country2Id,
@@ -67,7 +76,7 @@ CREATE VIEW CountryPairs_numFriends AS
 
 -- Message
 
-CREATE VIEW Message_creationDates AS
+INSERT INTO Message_creationDates
     SELECT DISTINCT creationDate
     FROM (
         SELECT creationDate FROM Comment
@@ -76,12 +85,12 @@ CREATE VIEW Message_creationDates AS
     ) creationDates
     ORDER BY creationDate ASC;
 
-CREATE VIEW Message_creationDays AS
+INSERT INTO Message_creationDays
     SELECT DISTINCT creationDate::date AS creationDay
     FROM Message_creationDates
     ORDER BY creationDay ASC;
 
-CREATE VIEW Message_length AS
+INSERT INTO Message_length
     SELECT length, count(id) AS frequency
     FROM (
         SELECT id, length FROM Comment
@@ -91,7 +100,7 @@ CREATE VIEW Message_length AS
     GROUP BY length
     ORDER BY frequency DESC, length ASC;
 
-CREATE VIEW Message_Tags AS
+INSERT INTO Message_Tags
     SELECT hasTag_Tag AS tag, count(id) AS frequency
     FROM (
         SELECT id, hasTag_Tag FROM Comment_hasTag_Tag
@@ -101,7 +110,7 @@ CREATE VIEW Message_Tags AS
     GROUP BY hasTag_Tag
     ORDER BY frequency DESC, tag ASC;
 
-CREATE VIEW Message_TagClasses AS
+INSERT INTO Message_TagClasses
     SELECT Tag.hasType_TagClass AS tagClass, sum(Message_Tags.frequency) AS frequency
     FROM Message_Tags
     JOIN Tag 
@@ -109,24 +118,26 @@ CREATE VIEW Message_TagClasses AS
     GROUP BY tagClass
     ORDER BY frequency DESC, tagClass ASC;
 
+-- Person
+
+INSERT INTO Person_numFriends
+    SELECT person1Id AS id, count(person2Id) AS numFriends
+    FROM Person_knows_Person
+    GROUP BY person1Id
+    ORDER BY degree DESC, person1Id ASC;
+
 -- Post
 
-CREATE VIEW Post_languages AS
+INSERT INTO Post_languages
     SELECT language, count(id) AS frequency
     FROM Post
     WHERE language IS NOT NULL
     GROUP BY language
     ORDER BY frequency DESC, language ASC;
 
--- Person
+-- TagClass
 
-CREATE VIEW Person_numFriends AS
-    SELECT person1Id AS id, count(person2Id) AS degree
-    FROM Person_knows_Person
-    GROUP BY person1Id
-    ORDER BY degree DESC, person1Id ASC;
-
-CREATE VIEW TagClass_numTags AS
+INSERT INTO TagClass_numTags
     SELECT hasType_TagClass AS tagClass, count(id) AS frequency
     FROM Tag
     GROUP BY tagClass
