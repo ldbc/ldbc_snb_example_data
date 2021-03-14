@@ -73,8 +73,10 @@ scripts/load-in-one-step.sh
 
 ## Parameter generation
 
-Run
+Run paramgen as follows:
 
 ```bash
+./load.sh ${LDBC_DATA_DIRECTORY}
+./transform.sh
 ./paramgen.sh
 ```
