@@ -78,6 +78,6 @@ Run paramgen as follows:
 ```bash
 ./load.sh ${LDBC_DATA_DIRECTORY} --no-header
 ./transform.sh
-./factor-views.sh
+./factor-tables.sh
 ./paramgen.sh
 ```

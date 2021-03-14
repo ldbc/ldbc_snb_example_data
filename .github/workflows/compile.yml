@@ -15,7 +15,7 @@ jobs:
           ./transform.sh
           ./export.sh
           ./rename.sh
-          ./factor-views.sh
+          ./factor-tables.sh
           ./paramgen.sh
       - name: Compress data sets
         run: |
