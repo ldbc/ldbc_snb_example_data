@@ -47,8 +47,8 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-singular-projected-fk/dynamic/Comment_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Comment)
-  TO 'data/csv-singular-projected-fk/dynamic/Comment_isLocatedIn_Place.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Country FROM Comment)
+  TO 'data/csv-singular-projected-fk/dynamic/Comment_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Post FROM Comment WHERE replyOf_Post IS NOT NULL)
@@ -71,16 +71,16 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-singular-projected-fk/dynamic/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Post)
-  TO 'data/csv-singular-projected-fk/dynamic/Post_isLocatedIn_Place.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Country FROM Post)
+  TO 'data/csv-singular-projected-fk/dynamic/Post_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed FROM Person)
   TO 'data/csv-singular-projected-fk/dynamic/Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Person)
-  TO 'data/csv-singular-projected-fk/dynamic/Person_isLocatedIn_Place.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_City FROM Person)
+  TO 'data/csv-singular-projected-fk/dynamic/Person_isLocatedIn_City.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, unnest(string_split_regex(email,  ';')) AS email FROM Person)  TO 'data/csv-singular-projected-fk/dynamic/Person_email.csv'  WITH (HEADER, DELIMITER '|');

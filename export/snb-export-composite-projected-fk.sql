@@ -47,8 +47,8 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-composite-projected-fk/dynamic/Comment_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Comment)
-  TO 'data/csv-composite-projected-fk/dynamic/Comment_isLocatedIn_Place.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Country FROM Comment)
+  TO 'data/csv-composite-projected-fk/dynamic/Comment_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, replyOf_Post FROM Comment WHERE replyOf_Post IS NOT NULL)
@@ -71,16 +71,16 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-composite-projected-fk/dynamic/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Post)
-  TO 'data/csv-composite-projected-fk/dynamic/Post_isLocatedIn_Place.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Country FROM Post)
+  TO 'data/csv-composite-projected-fk/dynamic/Post_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, speaks, email FROM Person)
   TO 'data/csv-composite-projected-fk/dynamic/Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_Place FROM Person)
-  TO 'data/csv-composite-projected-fk/dynamic/Person_isLocatedIn_Place.csv'
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, isLocatedIn_City FROM Person)
+  TO 'data/csv-composite-projected-fk/dynamic/Person_isLocatedIn_City.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, hasTag_Tag FROM Comment_hasTag_Tag)

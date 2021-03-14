@@ -40,7 +40,7 @@ CREATE TABLE Comment (
     content varchar(2000) not null,
     length int not null,
     hasCreator_Person bigint not null,
-    isLocatedIn_Place bigint not null,
+    isLocatedIn_Country bigint not null,
     replyOf_Post bigint,
     replyOf_Comment bigint
 );
@@ -62,7 +62,7 @@ CREATE TABLE Post (
     length int not null,
     hasCreator_Person bigint not null,
     Forum_containerOf bigint not null,
-    isLocatedIn_Place bigint not null
+    isLocatedIn_Country bigint not null
 );
 
 CREATE TABLE Person (
@@ -74,7 +74,7 @@ CREATE TABLE Person (
     birthday date not null,
     locationIP varchar(40) not null,
     browserUsed varchar(40) not null,
-    isLocatedIn_Place bigint not null,
+    isLocatedIn_City bigint not null,
     speaks varchar(640) not null,
     email varchar(8192) not null
 );

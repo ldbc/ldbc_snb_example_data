@@ -19,15 +19,15 @@ COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDat
   TO 'data/csv-singular-merged-fk/dynamic/Forum.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment FROM Comment)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Country, replyOf_Post, replyOf_Comment FROM Comment)
   TO 'data/csv-singular-merged-fk/dynamic/Comment.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Place FROM Post)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Country FROM Post)
   TO 'data/csv-singular-merged-fk/dynamic/Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place FROM Person)
+COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_City FROM Person)
   TO 'data/csv-singular-merged-fk/dynamic/Person.csv'
   WITH (HEADER, DELIMITER '|');
 

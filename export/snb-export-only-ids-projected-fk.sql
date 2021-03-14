@@ -88,8 +88,8 @@ COPY (SELECT id, hasCreator_Person FROM Comment)
   TO 'data/csv-only-ids-projected-fk/Comment_hasCreator_Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isLocatedIn_Place FROM Comment)
-  TO 'data/csv-only-ids-projected-fk/Comment_isLocatedIn_Place.csv'
+COPY (SELECT id, isLocatedIn_Country FROM Comment)
+  TO 'data/csv-only-ids-projected-fk/Comment_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, replyOf_Post FROM Comment WHERE replyOf_Post IS NOT NULL)
@@ -114,8 +114,8 @@ COPY (SELECT Forum_containerOf AS forumId, id AS postId FROM Post)
   TO 'data/csv-only-ids-projected-fk/Forum_containerOf_Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isLocatedIn_Place FROM Post)
-  TO 'data/csv-only-ids-projected-fk/Post_isLocatedIn_Place.csv'
+COPY (SELECT id, isLocatedIn_Country FROM Post)
+  TO 'data/csv-only-ids-projected-fk/Post_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
 -- Person
@@ -124,8 +124,8 @@ COPY (SELECT id FROM Person)
   TO 'data/csv-only-ids-projected-fk/Person.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isLocatedIn_Place FROM Person)
-  TO 'data/csv-only-ids-projected-fk/Person_isLocatedIn_Place.csv'
+COPY (SELECT id, isLocatedIn_City FROM Person)
+  TO 'data/csv-only-ids-projected-fk/Person_isLocatedIn_City.csv'
   WITH (HEADER, DELIMITER '|');
 
 COPY (SELECT id, hasTag_Tag FROM Comment_hasTag_Tag)

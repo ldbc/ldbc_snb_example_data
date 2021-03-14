@@ -44,15 +44,15 @@ COPY (SELECT id, hasModerator_Person FROM Forum)
   TO 'data/csv-only-ids-merged-fk/Forum.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment FROM Comment)
+COPY (SELECT id, hasCreator_Person, isLocatedIn_Country, replyOf_Post, replyOf_Comment FROM Comment)
   TO 'data/csv-only-ids-merged-fk/Comment.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, hasCreator_Person, Forum_containerOf, isLocatedIn_Place FROM Post)
+COPY (SELECT id, hasCreator_Person, Forum_containerOf, isLocatedIn_Country FROM Post)
   TO 'data/csv-only-ids-merged-fk/Post.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isLocatedIn_Place FROM Person)
+COPY (SELECT id, isLocatedIn_City FROM Person)
   TO 'data/csv-only-ids-merged-fk/Person.csv'
   WITH (HEADER, DELIMITER '|');
 
