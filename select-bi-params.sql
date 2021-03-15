@@ -204,7 +204,7 @@ COPY (SELECT city1Id, city2Id
 
 -- Q20
 COPY (
-    SELECT Companies_numEmployees.id AS company, Person_numFriends.id AS person2Id
+    SELECT Companies_numEmployees.name AS company, Person_numFriends.id AS person2Id
     FROM
         (SELECT * FROM Companies_numEmployees LIMIT 10) Companies_numEmployees,
         (SELECT * FROM Person_numFriends LIMIT 10) Person_numFriends
