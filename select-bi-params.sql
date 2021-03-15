@@ -13,7 +13,7 @@ COPY (
     TO 'params/bi-2.csv'
     WITH (HEADER, DELIMITER '|');
 
--- -- Q3
+-- Q3
 COPY (
     SELECT Message_TagClasses.tagClassName AS tagClass, Country_numPersons.name AS country
     FROM
@@ -23,7 +23,7 @@ COPY (
     TO 'params/bi-3.csv'
     WITH (HEADER, DELIMITER '|');
 
--- -- Q4
+-- Q4
 COPY (SELECT creationDay AS date FROM Message_creationDays LIMIT 20)
     TO 'params/bi-4.csv'
     WITH (HEADER, DELIMITER '|');
@@ -38,12 +38,12 @@ COPY (SELECT tagName AS tag FROM Message_Tags LIMIT 10)
     TO 'params/bi-6.csv'
     WITH (HEADER, DELIMITER '|');
 
--- -- Q7
+-- Q7
 COPY (SELECT tagName AS tag FROM Message_Tags LIMIT 10)
     TO 'params/bi-7.csv'
     WITH (HEADER, DELIMITER '|');
 
--- -- Q8
+-- Q8
 COPY (
     SELECT Message_Tags.tagName AS tag, Message_creationDays.creationDay AS date
     FROM
