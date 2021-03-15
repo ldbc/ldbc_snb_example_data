@@ -97,7 +97,10 @@ COPY (
 -- Q12
 -- TODO: balance
 COPY (
-    SELECT Message_creationDays.creationDay AS date, Message_length.length AS lengthThreshold, Post_languages.language AS language
+    SELECT
+        Message_creationDays.creationDay AS date,
+        Message_length.length AS lengthThreshold,
+        Post_languages.language AS language -- should be multiple languages
     FROM
         (SELECT creationDay FROM Message_creationDays LIMIT 10) Message_creationDays,
         (SELECT length FROM Message_length LIMIT 10) Message_length, -- OFFSET count/5?
@@ -118,13 +121,13 @@ COPY (
 
 -- Q14
 -- Q14a: correlated countries
-COPY (SELECT country1Id, country2Id FROM CountryPairs_numFriends ORDER BY frequency DESC LIMIT 10)
-    TO 'params/bi/q14a.csv'
+COPY (SELECT country1Name AS country1, country2Name AS country2 FROM CountryPairs_numFriends ORDER BY frequency DESC LIMIT 10)
+    TO 'params/bi-14a.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q14b: anti-correlated countries
-COPY (SELECT country1Id, country2Id FROM CountryPairs_numFriends ORDER BY frequency ASC LIMIT 10)
-    TO 'params/bi/q14b.csv'
+COPY (SELECT country1Name AS country1, country2Name AS country2 FROM CountryPairs_numFriends ORDER BY frequency ASC LIMIT 10)
+    TO 'params/bi-14b.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q15
