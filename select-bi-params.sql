@@ -88,7 +88,7 @@ COPY (
 COPY (
     SELECT country, startDate
     FROM
-        (SELECT name AS country FROM Country_numPersons LIMIT 10 OFFSET 2) c,
+        (SELECT name AS country FROM Country_numPersons LIMIT 10) c, -- OFFSET 2
         (SELECT creationDay AS startDate FROM Message_creationDays LIMIT 10) startDate
     )
     TO 'params/bi-11.csv'
