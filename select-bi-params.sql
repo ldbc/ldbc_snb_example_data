@@ -128,7 +128,13 @@ COPY (SELECT country1Id, country2Id FROM CountryPairs_numFriends ORDER BY freque
 
 
 -- Q19
-
+COPY (
+    SELECT city1Id, city2Id
+    FROM CityPairs_numFriends
+    LIMIT 10
+    )
+    TO 'params/bi/q19.csv'
+    WITH (HEADER, DELIMITER '|');
 
 -- Q20
 COPY (

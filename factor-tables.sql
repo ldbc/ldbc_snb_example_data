@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Country_numCities;
 DROP TABLE IF EXISTS Country_numPersons;
 DROP TABLE IF EXISTS Country_numMessages;
 DROP TABLE IF EXISTS CountryPairs_numFriends;
+DROP TABLE IF EXISTS CityPairs_numFriends;
 DROP TABLE IF EXISTS Message_creationDates; -- datetimes
 DROP TABLE IF EXISTS Message_creationDays;  -- dates
 DROP TABLE IF EXISTS Message_length;
@@ -20,6 +21,7 @@ CREATE TABLE Country_numCities(id BIGINT, name VARCHAR, numCities INT);
 CREATE TABLE Country_numPersons(id BIGINT, name VARCHAR, numPersons INT);
 CREATE TABLE Country_numMessages(id BIGINT, frequency INT);
 CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, country1Name VARCHAR, country2Name VARCHAR, frequency INT);
+CREATE TABLE CityPairs_numFriends(city1Id BIGINT, city2Id BIGINT, city1Name VARCHAR, city2Name VARCHAR, frequency INT);
 CREATE TABLE Message_creationDates(creationDate DATETIME);
 CREATE TABLE Message_creationDays(creationDay DATE);
 CREATE TABLE Message_length(length INT, frequency INT);
@@ -85,6 +87,26 @@ INSERT INTO CountryPairs_numFriends
     WHERE Country1.id < Country2.id
     GROUP BY country1Id, country2Id, country1Name, country2Name
     ORDER BY frequency DESC, country1Id ASC, country2Id ASC;
+
+INSERT INTO CityPairs_numFriends
+    SELECT
+        City1.id AS city1Id,
+        City2.id AS city2Id,
+        City1.name AS city1Name,
+        City2.name AS city2Name,
+        count(*) AS frequency
+    FROM Person_knows_Person
+    JOIN Person Person1
+      ON Person1.id = Person_knows_Person.Person1Id
+    JOIN City City1
+      ON Person1.isLocatedIn_City = City1.id
+    JOIN Person Person2
+      ON Person2.id = Person_knows_Person.Person2Id
+    JOIN City City2
+      ON Person2.isLocatedIn_City = City2.id
+    WHERE City1.id < City2.id
+    GROUP BY city1Id, city2Id, city1Name, city2Name
+    ORDER BY frequency DESC, city1Id ASC, city2Id ASC;
 
 -- Message
 
