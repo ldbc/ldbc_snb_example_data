@@ -10,3 +10,5 @@ if [ ! -f duckdb ]; then
     unzip -o duckdb_cli-linux-amd64.zip
     rm duckdb_cli-linux-amd64.zip
 fi
+
+pip3 install --user --progress-bar off duckdb==${DUCKDB_VERSION}
