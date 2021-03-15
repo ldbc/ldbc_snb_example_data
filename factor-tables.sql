@@ -16,18 +16,18 @@ DROP TABLE IF EXISTS Post_languages;
 DROP TABLE IF EXISTS TagClass_numTags;
 DROP TABLE IF EXISTS Companies_numEmployees;
 
-CREATE TABLE Country_numCities(id BIGINT, numCities INT);
-CREATE TABLE Country_numPersons(id BIGINT, numPersons INT);
-CREATE TABLE Country_numMessages(countryId BIGINT, frequency INT);
-CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, frequency INT);
+CREATE TABLE Country_numCities(id BIGINT, name VARCHAR, numCities INT);
+CREATE TABLE Country_numPersons(id BIGINT, name VARCHAR, numPersons INT);
+CREATE TABLE Country_numMessages(id BIGINT, frequency INT);
+CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, country1Name VARCHAR, country2Name VARCHAR, frequency INT);
 CREATE TABLE Message_creationDates(creationDate DATETIME);
 CREATE TABLE Message_creationDays(creationDay DATE);
 CREATE TABLE Message_length(length INT, frequency INT);
-CREATE TABLE Message_Tags(tag BIGINT, frequency INT);
-CREATE TABLE Message_TagClasses(tagClass BIGINT, frequency INT);
+CREATE TABLE Message_Tags(tagId BIGINT, tagName VARCHAR, frequency INT);
+CREATE TABLE Message_TagClasses(tagClassId BIGINT, tagClassName VARCHAR, frequency INT);
 CREATE TABLE Person_numFriends(id BIGINT, numFriends INT);
 CREATE TABLE Post_languages(language VARCHAR, frequency INT);
-CREATE TABLE TagClass_numTags(tagClass BIGINT, frequency INT);
+CREATE TABLE TagClass_numTags(id BIGINT, name VARCHAR, frequency INT);
 CREATE TABLE Companies_numEmployees(id BIGINT, name VARCHAR, frequency INT);
 
 -- define views
@@ -35,17 +35,21 @@ CREATE TABLE Companies_numEmployees(id BIGINT, name VARCHAR, frequency INT);
 -- Country
 
 INSERT INTO Country_numCities
-    SELECT isPartOf_Country AS id, count(id) AS numCities
+    SELECT Country.id AS id, Country.name AS name, count(City.id) AS numCities
     FROM City
-    GROUP BY isPartOf_Country
+    JOIN Country
+      ON City.isPartOf_Country = Country.id
+    GROUP BY Country.id, Country.name
     ORDER BY numCities DESC, id ASC;
 
 INSERT INTO Country_numPersons
-    SELECT isPartOf_Country AS id, count(person.id) AS numPersons
+    SELECT Country.id AS id, Country.name AS name, count(Person.id) AS numPersons
     FROM Person
     JOIN City
-      ON person.isLocatedIn_City = city.id
-    GROUP BY isPartOf_Country
+      ON Person.isLocatedIn_City = City.id
+    JOIN Country
+      ON City.isPartOf_Country = Country.id
+    GROUP BY Country.id, Country.name
     ORDER BY numPersons DESC, id ASC;
 
 INSERT INTO Country_numMessages
@@ -60,20 +64,26 @@ INSERT INTO Country_numMessages
 
 INSERT INTO CountryPairs_numFriends
     SELECT
-        City1.isPartOf_Country AS country1Id,
-        City2.isPartOf_Country AS country2Id,
+        Country1.id AS country1Id,
+        Country2.id AS country2Id,
+        Country1.name AS country1Name,
+        Country2.name AS country2Name,
         count(*) AS frequency
     FROM Person_knows_Person
     JOIN Person Person1
       ON Person1.id = Person_knows_Person.Person1Id
     JOIN City City1
       ON Person1.isLocatedIn_City = City1.id
+    JOIN Country Country1
+      ON City1.isPartOf_Country = Country1.id
     JOIN Person Person2
       ON Person2.id = Person_knows_Person.Person2Id
     JOIN City City2
       ON Person2.isLocatedIn_City = City2.id
-    WHERE City1.isPartOf_Country < City2.isPartOf_Country
-    GROUP BY country1Id, country2Id
+    JOIN Country Country2
+      ON City2.isPartOf_Country = Country2.id
+    WHERE Country1.id < Country2.id
+    GROUP BY country1Id, country2Id, country1Name, country2Name
     ORDER BY frequency DESC, country1Id ASC, country2Id ASC;
 
 -- Message
@@ -103,22 +113,26 @@ INSERT INTO Message_length
     ORDER BY frequency DESC, length ASC;
 
 INSERT INTO Message_Tags
-    SELECT hasTag_Tag AS tag, count(id) AS frequency
+    SELECT Tag.id AS tagId, Tag.name AS tagName, count(Message_hasTag_Tag.id) AS frequency
     FROM (
         SELECT id, hasTag_Tag FROM Comment_hasTag_Tag
         UNION ALL
         SELECT id, hasTag_Tag FROM Post_hasTag_Tag
-    ) tags
-    GROUP BY hasTag_Tag
-    ORDER BY frequency DESC, tag ASC;
+    ) Message_hasTag_Tag
+    JOIN Tag
+      ON Message_hasTag_Tag.hasTag_Tag = Tag.id
+    GROUP BY tagId, tagName
+    ORDER BY frequency DESC, tagId ASC;
 
 INSERT INTO Message_TagClasses
-    SELECT Tag.hasType_TagClass AS tagClass, sum(Message_Tags.frequency) AS frequency
+    SELECT TagClass.id AS tagClassId, TagClass.name AS tagClassName, sum(Message_Tags.frequency) AS frequency
     FROM Message_Tags
-    JOIN Tag 
-      ON Message_Tags.tag = Tag.id
-    GROUP BY tagClass
-    ORDER BY frequency DESC, tagClass ASC;
+    JOIN Tag
+      ON Message_Tags.tagId = Tag.id
+    JOIN TagClass
+      ON Tag.hasType_TagClass = TagClass.id
+    GROUP BY tagClassId, tagClassName
+    ORDER BY frequency DESC, tagClassId ASC;
 
 -- Person
 
@@ -140,10 +154,12 @@ INSERT INTO Post_languages
 -- TagClass
 
 INSERT INTO TagClass_numTags
-    SELECT hasType_TagClass AS tagClass, count(id) AS frequency
+    SELECT TagClass.id AS id, TagClass.name AS name, count(Tag.id) AS frequency
     FROM Tag
-    GROUP BY tagClass
-    ORDER BY frequency DESC, tagClass ASC;
+    JOIN TagClass
+      ON Tag.hasType_TagClass = TagClass.id
+    GROUP BY TagClass.id, TagClass.name
+    ORDER BY frequency DESC, TagClass.id ASC;
 
 -- Companies
 
