@@ -6,14 +6,15 @@ DROP TABLE IF EXISTS Country_numCities;
 DROP TABLE IF EXISTS Country_numPersons;
 DROP TABLE IF EXISTS Country_numMessages;
 DROP TABLE IF EXISTS CountryPairs_numFriends;
-DROP TABLE IF EXISTS Message_creationDates;
-DROP TABLE IF EXISTS Message_creationDays;
+DROP TABLE IF EXISTS Message_creationDates; -- datetimes
+DROP TABLE IF EXISTS Message_creationDays;  -- dates
 DROP TABLE IF EXISTS Message_length;
 DROP TABLE IF EXISTS Message_Tags;
 DROP TABLE IF EXISTS Message_TagClasses;
 DROP TABLE IF EXISTS Person_numFriends;
 DROP TABLE IF EXISTS Post_languages;
 DROP TABLE IF EXISTS TagClass_numTags;
+DROP TABLE IF EXISTS Companies_numEmployees;
 
 CREATE TABLE Country_numCities(id BIGINT, numCities INT);
 CREATE TABLE Country_numPersons(id BIGINT, numPersons INT);
@@ -27,6 +28,7 @@ CREATE TABLE Message_TagClasses(tagClass BIGINT, frequency INT);
 CREATE TABLE Person_numFriends(id BIGINT, numFriends INT);
 CREATE TABLE Post_languages(language VARCHAR, frequency INT);
 CREATE TABLE TagClass_numTags(tagClass BIGINT, frequency INT);
+CREATE TABLE Companies_numEmployees(id BIGINT, name VARCHAR, frequency INT);
 
 -- define views
 
@@ -143,11 +145,22 @@ INSERT INTO TagClass_numTags
     GROUP BY tagClass
     ORDER BY frequency DESC, tagClass ASC;
 
+-- Companies
+
+INSERT INTO Companies_numEmployees
+    SELECT Company.id AS id, Company.name AS name, count(Person_workAt_Company.id) AS numEmployees
+    FROM Company
+    JOIN Person_workAt_Company
+      ON Person_workAt_Company.workAt_Company = Company.id
+    GROUP BY Company.id, Company.name
+    ORDER BY numEmployees DESC, Company.id ASC;
+
 -- show some data from the views
 
 SELECT '-------- Country_numMessages -------' AS 'factor table'; SELECT * FROM Country_numMessages     LIMIT 10;
 SELECT '-------- Country_numPersons --------' AS 'factor table'; SELECT * FROM Country_numPersons      LIMIT 10;
 SELECT '-------- Country_numCities ---------' AS 'factor table'; SELECT * FROM Country_numCities       LIMIT 10;
+SELECT '------ CountryPairs_numFriends -----' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
 SELECT '------- Person_numFriends ----------' AS 'factor table'; SELECT * FROM Person_numFriends       LIMIT 10;
 SELECT '------ Message_creationDates -------' AS 'factor table'; SELECT * FROM Message_creationDates   LIMIT 10;
 SELECT '------- Message_creationDays -------' AS 'factor table'; SELECT * FROM Message_creationDays    LIMIT 10;
@@ -156,4 +169,4 @@ SELECT '---------- Message_length ----------' AS 'factor table'; SELECT * FROM M
 SELECT '--------- Message_TagClasses -------' AS 'factor table'; SELECT * FROM Message_TagClasses      LIMIT 10;
 SELECT '---------- Post_languages ----------' AS 'factor table'; SELECT * FROM Post_languages          LIMIT 10;
 SELECT '---------- TagClass_numTags --------' AS 'factor table'; SELECT * FROM TagClass_numTags        LIMIT 10;
-SELECT '------ CountryPairs_numFriends -----' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
+SELECT '------ Companies_numEmployees ------' AS 'factor table'; SELECT * FROM Companies_numEmployees  LIMIT 10;
