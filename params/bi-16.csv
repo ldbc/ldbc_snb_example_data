@@ -1,0 +1,13 @@
+taga|datea|tagb|dateb|maxknowslimit
+Pyrenees|2011-10-10|Snowboard|2012-02-15|5
+Pyrenees|2011-10-10|Snowboard|2012-03-04|4
+Pyrenees|2012-02-15|Snowboard|2011-10-10|6
+Pyrenees|2012-02-15|Snowboard|2012-03-04|3
+Pyrenees|2012-03-04|Snowboard|2011-10-10|5
+Pyrenees|2012-03-04|Snowboard|2012-02-15|6
+Snowboard|2011-10-10|Pyrenees|2012-02-15|5
+Snowboard|2011-10-10|Pyrenees|2012-03-04|6
+Snowboard|2012-02-15|Pyrenees|2011-10-10|3
+Snowboard|2012-02-15|Pyrenees|2012-03-04|3
+Snowboard|2012-03-04|Pyrenees|2011-10-10|6
+Snowboard|2012-03-04|Pyrenees|2012-02-15|6

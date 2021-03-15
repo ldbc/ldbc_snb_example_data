@@ -1,6 +1,6 @@
 -- Q1
 COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate FROM Message_creationDates LIMIT 10)
-    TO 'params/bi/q1.csv'
+    TO 'params/bi-1.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q2
@@ -10,7 +10,7 @@ COPY (
         (SELECT * FROM Message_creationDays LIMIT 10) Message_creationDays,
         (SELECT * FROM Message_TagClasses   LIMIT 10) Message_TagClasses
     )
-    TO 'params/bi/q2.csv'
+    TO 'params/bi-2.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- -- Q3
@@ -20,27 +20,27 @@ COPY (
         (SELECT * FROM Message_TagClasses LIMIT 10) Message_TagClasses,
         (SELECT * FROM Country_numPersons LIMIT  2) Country_numPersons
     )
-    TO 'params/bi/q3.csv'
+    TO 'params/bi-3.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- -- Q4
 COPY (SELECT creationDay AS date FROM Message_creationDays LIMIT 20)
-    TO 'params/bi/q4.csv'
+    TO 'params/bi-4.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q5
 COPY (SELECT tagName AS tag FROM Message_Tags LIMIT 10)
-    TO 'params/bi/q5.csv'
+    TO 'params/bi-5.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q6
 COPY (SELECT tagName AS tag FROM Message_Tags LIMIT 10)
-    TO 'params/bi/q6.csv'
+    TO 'params/bi-6.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- -- Q7
 COPY (SELECT tagName AS tag FROM Message_Tags LIMIT 10)
-    TO 'params/bi/q7.csv'
+    TO 'params/bi-7.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- -- Q8
@@ -50,7 +50,7 @@ COPY (
         (SELECT * FROM Message_Tags LIMIT 10) Message_Tags,
         (SELECT * FROM Message_creationDays LIMIT 10) Message_creationDays
     )
-    TO 'params/bi/q8.csv'
+    TO 'params/bi-8.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q9
@@ -63,7 +63,7 @@ COPY (
     FROM
         (SELECT * FROM Message_creationDays LIMIT 10) Message_creationDays
     )
-    TO 'params/bi/q9.csv'
+    TO 'params/bi-9.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q10
@@ -81,7 +81,7 @@ COPY (
         (SELECT * FROM Country_numPersons LIMIT 10) Country_numPersons, -- OFFSET 2
         (SELECT * FROM Message_TagClasses LIMIT 10) Message_TagClasses
     )
-    TO 'params/bi/q10.csv'
+    TO 'params/bi-10.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q11: using Message_creationDays to determine the startDay
@@ -91,7 +91,7 @@ COPY (
         (SELECT name AS country FROM Country_numPersons LIMIT 10 OFFSET 2) c,
         (SELECT creationDay AS startDate FROM Message_creationDays LIMIT 10) startDate
     )
-    TO 'params/bi/q11.csv'
+    TO 'params/bi-11.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q12
@@ -106,7 +106,7 @@ COPY (
         (SELECT length FROM Message_length LIMIT 10) Message_length, -- OFFSET count/5?
         (SELECT language FROM Post_languages LIMIT 10) Post_languages
     )
-    TO 'params/bi/q12.csv'
+    TO 'params/bi-12.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q13
@@ -116,7 +116,7 @@ COPY (
         (SELECT * FROM Country_numPersons LIMIT  2) Country_numPersons,
         (SELECT * FROM Message_creationDays ORDER BY creationDay DESC LIMIT 10) Message_creationDays
     )
-    TO 'params/bi/q13.csv'
+    TO 'params/bi-13.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q14
@@ -145,7 +145,7 @@ COPY (
         (SELECT * FROM Person_numFriends LIMIT 10) Person_numFriends2
     WHERE Person_numFriends1.id != Person_numFriends2.id
     )
-    TO 'params/bi/q15.csv'
+    TO 'params/bi-15.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q16
@@ -166,7 +166,7 @@ COPY (
     WHERE Message_TagsA.tagId != Message_TagsB.tagId
       AND Message_creationDaysA.creationDay != Message_creationDaysB.creationDay
     )
-    TO 'params/bi/q16.csv'
+    TO 'params/bi-16.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q17
@@ -178,7 +178,7 @@ COPY (
         8 + CAST(FLOOR(9*RANDOM()) AS INT) AS delta
     FROM Message_Tags
     )
-    TO 'params/bi/q17.csv'
+    TO 'params/bi-17.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q18
@@ -190,7 +190,7 @@ COPY (
         (SELECT * FROM Person_numFriends LIMIT 10) Person_numFriends,
         (SELECT * FROM Message_Tags LIMIT 10) Message_Tags
     )
-    TO 'params/bi/q18.csv'
+    TO 'params/bi-18.csv'
     WITH (HEADER, DELIMITER '|');
 
 
@@ -199,7 +199,7 @@ COPY (
 COPY (SELECT city1Id, city2Id
     FROM CityPairs_numFriends
     LIMIT 10)
-    TO 'params/bi/q19.csv'
+    TO 'params/bi-19.csv'
     WITH (HEADER, DELIMITER '|');
 
 -- Q20
@@ -209,5 +209,5 @@ COPY (
         (SELECT * FROM Companies_numEmployees LIMIT 10) Companies_numEmployees,
         (SELECT * FROM Person_numFriends LIMIT 10) Person_numFriends
     )
-    TO 'params/bi/q20.csv'
+    TO 'params/bi-20.csv'
     WITH (HEADER, DELIMITER '|');
