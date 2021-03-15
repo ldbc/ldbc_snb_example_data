@@ -2,7 +2,6 @@
 
 -- cleanup
 
-DROP TABLE IF EXISTS Country_numCities;
 DROP TABLE IF EXISTS Country_numPersons;
 DROP TABLE IF EXISTS Country_numMessages;
 DROP TABLE IF EXISTS CountryPairs_numFriends;
@@ -17,7 +16,6 @@ DROP TABLE IF EXISTS Post_languages;
 DROP TABLE IF EXISTS TagClass_numTags;
 DROP TABLE IF EXISTS Companies_numEmployees;
 
-CREATE TABLE Country_numCities(id BIGINT, name VARCHAR, numCities INT);
 CREATE TABLE Country_numPersons(id BIGINT, name VARCHAR, numPersons INT);
 CREATE TABLE Country_numMessages(id BIGINT, frequency INT);
 CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, country1Name VARCHAR, country2Name VARCHAR, frequency INT);
@@ -35,14 +33,6 @@ CREATE TABLE Companies_numEmployees(id BIGINT, name VARCHAR, frequency INT);
 -- define views
 
 -- Country
-
-INSERT INTO Country_numCities
-    SELECT Country.id AS id, Country.name AS name, count(City.id) AS numCities
-    FROM City
-    JOIN Country
-      ON City.isPartOf_Country = Country.id
-    GROUP BY Country.id, Country.name
-    ORDER BY numCities DESC, id ASC;
 
 INSERT INTO Country_numPersons
     SELECT Country.id AS id, Country.name AS name, count(Person.id) AS numPersons
@@ -197,7 +187,6 @@ INSERT INTO Companies_numEmployees
 
 SELECT '-------- Country_numMessages -------' AS 'factor table'; SELECT * FROM Country_numMessages     LIMIT 10;
 SELECT '-------- Country_numPersons --------' AS 'factor table'; SELECT * FROM Country_numPersons      LIMIT 10;
-SELECT '-------- Country_numCities ---------' AS 'factor table'; SELECT * FROM Country_numCities       LIMIT 10;
 SELECT '------ CountryPairs_numFriends -----' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
 SELECT '------- Person_numFriends ----------' AS 'factor table'; SELECT * FROM Person_numFriends       LIMIT 10;
 SELECT '------ Message_creationDates -------' AS 'factor table'; SELECT * FROM Message_creationDates   LIMIT 10;
