@@ -9,6 +9,5 @@ if [ ! -f duckdb ]; then
     wget -q https://github.com/cwida/duckdb/releases/download/${DUCKDB_VERSION}/duckdb_cli-linux-amd64.zip -O duckdb_cli-linux-amd64.zip
     unzip -o duckdb_cli-linux-amd64.zip
     rm duckdb_cli-linux-amd64.zip
+    pip3 install --user --progress-bar off duckdb==${DUCKDB_VERSION}
 fi
-
-pip3 install --user --progress-bar off duckdb==${DUCKDB_VERSION}
