@@ -34,3 +34,5 @@ ${RENAME} -f 's/_University/_organisation/g' dynamic/*
 ${RENAME} -f 's/_Company/_organisation/g' dynamic/*
 ${RENAME} -f 's/_Tag/_tag/g' dynamic/*
 ${RENAME} -f 's/_Place/_place/g' dynamic/*
+${RENAME} -f 's/_City/_city/g' dynamic/*
+${RENAME} -f 's/_Country/_country/g' dynamic/*
