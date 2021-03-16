@@ -34,8 +34,8 @@ To process the data sets, run the following scripts (the first one downloads Duc
 ```bash
 ./load.sh ${LDBC_DATA_DIRECTORY} --no-header
 ./transform.sh
-./rename.sh
 ./export.sh
+./rename.sh
 ```
 
 The `duckdb` directory contains Python and SQL scripts to convert data to other formats (e.g. `CsvComposite` and `CsvMergeForeign`).
