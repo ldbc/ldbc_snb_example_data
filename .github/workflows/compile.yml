@@ -22,15 +22,15 @@ jobs:
           # get rid of .gitignore files
           find . -name .gitignore | xargs rm
           mkdir compressed
-          cd data/raw/                                         && zip -r ../../compressed/raw.zip                                         * && cd ..
-          cd data/csv-composite-merged-fk/                     && zip -r ../../compressed/csv-composite-merged-fk.zip                     * && cd ..
-          cd data/csv-composite-projected-fk/                  && zip -r ../../compressed/csv-composite-projected-fk.zip                  * && cd ..
-          cd data/csv-singular-merged-fk/                      && zip -r ../../compressed/csv-singular-merged-fk.zip                      * && cd ..
-          cd data/csv-singular-projected-fk/                   && zip -r ../../compressed/csv-singular-projected-fk.zip                   * && cd ..
-          cd data/csv-only-ids-merged-fk/                      && zip -r ../../compressed/csv-only-ids-merged-fk.zip                      * && cd ..
-          cd data/csv-only-ids-projected-fk/                   && zip -r ../../compressed/csv-only-ids-projected-fk.zip                   * && cd ..
-          cd data/static-data-projected-fk-separate-labels/    && zip -r ../../compressed/static-data-projected-fk-separate-labels.zip    * && cd ..
-          cd data/csv-composite-projected-fk-legacy-filenames/ && zip -r ../../compressed/csv-composite-projected-fk-legacy-filenames.zip * && cd ..
+          cd data/raw/                                         && zip -r ../../compressed/raw.zip                                         * && cd ../../
+          cd data/csv-composite-merged-fk/                     && zip -r ../../compressed/csv-composite-merged-fk.zip                     * && cd ../../
+          cd data/csv-composite-projected-fk/                  && zip -r ../../compressed/csv-composite-projected-fk.zip                  * && cd ../../
+          cd data/csv-singular-merged-fk/                      && zip -r ../../compressed/csv-singular-merged-fk.zip                      * && cd ../../
+          cd data/csv-singular-projected-fk/                   && zip -r ../../compressed/csv-singular-projected-fk.zip                   * && cd ../../
+          cd data/csv-only-ids-merged-fk/                      && zip -r ../../compressed/csv-only-ids-merged-fk.zip                      * && cd ../../
+          cd data/csv-only-ids-projected-fk/                   && zip -r ../../compressed/csv-only-ids-projected-fk.zip                   * && cd ../../
+          cd data/static-data-projected-fk-separate-labels/    && zip -r ../../compressed/static-data-projected-fk-separate-labels.zip    * && cd ../../
+          cd data/csv-composite-projected-fk-legacy-filenames/ && zip -r ../../compressed/csv-composite-projected-fk-legacy-filenames.zip * && cd ../../
           cd ..
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
