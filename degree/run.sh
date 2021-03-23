@@ -22,13 +22,13 @@ echo "convert from raw"
 Rscript ./scripts/snb_transform.R
 echo "conversion complete"
 
-echo "compute degree per node"
-Rscript ./scripts/compute.R
-echo "exported to degree.csv"
+echo "compute degree for $2 node(s)"
+Rscript ./scripts/compute.R $2
+echo "exported to data/"
 
-echo "creating graphics"
-Rscript ./scripts/plot.R
-echo "graphics created"
+echo "creating graphic(s) for $2 node(s)"
+Rscript ./scripts/plot.R $1 $2
+echo "graphic(s) created"
 
 end=`date +%s`
 

@@ -3,3 +3,4 @@ compressed/
 *.duckdb*
 duckdb
 duckdb*.zip
+.DS_Store
