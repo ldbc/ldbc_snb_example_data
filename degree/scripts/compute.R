@@ -19,7 +19,6 @@ if (node == "person" || node == "all") {
   )
   
   # merge
-  invisible(dbExecute(con, "DROP VIEW IF EXISTS person_degree"))
   invisible(
     dbExecute(
       con,
@@ -56,16 +55,85 @@ SELECT pid, sum(degree) as degree FROM person_degree GROUP BY pid
 TO './data/person.csv' WITH (HEADER 1, DELIMITER ',') "
     ))
 
-} else if (node == "post" || node == "all") {
+} 
+
+if (node == "post" || node == "all") {
   
   cat("computing post degree\n")
   
-} else if (node == "comment" || node == "all") {
+  invisible(dbExecute(
+    con,
+    "CREATE VIEW post_degree AS 
+     SELECT id, count(hascreator_person) as degree FROM post GROUP BY id
+     UNION ALL   
+     SELECT id, count(forum_containerof) as degree FROM post GROUP BY id 
+     UNION ALL
+     SELECT id, count(hastag_tag) as degree FROM post_hastag_tag GROUP BY id
+     UNION ALL
+     SELECT likes_post AS id, count(*) as degree FROM person_likes_post GROUP BY likes_post
+     UNION ALL
+     SELECT replyof_post AS id, count(*) as degree FROM Comment WHERE replyof_post >= 0 GROUP BY replyof_post
+  "
+  ))
+  
+  # export
+  invisible(
+    dbExecute(
+      con,
+      "COPY ( SELECT id, sum(degree) as degree FROM post_degree GROUP BY id ) TO './data/post.csv' WITH (HEADER 1, DELIMITER ',') "
+    ))
+  
+} 
+
+if (node == "comment" || node == "all") {
   
   cat("computing comment degree\n")
   
-} else if (node == "forum" || node == "all") {
+  dbExecute(
+    con,
+    "CREATE VIEW comment_degree AS 
+   SELECT id, count(hascreator_person) as degree FROM comment GROUP BY id
+   UNION ALL   
+   SELECT id, count(hastag_tag) as degree FROM comment_hastag_tag GROUP BY id
+   UNION ALL
+   SELECT likes_comment AS id, count(*) as degree FROM person_likes_comment GROUP BY likes_comment
+   UNION ALL
+   SELECT replyof_comment AS id, count(*) as degree FROM comment WHERE replyof_comment >= 0 GROUP BY replyof_comment
+  "
+  )
+  
+  # export
+  invisible(
+    dbExecute(
+      con,
+      "COPY ( SELECT id, sum(degree) as degree FROM comment_degree GROUP BY id ) TO './data/comment.csv' WITH (HEADER 1, DELIMITER ',') "
+    ))
+  
+} 
+
+if (node == "forum" || node == "all") {
   
   cat("computing forum degree\n")
+  
+  invisible(
+  dbExecute(
+    con,
+    "CREATE VIEW forum_degree AS 
+  SELECT forum_containerof as id, count(id) as degree FROM post GROUP BY forum_containerof
+  UNION ALL
+  SELECT id, count(hasmoderator_person) as degree FROM Forum GROUP BY id
+  UNION ALL
+  SELECT id, count(hasmember_person) as degree FROM forum_hasmember_person GROUP BY id
+  UNION ALL
+  SELECT id, count(hastag_tag) as degree FROM forum_hastag_tag GROUP BY id
+  "
+  )
+  )
+  
+  invisible(
+    dbExecute(
+      con,
+      "COPY ( SELECT id, sum(degree) as degree FROM forum_degree GROUP BY id ) TO './data/forum.csv' WITH (HEADER 1, DELIMITER ',') "
+    ))
   
 }

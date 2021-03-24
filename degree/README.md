@@ -10,3 +10,10 @@
 # Degree distribution of all node types at scale factor 10
 ./run.sh 10 all
 ```
+
+### TODO
+- [ ] Tag 
+- [ ] TagClass
+- [ ] Place
+- [ ] Organisation 
+- [ ] Don't load all data if, for example, only person requested

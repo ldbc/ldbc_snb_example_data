@@ -4,3 +4,6 @@ compressed/
 duckdb
 duckdb*.zip
 .DS_Store
+.Rhistory
+degree/data/*
+:*
