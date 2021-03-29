@@ -17,6 +17,7 @@ cd ${LDBC_DATA_DIRECTORY}
 cd static
 rm -f *.csv
 for i in *; do
+  echo $i
   tail -qn +2 ${i}/*.csv > ${i}_0_0.csv
 done
 cd ..
@@ -24,6 +25,7 @@ cd ..
 cd dynamic
 rm -f *.csv
 for i in *; do
+  echo $i
   tail -qn +2 ${i}/*.csv > ${i}_0_0.csv
 done
 cd ..
