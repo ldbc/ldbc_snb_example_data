@@ -2,7 +2,7 @@ library("DBI")
 con = dbConnect(duckdb::duckdb(), ":ldbc:")
 
 dir = Sys.getenv(c("LDBC_DATA_DIRECTORY"))
-
+dir = "/Users/jackwaudby/Documents/ldbc/ldbc_snb_datagen/out/csv/raw/composite-merged-fk"
 orgs = dbExecute(con, paste0("COPY Raw_Organisation FROM '",dir,"/static/Organisation_0_0.csv' (DELIMITER '|')"))
 cat(paste0("loaded ",orgs," Organisation(s)\n"))
 
@@ -61,3 +61,4 @@ cat(paste0("loaded ",plc," Person_likes_Comment(s)\n"))
 
 pkp = dbExecute(con, paste0("COPY Raw_Person_knows_Person FROM '",dir,"/dynamic/Person_knows_Person_0_0.csv' (DELIMITER '|', TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')"))
 cat(paste0("loaded ",pkp," Person_knows_Person(s)\n"))
+

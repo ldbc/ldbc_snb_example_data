@@ -162,3 +162,4 @@ rphastag = dbExecute(con, "create table Raw_Post_hasTag_Tag (
      id bigint not null,
      hasTag_Tag bigint not null
  )")
+

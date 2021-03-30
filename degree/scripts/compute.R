@@ -137,3 +137,26 @@ if (node == "forum" || node == "all") {
     ))
   
 }
+
+if (node == "city" || node == "all") {
+  
+  cat("computing city degree\n")
+  
+  invisible(
+    dbExecute(
+      con,
+      "CREATE VIEW city_degree AS 
+     SELECT id, count(ispartof_country) as degree FROM city GROUP BY id
+     UNION ALL   
+     SELECT islocatedin_city AS id, count(*) as degree FROM person GROUP BY islocatedin_city
+   "
+    )
+  )
+  
+  invisible(
+    dbExecute(
+      con,
+      "COPY ( SELECT id, sum(degree) as degree FROM city_degree GROUP BY id ) TO './data/city.csv' WITH (HEADER 1, DELIMITER ',') "
+    ))
+  
+}

@@ -15,8 +15,9 @@ if (node == "person" || node == "all") {
     theme_bw() +
     ggtitle(paste0("SF",sf)) +
       theme(
-        plot.title = element_text(hjust = 0.5),
-        text = element_text(size = 16)
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.text = element_text(size=18),
+        axis.title = element_text(size=22),
       ) + scale_y_log10()
   )
 
@@ -33,8 +34,9 @@ if (node == "forum" || node == "all") {
       theme_bw() +
       ggtitle(paste0("SF",sf)) +
       theme(
-        plot.title = element_text(hjust = 0.5),
-        text = element_text(size = 16)
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.text = element_text(size=18),
+        axis.title = element_text(size=22),
       ) + scale_y_log10()
   )
 
@@ -51,8 +53,9 @@ if (node == "post" || node == "all") {
       theme_bw() +
       ggtitle(paste0("SF",sf)) +
       theme(
-        plot.title = element_text(hjust = 0.5),
-        text = element_text(size = 16)
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.text = element_text(size=18),
+        axis.title = element_text(size=22),
       ) + scale_y_log10()
   )
 
@@ -70,10 +73,32 @@ if (node == "comment" || node == "all") {
       theme_bw() +
       ggtitle(paste0("SF",sf)) +
       theme(
-        plot.title = element_text(hjust = 0.5),
-        text = element_text(size = 16)
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.text = element_text(size=18),
+        axis.title = element_text(size=22),
       ) + scale_y_log10()
   )
 
   ggsave(paste0("./graphics/comment_degree_sf", sf, "_log_y.pdf"))
 }
+
+if (node == "city" || node == "all") {
+  cat("plot city degree\n")
+  
+  dat = read.csv(paste0("./data/city.csv"), header = TRUE)
+  max(dat$degree)
+  invisible(
+    ggplot(data = dat, aes(x = degree)) +
+      geom_histogram(color = "black", fill = "white" , bins=20) +
+      theme_bw() +
+      ggtitle(paste0("SF",sf)) +
+      theme(
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.text = element_text(size=18),
+        axis.title = element_text(size=22),
+      ) + scale_y_log10()
+  )
+  
+  ggsave(paste0("./graphics/city_degree_sf", sf, "_log_y.pdf"))
+}
+
