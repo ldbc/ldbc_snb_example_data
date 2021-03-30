@@ -102,3 +102,25 @@ if (node == "city" || node == "all") {
   ggsave(paste0("./graphics/city_degree_sf", sf, "_log_y.pdf"))
 }
 
+
+if (node == "tag" || node == "all") {
+  cat("plot tag degree\n")
+  
+  dat = read.csv(paste0("./data/tag.csv"), header = TRUE)
+  max(dat$degree)
+  invisible(
+    ggplot(data = dat, aes(x = degree)) +
+      geom_histogram(color = "black", fill = "white" , bins=20) +
+      theme_bw() +
+      ggtitle(paste0("SF",sf)) +
+      theme(
+        plot.title = element_text(hjust = 0.5, size = 22),
+        axis.text = element_text(size=18),
+        axis.title = element_text(size=22),
+      ) + scale_y_log10()
+  )
+  
+  ggsave(paste0("./graphics/tag_degree_sf", sf, "_log_y.pdf"))
+}
+
+

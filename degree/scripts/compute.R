@@ -160,3 +160,32 @@ if (node == "city" || node == "all") {
     ))
   
 }
+
+if (node == "tag" || node == "all") {
+  
+  cat("computing tag degree\n")
+  
+  invisible(
+    dbExecute(
+      con,
+      "CREATE VIEW tag_degree AS 
+     SELECT id, count(hastype_tagclass) as degree FROM tag GROUP BY id
+     UNION ALL   
+     SELECT hastag_tag AS id, count(*) as degree FROM forum_hastag_tag GROUP BY hastag_tag
+     UNION ALL
+     SELECT hastag_tag AS id, count(*) as degree FROM post_hastag_tag GROUP BY hastag_tag
+     UNION ALL
+     SELECT hastag_tag AS id, count(*) as degree FROM comment_hastag_tag GROUP BY hastag_tag
+     UNION ALL
+     SELECT hasinterest_tag AS id, count(*) as degree FROM person_hasinterest_tag GROUP BY hasinterest_tag
+   "
+    )
+  )
+  
+  invisible(
+    dbExecute(
+      con,
+      "COPY ( SELECT id, sum(degree) as degree FROM tag_degree GROUP BY id ) TO './data/tag.csv' WITH (HEADER 1, DELIMITER ',') "
+    ))
+  
+}
