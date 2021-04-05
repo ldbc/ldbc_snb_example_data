@@ -15,15 +15,11 @@ The example graph is serialized using the `raw` serializer (composite-merged-fk 
 
 ## Generate data sets
 
-Use the data generator in raw mode to generate the data sets. Set the `$LDBC_DATA_DIRECTORY` environment variable to point to the directory of Datagen's output (containing the `static` and `dynamic` directories):
+Use the data generator in raw mode to generate the data sets. Set the `$LDBC_DATA_DIRECTORY` environment variable to point to the directory of Datagen's output (containing the `static` and `dynamic` directories). Currently, you also have to concatenate the CSVs using the following script.
 
 ```bash
+DATAGEN_OUTPUT_DIR=TodoSetMe
 LDBC_DATA_DIRECTORY=${DATAGEN_OUTPUT_DIR}/csv/raw/composite-merged-fk
-```
-
-Currently, you have to concatenate the CSVs using the following script:
-
-```bash
 ./spark-concat.sh ${LDBC_DATA_DIRECTORY}
 ```
 
