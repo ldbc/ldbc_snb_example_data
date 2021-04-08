@@ -2,33 +2,33 @@
 
 -- cleanup
 
-DROP TABLE IF EXISTS Country_numPersons;
-DROP TABLE IF EXISTS Country_numMessages;
-DROP TABLE IF EXISTS CountryPairs_numFriends;
 DROP TABLE IF EXISTS CityPairs_numFriends;
+DROP TABLE IF EXISTS Companies_numEmployees;
+DROP TABLE IF EXISTS Country_numMessages;
+DROP TABLE IF EXISTS Country_numPersons;
+DROP TABLE IF EXISTS CountryPairs_numFriends;
 DROP TABLE IF EXISTS Message_creationDates; -- datetimes
 DROP TABLE IF EXISTS Message_creationDays;  -- dates
 DROP TABLE IF EXISTS Message_length;
-DROP TABLE IF EXISTS Message_Tags;
 DROP TABLE IF EXISTS Message_TagClasses;
+DROP TABLE IF EXISTS Message_Tags;
 DROP TABLE IF EXISTS Person_numFriends;
 DROP TABLE IF EXISTS Post_languages;
 DROP TABLE IF EXISTS TagClass_numTags;
-DROP TABLE IF EXISTS Companies_numEmployees;
 
-CREATE TABLE Country_numPersons(id BIGINT, name VARCHAR, numPersons INT);
-CREATE TABLE Country_numMessages(id BIGINT, frequency INT);
-CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, country1Name VARCHAR, country2Name VARCHAR, frequency INT);
 CREATE TABLE CityPairs_numFriends(city1Id BIGINT, city2Id BIGINT, city1Name VARCHAR, city2Name VARCHAR, frequency INT);
+CREATE TABLE Companies_numEmployees(id BIGINT, name VARCHAR, frequency INT);
+CREATE TABLE Country_numMessages(id BIGINT, frequency INT);
+CREATE TABLE Country_numPersons(id BIGINT, name VARCHAR, numPersons INT);
+CREATE TABLE CountryPairs_numFriends(country1Id BIGINT, country2Id BIGINT, country1Name VARCHAR, country2Name VARCHAR, frequency INT);
 CREATE TABLE Message_creationDates(creationDate DATETIME);
 CREATE TABLE Message_creationDays(creationDay DATE);
 CREATE TABLE Message_length(length INT, frequency INT);
-CREATE TABLE Message_Tags(tagId BIGINT, tagName VARCHAR, frequency INT);
 CREATE TABLE Message_TagClasses(tagClassId BIGINT, tagClassName VARCHAR, frequency INT);
+CREATE TABLE Message_Tags(tagId BIGINT, tagName VARCHAR, frequency INT);
 CREATE TABLE Person_numFriends(id BIGINT, numFriends INT);
 CREATE TABLE Post_languages(language VARCHAR, frequency INT);
 CREATE TABLE TagClass_numTags(id BIGINT, name VARCHAR, frequency INT);
-CREATE TABLE Companies_numEmployees(id BIGINT, name VARCHAR, frequency INT);
 
 -- define views
 
@@ -185,15 +185,16 @@ INSERT INTO Companies_numEmployees
 
 -- show some data from the views
 
-SELECT '-------- Country_numMessages -------' AS 'factor table'; SELECT * FROM Country_numMessages     LIMIT 10;
-SELECT '-------- Country_numPersons --------' AS 'factor table'; SELECT * FROM Country_numPersons      LIMIT 10;
-SELECT '------ CountryPairs_numFriends -----' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
-SELECT '------- Person_numFriends ----------' AS 'factor table'; SELECT * FROM Person_numFriends       LIMIT 10;
-SELECT '------ Message_creationDates -------' AS 'factor table'; SELECT * FROM Message_creationDates   LIMIT 10;
-SELECT '------- Message_creationDays -------' AS 'factor table'; SELECT * FROM Message_creationDays    LIMIT 10;
-SELECT '------------ Message_Tags ----------' AS 'factor table'; SELECT * FROM Message_Tags            LIMIT 10;
-SELECT '---------- Message_length ----------' AS 'factor table'; SELECT * FROM Message_length          LIMIT 10;
-SELECT '--------- Message_TagClasses -------' AS 'factor table'; SELECT * FROM Message_TagClasses      LIMIT 10;
-SELECT '---------- Post_languages ----------' AS 'factor table'; SELECT * FROM Post_languages          LIMIT 10;
-SELECT '---------- TagClass_numTags --------' AS 'factor table'; SELECT * FROM TagClass_numTags        LIMIT 10;
-SELECT '------ Companies_numEmployees ------' AS 'factor table'; SELECT * FROM Companies_numEmployees  LIMIT 10;
+SELECT '---> Companies_numEmployees <----' AS 'factor table'; SELECT * FROM Companies_numEmployees  LIMIT 10;
+SELECT '---> Country_numMessages <-------' AS 'factor table'; SELECT * FROM Country_numMessages     LIMIT 10;
+SELECT '---> Country_numPersons <--------' AS 'factor table'; SELECT * FROM Country_numPersons      LIMIT 10;
+SELECT '---> CountryPairs_numFriends <---' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
+SELECT '---> CountryPairs_numFriends <---' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
+SELECT '---> Message_creationDates <-----' AS 'factor table'; SELECT * FROM Message_creationDates   LIMIT 10;
+SELECT '---> Message_creationDays <------' AS 'factor table'; SELECT * FROM Message_creationDays    LIMIT 10;
+SELECT '---> Message_length <------------' AS 'factor table'; SELECT * FROM Message_length          LIMIT 10;
+SELECT '---> Message_TagClasses <--------' AS 'factor table'; SELECT * FROM Message_TagClasses      LIMIT 10;
+SELECT '---> Message_Tags <--------------' AS 'factor table'; SELECT * FROM Message_Tags            LIMIT 10;
+SELECT '---> Person_numFriends <---------' AS 'factor table'; SELECT * FROM Person_numFriends       LIMIT 10;
+SELECT '---> Post_languages <------------' AS 'factor table'; SELECT * FROM Post_languages          LIMIT 10;
+SELECT '---> TagClass_numTags <----------' AS 'factor table'; SELECT * FROM TagClass_numTags        LIMIT 10;
