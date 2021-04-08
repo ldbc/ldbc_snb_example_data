@@ -107,7 +107,7 @@ INSERT INTO Message_creationDates
         UNION ALL
         SELECT creationDate FROM Post
     ) creationDates
-    ORDER BY creationDate ASC;
+    ORDER BY creationDate DESC;
 
 INSERT INTO Message_creationDays
     SELECT DISTINCT creationDate::date AS creationDay
