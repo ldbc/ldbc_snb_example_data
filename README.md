@@ -31,10 +31,11 @@ To process the data sets, run the following scripts (the first one downloads Duc
 ./load.sh ${LDBC_DATA_DIRECTORY} --no-header
 ./transform.sh
 ./export.sh
+# optional
 ./rename.sh
 ```
 
-The `duckdb` directory contains Python and SQL scripts to convert data to other formats (e.g. `CsvComposite` and `CsvMergeForeign`).
+The `duckdb` directory contains Python and SQL scripts to convert data to other formats (e.g. `CsvCompositeProjectedFK` and `CsvSingularMergedFK`).
 
 ## Deployed data sets
 
