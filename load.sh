@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 set -o pipefail
 
 # Usage: ./load.sh <PATHVAR> [--no-header]

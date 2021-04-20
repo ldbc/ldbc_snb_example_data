@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 set -o pipefail
 echo "create factor tables"
 cat sql/factor-tables.sql | ./duckdb ldbc.duckdb

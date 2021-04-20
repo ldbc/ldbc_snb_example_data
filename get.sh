@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 set -o pipefail
 
 export DUCKDB_VERSION=v0.2.5

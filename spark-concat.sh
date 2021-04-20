@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 set -o pipefail
 
 if [ $# -eq 0 ]; then

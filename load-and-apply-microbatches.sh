@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 set -o pipefail
 
 # loads the updates in the `batches` directory

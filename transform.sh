@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 set -o pipefail
 
 echo "transform data from raw to composite-merged-fk format"
