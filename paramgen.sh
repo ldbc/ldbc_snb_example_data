@@ -3,4 +3,4 @@
 set -e
 set -o pipefail
 
-cat select-bi-params.sql | ./duckdb ldbc.duckdb
+cat sql/select-bi-params.sql | ./duckdb ldbc.duckdb
