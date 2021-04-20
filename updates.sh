@@ -12,6 +12,7 @@ DYNAMIC_PREFIX="dynamic/"
 
 rm -f ldbc.duckdb
 cat schema/composite-merged-fk.sql | ./duckdb ldbc.duckdb
+cat schema/deletes.sql | ./duckdb ldbc.duckdb
 
 # initial snapshot
 cat sql/snb-load-composite-merged-fk-static.sql | \
@@ -28,13 +29,18 @@ cat sql/snb-load-composite-merged-fk-dynamic.sql | \
     ./duckdb ldbc.duckdb
 
 # insert batches iteratively
-for d in batches/*; do
-    echo $d
-    DYNAMIC_PREFIX="inserts/"
+for BATCH in batches/*; do
+    echo "Batch in directory '${BATCH}'"
+    echo "-> Inserts"
     cat sql/snb-load-composite-merged-fk-dynamic.sql | \
-        sed "s|\${PATHVAR}|${d}|g" | \
-        sed "s|\${DYNAMIC_PREFIX}|${DYNAMIC_PREFIX}|g" | \
+        sed "s|\${PATHVAR}|${BATCH}/inserts|g" | \
+        sed "s|\${DYNAMIC_PREFIX}||g" | \
         sed "s|\${POSTFIX}|${POSTFIX}|g" | \
+        sed "s|\${HEADER}|${HEADER}|g" | \
+        ./duckdb ldbc.duckdb
+    echo "-> Deletes"
+    cat sql/snb-deletes.sql | \
+        sed "s|\${PATHVAR}|${BATCH}/deletes|g" | \
         sed "s|\${HEADER}|${HEADER}|g" | \
         ./duckdb ldbc.duckdb
 
