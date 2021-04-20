@@ -11,3 +11,5 @@ if [ ! -f duckdb ]; then
     rm duckdb_cli-linux-amd64.zip
     pip3 install --user --progress-bar off duckdb==${DUCKDB_VERSION}
 fi
+
+pip3 install --user --progress-bar off python-dateutil
