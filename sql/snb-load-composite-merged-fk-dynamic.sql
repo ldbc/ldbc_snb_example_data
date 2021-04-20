@@ -1,0 +1,14 @@
+COPY Comment                   FROM '${PATHVAR}/${DYNAMIC_PREFIX}Comment${POSTFIX}'                     (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Comment_hasTag_Tag        FROM '${PATHVAR}/${DYNAMIC_PREFIX}Comment_hasTag_Tag${POSTFIX}'          (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Post                      FROM '${PATHVAR}/${DYNAMIC_PREFIX}Post${POSTFIX}'                        (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Post_hasTag_Tag           FROM '${PATHVAR}/${DYNAMIC_PREFIX}Post_hasTag_Tag${POSTFIX}'             (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Forum                     FROM '${PATHVAR}/${DYNAMIC_PREFIX}Forum${POSTFIX}'                       (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Forum_hasMember_Person    FROM '${PATHVAR}/${DYNAMIC_PREFIX}Forum_hasMember_Person${POSTFIX}'      (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Forum_hasTag_Tag          FROM '${PATHVAR}/${DYNAMIC_PREFIX}Forum_hasTag_Tag${POSTFIX}'            (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person                    FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person${POSTFIX}'                      (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person_hasInterest_Tag    FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person_hasInterest_Tag${POSTFIX}'      (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person_studyAt_University FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person_studyAt_University${POSTFIX}'   (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person_workAt_Company     FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person_workAt_Company${POSTFIX}'       (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person_likes_Post         FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person_likes_Post${POSTFIX}'           (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person_likes_Comment      FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person_likes_Comment${POSTFIX}'        (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');
+COPY Person_knows_Person       FROM '${PATHVAR}/${DYNAMIC_PREFIX}Person_knows_Person${POSTFIX}'         (DELIMITER '|' ${HEADER}, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00');

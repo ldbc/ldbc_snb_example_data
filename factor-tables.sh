@@ -3,6 +3,6 @@
 set -e
 set -o pipefail
 echo "create factor tables"
-cat factor-tables.sql | ./duckdb ldbc.duckdb
+cat sql/factor-tables.sql | ./duckdb ldbc.duckdb
 echo "generate parameters"
-cat select-bi-params.sql | ./duckdb ldbc.duckdb
+cat sql/select-bi-params.sql | ./duckdb ldbc.duckdb

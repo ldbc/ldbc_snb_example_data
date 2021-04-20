@@ -41,7 +41,7 @@ rc =  dbExecute(con, "create table Raw_Comment (
      content varchar(2000) not null,
      length int not null,
      hasCreator_Person bigint not null,
-     isLocatedIn_Place bigint not null,
+     isLocatedIn_Country bigint not null,
      replyOf_Post bigint,
      replyOf_Comment bigint
  )")
@@ -88,7 +88,7 @@ rpers =  dbExecute(con, "create table Raw_Person (
      birthday date not null,
      locationIP varchar(40) not null,
      browserUsed varchar(40) not null,
-     isLocatedIn_Place bigint not null,
+     isLocatedIn_City bigint not null,
      speaks varchar(640) not null,
      email varchar(8192) not null
  )")
@@ -153,7 +153,7 @@ rpost = dbExecute(con, "create table Raw_Post (
      length int not null,
      hasCreator_Person bigint not null,
      Forum_containerOf bigint not null,
-     isLocatedIn_Place bigint not null
+     isLocatedIn_Country bigint not null
  )")
 
 rphastag = dbExecute(con, "create table Raw_Post_hasTag_Tag (
