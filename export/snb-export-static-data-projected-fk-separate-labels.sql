@@ -7,11 +7,11 @@ COPY (SELECT id, name, url FROM Organisation WHERE type = 'University')
   TO 'data/static-data-projected-fk-separate-labels/University.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isLocatedIn_Place FROM Organisation WHERE type = 'Company')
+COPY (SELECT id, isLocatedIn_Place AS isLocatedIn_Country FROM Organisation WHERE type = 'Company')
   TO 'data/static-data-projected-fk-separate-labels/Company_isLocatedIn_Country.csv'
   WITH (HEADER, DELIMITER '|');
 
-COPY (SELECT id, isLocatedIn_Place FROM Organisation WHERE type = 'University')
+COPY (SELECT id, isLocatedIn_Place AS isLocatedIn_City FROM Organisation WHERE type = 'University')
   TO 'data/static-data-projected-fk-separate-labels/University_isLocatedIn_City.csv'
   WITH (HEADER, DELIMITER '|');
 

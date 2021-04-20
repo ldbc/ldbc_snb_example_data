@@ -112,7 +112,7 @@ INSERT INTO Person_knows_Person
 
 -- Forums/Messages and their many-to-one edges
 INSERT INTO Comment
-  SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment
+  SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Country, replyOf_Post, replyOf_Comment
   FROM Raw_Comment
   WHERE creationDate < :bulkLoadTime
     AND deletionDate >= :bulkLoadTime
@@ -124,7 +124,7 @@ INSERT INTO Forum
     AND deletionDate >= :bulkLoadTime
 ;
 INSERT INTO Post
-  SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Place
+  SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Country
   FROM Raw_Post
   WHERE creationDate < :bulkLoadTime
     AND deletionDate >= :bulkLoadTime
@@ -132,7 +132,7 @@ INSERT INTO Post
 
 -- Persons
 INSERT INTO Person
-  SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
+  SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_City, speaks, email
   FROM Raw_Person
   WHERE creationDate < :bulkLoadTime
     AND deletionDate >= :bulkLoadTime

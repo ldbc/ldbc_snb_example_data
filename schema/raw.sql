@@ -42,7 +42,7 @@ CREATE TABLE Raw_Comment (
     content varchar(2000) not null,
     length int not null,
     hasCreator_Person bigint not null,
-    isLocatedIn_Place bigint not null,
+    isLocatedIn_Country bigint not null,
     replyOf_Post bigint,
     replyOf_Comment bigint
 );
@@ -89,7 +89,7 @@ CREATE TABLE Raw_Person (
     birthday date not null,
     locationIP varchar(40) not null,
     browserUsed varchar(40) not null,
-    isLocatedIn_Place bigint not null,
+    isLocatedIn_City bigint not null,
     speaks varchar(640) not null,
     email varchar(8192) not null
 );
@@ -154,7 +154,7 @@ CREATE TABLE Raw_Post (
     length int not null,
     hasCreator_Person bigint not null,
     Forum_containerOf bigint not null,
-    isLocatedIn_Place bigint not null
+    isLocatedIn_Country bigint not null
 );
 
 CREATE TABLE Raw_Post_hasTag_Tag (

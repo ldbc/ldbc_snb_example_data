@@ -60,7 +60,7 @@ while batch_start_date < network_end_date:
     # INS1
     con.execute("""
         INSERT INTO Person
-        SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
+        SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_City, speaks, email
         FROM Raw_Person
         WHERE creationDate >= ?
           AND creationDate < ?
@@ -151,7 +151,7 @@ while batch_start_date < network_end_date:
     # INS6
     con.execute("""
         INSERT INTO Post
-        SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Place
+        SELECT creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Country
         FROM Raw_Post
         WHERE creationDate >= ?
           AND creationDate < ?
@@ -171,7 +171,7 @@ while batch_start_date < network_end_date:
     # INS7
     con.execute("""
         INSERT INTO Comment
-        SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment
+        SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Country, replyOf_Post, replyOf_Comment
         FROM Raw_Comment
         WHERE creationDate >= ?
           AND creationDate < ?
@@ -305,30 +305,30 @@ while batch_start_date < network_end_date:
     os.mkdir(f"{batch_dir}/deletes")
 
     # inserts
-    con.execute(f"COPY Person                        TO 'batches/{batch_start_date}/inserts/Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") # INS1
-    con.execute(f"COPY Person_hasInterest_Tag        TO 'batches/{batch_start_date}/inserts/Person_hasInterest_Tag.csv'    (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_studyAt_University     TO 'batches/{batch_start_date}/inserts/Person_studyAt_University.csv' (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_workAt_Company         TO 'batches/{batch_start_date}/inserts/Person_workAt_Company.csv'     (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_likes_Post             TO 'batches/{batch_start_date}/inserts/Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") # INS2
-    con.execute(f"COPY Person_likes_Comment          TO 'batches/{batch_start_date}/inserts/Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # INS3
-    con.execute(f"COPY Forum                         TO 'batches/{batch_start_date}/inserts/Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") # INS4
-    con.execute(f"COPY Forum_hasTag_Tag              TO 'batches/{batch_start_date}/inserts/Forum_hasTag_Tag.csv'          (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Forum_hasMember_Person        TO 'batches/{batch_start_date}/inserts/Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # INS5
-    con.execute(f"COPY Post                          TO 'batches/{batch_start_date}/inserts/Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") # INS6
-    con.execute(f"COPY Post_hasTag_Tag               TO 'batches/{batch_start_date}/inserts/Post_hasTag_Tag.csv'           (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Comment                       TO 'batches/{batch_start_date}/inserts/Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # INS7
-    con.execute(f"COPY Comment_hasTag_Tag            TO 'batches/{batch_start_date}/inserts/Comment_hasTag_Tag.csv'        (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_knows_Person           TO 'batches/{batch_start_date}/inserts/Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") # INS8
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_City, speaks, email FROM Person)                     TO 'batches/{batch_start_date}/inserts/Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") #INS1
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, hasInterest_Tag FROM Person_hasInterest_Tag)                                                                                      TO 'batches/{batch_start_date}/inserts/Person_hasInterest_Tag.csv'    (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, studyAt_University, classYear FROM Person_studyAt_University)                                                                     TO 'batches/{batch_start_date}/inserts/Person_studyAt_University.csv' (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, workAt_Company, workFrom FROM Person_workAt_Company)                                                                              TO 'batches/{batch_start_date}/inserts/Person_workAt_Company.csv'     (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, likes_Post FROM Person_likes_Post)                                                                                                TO 'batches/{batch_start_date}/inserts/Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") #INS2
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, likes_Comment FROM Person_likes_Comment)                                                                                          TO 'batches/{batch_start_date}/inserts/Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") #INS3
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, title, hasModerator_Person FROM Forum)                                                                                            TO 'batches/{batch_start_date}/inserts/Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") #INS4
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, hasTag_Tag FROM Forum_hasTag_Tag)                                                                                                 TO 'batches/{batch_start_date}/inserts/Forum_hasTag_Tag.csv'          (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, hasMember_Person FROM Forum_hasMember_Person)                                                                                     TO 'batches/{batch_start_date}/inserts/Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") #INS5
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, imageFile, locationIP, browserUsed, language, content, length, hasCreator_Person, Forum_containerOf, isLocatedIn_Country FROM Post) TO 'batches/{batch_start_date}/inserts/Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") #INS6
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, hasTag_Tag FROM Post_hasTag_Tag)                                                                                                  TO 'batches/{batch_start_date}/inserts/Post_hasTag_Tag.csv'           (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Country, replyOf_Post, replyOf_Comment FROM Comment)       TO 'batches/{batch_start_date}/inserts/Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") #INS7
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, id, hasTag_Tag FROM Comment_hasTag_Tag)                                                                                               TO 'batches/{batch_start_date}/inserts/Comment_hasTag_Tag.csv'        (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Person1id, Person2id FROM Person_knows_Person)                                                                                        TO 'batches/{batch_start_date}/inserts/Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") #INS8
 
     # deletes
-    con.execute(f"COPY Delete_Person                 TO 'batches/{batch_start_date}/deletes/Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL1
-    con.execute(f"COPY Delete_Person_likes_Post      TO 'batches/{batch_start_date}/deletes/Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") # DEL2
-    con.execute(f"COPY Delete_Person_likes_Comment   TO 'batches/{batch_start_date}/deletes/Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL3
-    con.execute(f"COPY Delete_Forum                  TO 'batches/{batch_start_date}/deletes/Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") # DEL4
-    con.execute(f"COPY Delete_Forum_hasMember_Person TO 'batches/{batch_start_date}/deletes/Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL5
-    con.execute(f"COPY Delete_Post                   TO 'batches/{batch_start_date}/deletes/Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL6
-    con.execute(f"COPY Delete_Comment                TO 'batches/{batch_start_date}/deletes/Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL7
-    con.execute(f"COPY Delete_Person_knows_Person    TO 'batches/{batch_start_date}/deletes/Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") # DEL8
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Person)                 TO 'batches/{batch_start_date}/deletes/Person.csv'                 (HEADER, FORMAT CSV, DELIMITER '|')") #DEL1
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Person_likes_Post)      TO 'batches/{batch_start_date}/deletes/Person_likes_Post.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") #DEL2
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Person_likes_Comment)   TO 'batches/{batch_start_date}/deletes/Person_likes_Comment.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") #DEL3
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Forum)                  TO 'batches/{batch_start_date}/deletes/Forum.csv'                  (HEADER, FORMAT CSV, DELIMITER '|')") #DEL4
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Forum_hasMember_Person) TO 'batches/{batch_start_date}/deletes/Forum_hasMember_Person.csv' (HEADER, FORMAT CSV, DELIMITER '|')") #DEL5
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Post)                   TO 'batches/{batch_start_date}/deletes/Post.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") #DEL6
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Comment)                TO 'batches/{batch_start_date}/deletes/Comment.csv'                (HEADER, FORMAT CSV, DELIMITER '|')") #DEL7
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Person_knows_Person)    TO 'batches/{batch_start_date}/deletes/Person_knows_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") #DEL8
 
     ############################# set interval for next iteration ##########################
 
