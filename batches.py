@@ -300,33 +300,35 @@ while batch_start_date < network_end_date:
     ######################################## export ########################################
 
     batch_dir = f"batches/{batch_start_date}"
-    os.mkdir(batch_dir)
+    os.mkdir(f"{batch_dir}")
+    os.mkdir(f"{batch_dir}/inserts")
+    os.mkdir(f"{batch_dir}/deletes")
 
     # inserts
-    con.execute(f"COPY Person                        TO 'batches/{batch_start_date}/Insert_Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") # INS1
-    con.execute(f"COPY Person_hasInterest_Tag        TO 'batches/{batch_start_date}/Insert_Person_hasInterest_Tag.csv'    (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_studyAt_University     TO 'batches/{batch_start_date}/Insert_Person_studyAt_University.csv' (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_workAt_Company         TO 'batches/{batch_start_date}/Insert_Person_workAt_Company.csv'     (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_likes_Post             TO 'batches/{batch_start_date}/Insert_Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") # INS2
-    con.execute(f"COPY Person_likes_Comment          TO 'batches/{batch_start_date}/Insert_Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # INS3
-    con.execute(f"COPY Forum                         TO 'batches/{batch_start_date}/Insert_Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") # INS4
-    con.execute(f"COPY Forum_hasTag_Tag              TO 'batches/{batch_start_date}/Insert_Forum_hasTag_Tag.csv'          (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Forum_hasMember_Person        TO 'batches/{batch_start_date}/Insert_Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # INS5
-    con.execute(f"COPY Post                          TO 'batches/{batch_start_date}/Insert_Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") # INS6
-    con.execute(f"COPY Post_hasTag_Tag               TO 'batches/{batch_start_date}/Insert_Post_hasTag_Tag.csv'           (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Comment                       TO 'batches/{batch_start_date}/Insert_Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # INS7
-    con.execute(f"COPY Comment_hasTag_Tag            TO 'batches/{batch_start_date}/Insert_Comment_hasTag_Tag.csv'        (HEADER, FORMAT CSV, DELIMITER '|')")
-    con.execute(f"COPY Person_knows_Person           TO 'batches/{batch_start_date}/Insert_Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") # INS8
+    con.execute(f"COPY Person                        TO 'batches/{batch_start_date}/inserts/Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") # INS1
+    con.execute(f"COPY Person_hasInterest_Tag        TO 'batches/{batch_start_date}/inserts/Person_hasInterest_Tag.csv'    (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY Person_studyAt_University     TO 'batches/{batch_start_date}/inserts/Person_studyAt_University.csv' (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY Person_workAt_Company         TO 'batches/{batch_start_date}/inserts/Person_workAt_Company.csv'     (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY Person_likes_Post             TO 'batches/{batch_start_date}/inserts/Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") # INS2
+    con.execute(f"COPY Person_likes_Comment          TO 'batches/{batch_start_date}/inserts/Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # INS3
+    con.execute(f"COPY Forum                         TO 'batches/{batch_start_date}/inserts/Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") # INS4
+    con.execute(f"COPY Forum_hasTag_Tag              TO 'batches/{batch_start_date}/inserts/Forum_hasTag_Tag.csv'          (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY Forum_hasMember_Person        TO 'batches/{batch_start_date}/inserts/Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # INS5
+    con.execute(f"COPY Post                          TO 'batches/{batch_start_date}/inserts/Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") # INS6
+    con.execute(f"COPY Post_hasTag_Tag               TO 'batches/{batch_start_date}/inserts/Post_hasTag_Tag.csv'           (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY Comment                       TO 'batches/{batch_start_date}/inserts/Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # INS7
+    con.execute(f"COPY Comment_hasTag_Tag            TO 'batches/{batch_start_date}/inserts/Comment_hasTag_Tag.csv'        (HEADER, FORMAT CSV, DELIMITER '|')")
+    con.execute(f"COPY Person_knows_Person           TO 'batches/{batch_start_date}/inserts/Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") # INS8
 
     # deletes
-    con.execute(f"COPY Delete_Person                 TO 'batches/{batch_start_date}/Delete_Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL1
-    con.execute(f"COPY Delete_Person_likes_Post      TO 'batches/{batch_start_date}/Delete_Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") # DEL2
-    con.execute(f"COPY Delete_Person_likes_Comment   TO 'batches/{batch_start_date}/Delete_Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL3
-    con.execute(f"COPY Delete_Forum                  TO 'batches/{batch_start_date}/Delete_Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") # DEL4
-    con.execute(f"COPY Delete_Forum_hasMember_Person TO 'batches/{batch_start_date}/Delete_Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL5
-    con.execute(f"COPY Delete_Post                   TO 'batches/{batch_start_date}/Delete_Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL6
-    con.execute(f"COPY Delete_Comment                TO 'batches/{batch_start_date}/Delete_Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL7
-    con.execute(f"COPY Delete_Person_knows_Person    TO 'batches/{batch_start_date}/Delete_Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") # DEL8
+    con.execute(f"COPY Delete_Person                 TO 'batches/{batch_start_date}/deletes/Person.csv'                    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL1
+    con.execute(f"COPY Delete_Person_likes_Post      TO 'batches/{batch_start_date}/deletes/Person_likes_Post.csv'         (HEADER, FORMAT CSV, DELIMITER '|')") # DEL2
+    con.execute(f"COPY Delete_Person_likes_Comment   TO 'batches/{batch_start_date}/deletes/Person_likes_Comment.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL3
+    con.execute(f"COPY Delete_Forum                  TO 'batches/{batch_start_date}/deletes/Forum.csv'                     (HEADER, FORMAT CSV, DELIMITER '|')") # DEL4
+    con.execute(f"COPY Delete_Forum_hasMember_Person TO 'batches/{batch_start_date}/deletes/Forum_hasMember_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL5
+    con.execute(f"COPY Delete_Post                   TO 'batches/{batch_start_date}/deletes/Post.csv'                      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL6
+    con.execute(f"COPY Delete_Comment                TO 'batches/{batch_start_date}/deletes/Comment.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL7
+    con.execute(f"COPY Delete_Person_knows_Person    TO 'batches/{batch_start_date}/deletes/Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") # DEL8
 
     ############################# set interval for next iteration ##########################
 
