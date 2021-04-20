@@ -105,6 +105,7 @@ INSERT INTO Post
 ;
 
 -- Persons
-INSERT INTO Person SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
+INSERT INTO Person
+  SELECT creationDate, id, firstName, lastName, gender, birthday, locationIP, browserUsed, isLocatedIn_Place, speaks, email
   FROM Raw_Person
 ;
