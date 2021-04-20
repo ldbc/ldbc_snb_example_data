@@ -61,7 +61,8 @@ while batch_start_date < network_end_date:
         SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment
         FROM Raw_Comment
         WHERE creationDate >= ?
-          AND deletionDate >= ?""",
+          AND deletionDate >= ?
+        """,
         interval)
     # insert nodes
     # con.execute(f"COPY Composite_MergeForeign_Person TO 'batches/{batch_start_date}/insert_Person.csv'  (HEADER, FORMAT CSV, DELIMITER '|')") #1
@@ -71,14 +72,18 @@ while batch_start_date < network_end_date:
 
     ######################################## deletes #######################################
 
-    # DEL1
+    deletion_params = [batch_start_date, batch_start_date, batch_end_date]
+
+    # DEL1 (Persons are always explicitly deleted)
     con.execute("""
         INSERT INTO Delete_Person
-        SELECT creationDate, id
+        SELECT deletionDate, id
         FROM Raw_Person
         WHERE creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     # DEL2
     con.execute("""
@@ -87,8 +92,10 @@ while batch_start_date < network_end_date:
         FROM Raw_Person_likes_Post
         WHERE explicitlyDeleted
           AND creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     # DEL3
     con.execute("""
@@ -97,17 +104,21 @@ while batch_start_date < network_end_date:
         FROM Raw_Person_likes_Comment
         WHERE explicitlyDeleted
           AND creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
-    # DEL4
+    # DEL4 (Forums are always explicitly deleted -- TODO: check in generated data for walls/albums/groups)
     con.execute("""
         INSERT INTO Delete_Forum
-        SELECT creationDate, id
+        SELECT deletionDate, id
         FROM Raw_Forum
         WHERE creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     # DEL5
     con.execute("""
@@ -116,26 +127,34 @@ while batch_start_date < network_end_date:
         FROM Raw_Forum_hasMember_Person
         WHERE explicitlyDeleted
           AND creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     # DEL6
     con.execute("""
         INSERT INTO Delete_Post
-        SELECT creationDate, id
+        SELECT deletionDate, id
         FROM Raw_Post
-        WHERE creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+        WHERE explicitlyDeleted
+          AND creationDate < ?
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     # DEL7
     con.execute("""
         INSERT INTO Delete_Comment
-        SELECT creationDate, id
+        SELECT deletionDate, id
         FROM Raw_Comment
-        WHERE creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+        WHERE explicitlyDeleted
+          AND creationDate < ?
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     # DEL8
     con.execute("""
@@ -144,27 +163,30 @@ while batch_start_date < network_end_date:
         FROM Raw_Person_knows_Person
         WHERE explicitlyDeleted
           AND creationDate < ?
-          AND deletionDate < ?""",
-        interval)
+          AND deletionDate >= ?
+          AND deletionDate < ?
+        """,
+        deletion_params)
 
     ######################################## export ########################################
 
     batch_dir = f"batches/{batch_start_date}"
     os.mkdir(batch_dir)
-    
-    # insert edges
 
-    # delete nodes
-    con.execute(f"COPY Delete_Person  TO 'batches/{batch_start_date}/delete_Person.csv'  (HEADER, FORMAT CSV, DELIMITER '|')") # DEL1
-    con.execute(f"COPY Delete_Forum   TO 'batches/{batch_start_date}/delete_Forum.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL4
-    con.execute(f"COPY Delete_Post    TO 'batches/{batch_start_date}/delete_Post.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL6
-    con.execute(f"COPY Delete_Comment TO 'batches/{batch_start_date}/delete_Comment.csv' (HEADER, FORMAT CSV, DELIMITER '|')") # DEL7
+    # inserts
+    #con.execute(f"COPY Person                        TO 'batches/{batch_start_date}/Insert_Person.csv'                 (HEADER, FORMAT CSV, DELIMITER '|')") # INS1
+    #con.execute(f"COPY Post                          TO 'batches/{batch_start_date}/Insert_Post.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # INS2
+    con.execute(f"COPY Comment                       TO 'batches/{batch_start_date}/Insert_Comment.csv'                (HEADER, FORMAT CSV, DELIMITER '|')") # INS3
 
-    # delete edges
-    con.execute(f"COPY Delete_Person_likes_Post      TO 'batches/{batch_start_date}/delete_Person_likes_Post.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL2
-    con.execute(f"COPY Delete_Person_likes_Comment   TO 'batches/{batch_start_date}/delete_Person_likes_Comment.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL3
-    con.execute(f"COPY Delete_Forum_hasMember_Person TO 'batches/{batch_start_date}/delete_Forum_hasMember_Person.csv' (HEADER, FORMAT CSV, DELIMITER '|')") # DEL5
-    con.execute(f"COPY Delete_Person_knows_Person    TO 'batches/{batch_start_date}/delete_Person_knows_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL8
+    # deletes
+    con.execute(f"COPY Delete_Person                 TO 'batches/{batch_start_date}/Delete_Person.csv'                 (HEADER, FORMAT CSV, DELIMITER '|')") # DEL1
+    con.execute(f"COPY Delete_Person_likes_Post      TO 'batches/{batch_start_date}/Delete_Person_likes_Post.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") # DEL2
+    con.execute(f"COPY Delete_Person_likes_Comment   TO 'batches/{batch_start_date}/Delete_Person_likes_Comment.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL3
+    con.execute(f"COPY Delete_Forum                  TO 'batches/{batch_start_date}/Delete_Forum.csv'                  (HEADER, FORMAT CSV, DELIMITER '|')") # DEL4
+    con.execute(f"COPY Delete_Forum_hasMember_Person TO 'batches/{batch_start_date}/Delete_Forum_hasMember_Person.csv' (HEADER, FORMAT CSV, DELIMITER '|')") # DEL5
+    con.execute(f"COPY Delete_Post                   TO 'batches/{batch_start_date}/Delete_Post.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL6
+    con.execute(f"COPY Delete_Comment                TO 'batches/{batch_start_date}/Delete_Comment.csv'                (HEADER, FORMAT CSV, DELIMITER '|')") # DEL7
+    con.execute(f"COPY Delete_Person_knows_Person    TO 'batches/{batch_start_date}/Delete_Person_knows_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL8
 
     ############################# set interval for next iteration ##########################
 

@@ -1,5 +1,5 @@
 creationDate|deletionDate|explicitlyDeleted|id|firstName|lastName|gender|birthday|locationIP|browserUsed|city|language|email
-2010-06-10T11:05:56.000+00:00|2015-01-01T00:00:00.000+00:00|false|1|Amelie|last_name|female|1990-01-01|127.0.0.1|Lynx|5|en;fr|amelie@mail.com;amelie@messagerie.fr
+2010-06-10T11:05:56.000+00:00|2012-11-30T00:00:00.000+00:00|true|1|Amelie|last_name|female|1990-01-01|127.0.0.1|Lynx|5|en;fr|amelie@mail.com;amelie@messagerie.fr
 2010-06-10T11:05:56.000+00:00|2015-01-01T00:00:00.000+00:00|false|2|Bernardo|last_name|male|1990-01-01|127.0.0.1|Lynx|4|en;es|bernardo@mail.com
 2010-06-10T11:05:56.000+00:00|2015-01-01T00:00:00.000+00:00|false|3|Cedric|last_name|male|1990-01-01|127.0.0.1|Lynx|6|en;fr|cedric@mail.com
 2010-06-10T11:05:56.000+00:00|2015-01-01T00:00:00.000+00:00|false|4|Diane|last_name|female|1990-01-01|127.0.0.1|Lynx|5|en;fr|diane@mail.com
