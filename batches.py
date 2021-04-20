@@ -44,14 +44,14 @@ while batch_start_date < network_end_date:
     con.execute("DELETE FROM Person_knows_Person")
 
     # clean delete tables
-    con.execute("DELETE FROM Delete_Person")                  # DEL1
-    con.execute("DELETE FROM Delete_Person_likes_Post")       # DEL2
-    con.execute("DELETE FROM Delete_Person_likes_Comment")    # DEL3
-    con.execute("DELETE FROM Delete_Forum")                   # DEL4
-    con.execute("DELETE FROM Delete_Forum_hasMember_Person")  # DEL5
-    con.execute("DELETE FROM Delete_Post")                    # DEL6
-    con.execute("DELETE FROM Delete_Comment")                 # DEL7
-    con.execute("DELETE FROM Delete_Person_knows_Person")     # DEL8
+    con.execute("DELETE FROM Delete_Candidates_Person")                  # DEL1
+    con.execute("DELETE FROM Delete_Candidates_Person_likes_Post")       # DEL2
+    con.execute("DELETE FROM Delete_Candidates_Person_likes_Comment")    # DEL3
+    con.execute("DELETE FROM Delete_Candidates_Forum")                   # DEL4
+    con.execute("DELETE FROM Delete_Candidates_Forum_hasMember_Person")  # DEL5
+    con.execute("DELETE FROM Delete_Candidates_Post")                    # DEL6
+    con.execute("DELETE FROM Delete_Candidates_Comment")                 # DEL7
+    con.execute("DELETE FROM Delete_Candidates_Person_knows_Person")     # DEL8
 
     ######################################## inserts #######################################
 
@@ -205,7 +205,7 @@ while batch_start_date < network_end_date:
 
     # DEL1 (Persons are always explicitly deleted)
     con.execute("""
-        INSERT INTO Delete_Person
+        INSERT INTO Delete_Candidates_Person
         SELECT deletionDate, id
         FROM Raw_Person
         WHERE creationDate < ?
@@ -216,7 +216,7 @@ while batch_start_date < network_end_date:
 
     # DEL2
     con.execute("""
-        INSERT INTO Delete_Person_likes_Post
+        INSERT INTO Delete_Candidates_Person_likes_Post
         SELECT deletionDate, id, likes_Post
         FROM Raw_Person_likes_Post
         WHERE explicitlyDeleted
@@ -228,7 +228,7 @@ while batch_start_date < network_end_date:
 
     # DEL3
     con.execute("""
-        INSERT INTO Delete_Person_likes_Comment
+        INSERT INTO Delete_Candidates_Person_likes_Comment
         SELECT deletionDate, id, likes_Comment
         FROM Raw_Person_likes_Comment
         WHERE explicitlyDeleted
@@ -240,7 +240,7 @@ while batch_start_date < network_end_date:
 
     # DEL4 (Forums are always explicitly deleted -- TODO: check in generated data for walls/albums/groups)
     con.execute("""
-        INSERT INTO Delete_Forum
+        INSERT INTO Delete_Candidates_Forum
         SELECT deletionDate, id
         FROM Raw_Forum
         WHERE creationDate < ?
@@ -251,7 +251,7 @@ while batch_start_date < network_end_date:
 
     # DEL5
     con.execute("""
-        INSERT INTO Delete_Forum_hasMember_Person
+        INSERT INTO Delete_Candidates_Forum_hasMember_Person
         SELECT deletionDate, id, hasMember_Person
         FROM Raw_Forum_hasMember_Person
         WHERE explicitlyDeleted
@@ -263,7 +263,7 @@ while batch_start_date < network_end_date:
 
     # DEL6
     con.execute("""
-        INSERT INTO Delete_Post
+        INSERT INTO Delete_Candidates_Post
         SELECT deletionDate, id
         FROM Raw_Post
         WHERE explicitlyDeleted
@@ -275,7 +275,7 @@ while batch_start_date < network_end_date:
 
     # DEL7
     con.execute("""
-        INSERT INTO Delete_Comment
+        INSERT INTO Delete_Candidates_Comment
         SELECT deletionDate, id
         FROM Raw_Comment
         WHERE explicitlyDeleted
@@ -287,7 +287,7 @@ while batch_start_date < network_end_date:
 
     # DEL8
     con.execute("""
-        INSERT INTO Delete_Person_knows_Person
+        INSERT INTO Delete_Candidates_Person_knows_Person
         SELECT deletionDate, Person1id, Person2id
         FROM Raw_Person_knows_Person
         WHERE explicitlyDeleted
@@ -321,14 +321,14 @@ while batch_start_date < network_end_date:
     con.execute(f"COPY (SELECT strftime(creationDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS creationDate, Person1id, Person2id FROM Person_knows_Person)                                                                                        TO 'batches/{batch_start_date}/inserts/Person_knows_Person.csv'       (HEADER, FORMAT CSV, DELIMITER '|')") #INS8
 
     # deletes
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Person)                 TO 'batches/{batch_start_date}/deletes/Person.csv'                 (HEADER, FORMAT CSV, DELIMITER '|')") #DEL1
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Person_likes_Post)      TO 'batches/{batch_start_date}/deletes/Person_likes_Post.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") #DEL2
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Person_likes_Comment)   TO 'batches/{batch_start_date}/deletes/Person_likes_Comment.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") #DEL3
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Forum)                  TO 'batches/{batch_start_date}/deletes/Forum.csv'                  (HEADER, FORMAT CSV, DELIMITER '|')") #DEL4
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Forum_hasMember_Person) TO 'batches/{batch_start_date}/deletes/Forum_hasMember_Person.csv' (HEADER, FORMAT CSV, DELIMITER '|')") #DEL5
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Post)                   TO 'batches/{batch_start_date}/deletes/Post.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") #DEL6
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Comment)                TO 'batches/{batch_start_date}/deletes/Comment.csv'                (HEADER, FORMAT CSV, DELIMITER '|')") #DEL7
-    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Person_knows_Person)    TO 'batches/{batch_start_date}/deletes/Person_knows_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") #DEL8
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Candidates_Person)                 TO 'batches/{batch_start_date}/deletes/Person.csv'                 (HEADER, FORMAT CSV, DELIMITER '|')") #DEL1
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Candidates_Person_likes_Post)      TO 'batches/{batch_start_date}/deletes/Person_likes_Post.csv'      (HEADER, FORMAT CSV, DELIMITER '|')") #DEL2
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Candidates_Person_likes_Comment)   TO 'batches/{batch_start_date}/deletes/Person_likes_Comment.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") #DEL3
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Candidates_Forum)                  TO 'batches/{batch_start_date}/deletes/Forum.csv'                  (HEADER, FORMAT CSV, DELIMITER '|')") #DEL4
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Candidates_Forum_hasMember_Person) TO 'batches/{batch_start_date}/deletes/Forum_hasMember_Person.csv' (HEADER, FORMAT CSV, DELIMITER '|')") #DEL5
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Candidates_Post)                   TO 'batches/{batch_start_date}/deletes/Post.csv'                   (HEADER, FORMAT CSV, DELIMITER '|')") #DEL6
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, id       FROM Delete_Candidates_Comment)                TO 'batches/{batch_start_date}/deletes/Comment.csv'                (HEADER, FORMAT CSV, DELIMITER '|')") #DEL7
+    con.execute(f"COPY (SELECT strftime(deletionDate, '%Y-%m-%dT%H:%M:%S.%g+00:00') AS deletionDate, src, trg FROM Delete_Candidates_Person_knows_Person)    TO 'batches/{batch_start_date}/deletes/Person_knows_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") #DEL8
 
     ############################# set interval for next iteration ##########################
 
