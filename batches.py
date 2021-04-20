@@ -2,6 +2,7 @@ import duckdb
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 import os
+import shutil
 
 con = duckdb.connect(database='ldbc.duckdb', read_only=False)
 
@@ -11,6 +12,11 @@ con = duckdb.connect(database='ldbc.duckdb', read_only=False)
 network_start_date = date(2011, 1, 1)
 network_end_date   = date(2014, 1, 1)
 batch_size         = relativedelta(years=1)
+
+
+if os.path.isdir("batches"):
+    shutil.rmtree("batches")
+os.mkdir("batches")
 
 batch_start_date = network_start_date
 while batch_start_date < network_end_date:
@@ -51,9 +57,9 @@ while batch_start_date < network_end_date:
 
     # inserts . . . TODO!!!!
     con.execute("""
-        INSERT INTO MergeForeign_Comment
+        INSERT INTO Comment
         SELECT creationDate, id, locationIP, browserUsed, content, length, hasCreator_Person, isLocatedIn_Place, replyOf_Post, replyOf_Comment
-        FROM Comment
+        FROM Raw_Comment
         WHERE creationDate >= ?
           AND deletionDate >= ?""",
         interval)
@@ -65,12 +71,11 @@ while batch_start_date < network_end_date:
 
     ######################################## deletes #######################################
 
-    # deletes
     # DEL1
     con.execute("""
         INSERT INTO Delete_Person
         SELECT creationDate, id
-        FROM Person
+        FROM Raw_Person
         WHERE creationDate < ?
           AND deletionDate < ?""",
         interval)
@@ -79,7 +84,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Person_likes_Post
         SELECT deletionDate, id, likes_Post
-        FROM Person_likes_Post
+        FROM Raw_Person_likes_Post
         WHERE explicitlyDeleted
           AND creationDate < ?
           AND deletionDate < ?""",
@@ -89,7 +94,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Person_likes_Comment
         SELECT deletionDate, id, likes_Comment
-        FROM Person_likes_Comment
+        FROM Raw_Person_likes_Comment
         WHERE explicitlyDeleted
           AND creationDate < ?
           AND deletionDate < ?""",
@@ -99,7 +104,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Forum
         SELECT creationDate, id
-        FROM Forum
+        FROM Raw_Forum
         WHERE creationDate < ?
           AND deletionDate < ?""",
         interval)
@@ -108,7 +113,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Forum_hasMember_Person
         SELECT deletionDate, id, hasMember_Person
-        FROM Forum_hasMember_Person
+        FROM Raw_Forum_hasMember_Person
         WHERE explicitlyDeleted
           AND creationDate < ?
           AND deletionDate < ?""",
@@ -118,7 +123,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Post
         SELECT creationDate, id
-        FROM Post
+        FROM Raw_Post
         WHERE creationDate < ?
           AND deletionDate < ?""",
         interval)
@@ -127,7 +132,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Comment
         SELECT creationDate, id
-        FROM Comment
+        FROM Raw_Comment
         WHERE creationDate < ?
           AND deletionDate < ?""",
         interval)
@@ -136,7 +141,7 @@ while batch_start_date < network_end_date:
     con.execute("""
         INSERT INTO Delete_Person_knows_Person
         SELECT deletionDate, Person1id, Person2id
-        FROM Person_knows_Person
+        FROM Raw_Person_knows_Person
         WHERE explicitlyDeleted
           AND creationDate < ?
           AND deletionDate < ?""",
@@ -144,7 +149,9 @@ while batch_start_date < network_end_date:
 
     ######################################## export ########################################
 
-    os.mkdir(f"batches/{batch_start_date}")
+    batch_dir = f"batches/{batch_start_date}"
+    os.mkdir(batch_dir)
+    
     # insert edges
 
     # delete nodes
@@ -158,3 +165,7 @@ while batch_start_date < network_end_date:
     con.execute(f"COPY Delete_Person_likes_Comment   TO 'batches/{batch_start_date}/delete_Person_likes_Comment.csv'   (HEADER, FORMAT CSV, DELIMITER '|')") # DEL3
     con.execute(f"COPY Delete_Forum_hasMember_Person TO 'batches/{batch_start_date}/delete_Forum_hasMember_Person.csv' (HEADER, FORMAT CSV, DELIMITER '|')") # DEL5
     con.execute(f"COPY Delete_Person_knows_Person    TO 'batches/{batch_start_date}/delete_Person_knows_Person.csv'    (HEADER, FORMAT CSV, DELIMITER '|')") # DEL8
+
+    ############################# set interval for next iteration ##########################
+
+    batch_start_date = batch_end_date

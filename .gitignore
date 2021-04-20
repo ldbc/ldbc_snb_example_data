@@ -7,3 +7,4 @@ duckdb*.zip
 .Rhistory
 degree/data/*
 :*
+batches/
