@@ -7,7 +7,7 @@ set -o pipefail
 
 PATHVAR=${1:-"`pwd`/data/raw/"}
 
-if [ "$2" = "--no-header" ]; then
+if [ "${2-}" = "--no-header" ]; then
     HEADER=
 else
     HEADER=", HEADER"
