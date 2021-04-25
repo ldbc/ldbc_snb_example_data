@@ -14,3 +14,5 @@ cat sql/snb-transform.sql | \
 
 cat export/snb-export-composite-merged-fk.sql | \
     ${DUCKDB_PATH}/duckdb ldbc.duckdb
+cat export/snb-export-composite-projected-fk.sql | \
+    ${DUCKDB_PATH}/duckdb ldbc.duckdb
