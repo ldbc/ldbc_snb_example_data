@@ -29,4 +29,8 @@ for BATCH in batches/*; do
         sed "s|\${HEADER}|${HEADER}|g" | \
         ${DUCKDB_PATH}/duckdb ldbc.duckdb
 
+    #echo "select * from forum_hasMember_person;" | ${DUCKDB_PATH}/duckdb ldbc.duckdb
+    #echo "select * from person_likes_post;" | ${DUCKDB_PATH}/duckdb ldbc.duckdb
+    #echo "select * from person_likes_comment;" | ${DUCKDB_PATH}/duckdb ldbc.duckdb
+
 done
