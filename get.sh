@@ -3,7 +3,8 @@
 set -eu
 set -o pipefail
 
-export DUCKDB_VERSION=v0.2.5
+DUCKDB_VERSION=v0.2.5
+DUCKDB_PATH="${DUCKDB_PATH:=.}"
 
 if [ ! -f ${DUCKDB_PATH}/duckdb ]; then
     wget -q https://github.com/cwida/duckdb/releases/download/${DUCKDB_VERSION}/duckdb_cli-linux-amd64.zip -O duckdb_cli-linux-amd64.zip

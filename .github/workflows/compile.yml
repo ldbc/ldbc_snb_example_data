@@ -10,7 +10,6 @@ jobs:
       - name: Process data
         run: |
           sudo apt install -y rename
-          ./get.sh
           ./load.sh
           ./transform.sh
           ./export.sh
