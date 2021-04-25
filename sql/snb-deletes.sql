@@ -61,7 +61,8 @@ SELECT Delete_Candidates_Person.deletionDate AS deletionDate, Forum.id
     ON Person.id = Delete_Candidates_Person.id
   JOIN Forum
     ON Forum.hasModerator_Person = Person.id
--- WHERE Forum.type 
+ WHERE Forum.title LIKE 'Album %'
+    OR Forum.title LIKE 'Wall %';
 ;
 
 -- hasModerator
