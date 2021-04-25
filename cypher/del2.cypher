@@ -1,2 +1,4 @@
-MATCH (:Person {id: $personId})-[likes:LIKES]->(:Post {id: $postId})
+LOAD CSV WITH HEADERS FROM 'file:///' + $batch + '/deletes/Person_likes_Post.csv' AS row FIELDTERMINATOR '|'
+WITH toInteger(row.src) AS srcId, toInteger(row.trg) AS trgId
+MATCH (:Person {id: srcId})-[likes:LIKES]->(:Post {id: trgId})
 DELETE likes
