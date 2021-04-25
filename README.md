@@ -4,9 +4,16 @@
 
 Scripts to convert from **raw graphs** produced by the SNB Datagen to graph data sets using various layouts (e.g. storing edges as merged foreign keys).
 
-We use a mix of Bash, Python, and [DuckDB](https://duckdb.org) SQL scripts to perform these operations.
+This repository uses a mix of Bash, Python, and [DuckDB](https://duckdb.org) SQL scripts.
+The `get.sh` script installs the Python dependencies and downloads a recent DuckDB binary if it does not exist in the repository directory (the script is automatically invoked by `load.sh`).
 
-## Data set
+If you want to use a custom-built DuckDB binary:
+* set the `DUCKDB_PATH` environment variable to the location of the `duckdb` binary (default value: `.`)
+* make sure the Python packages has been recompiled (see [instructions](https://github.com/duckdb/duckdb/tree/master/tools/pythonpkg))
+
+## Example data set
+
+The example data set in this repository reflects the toy graphs used in the LDBC SNB:
 
 * [Example graph without refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-without-refreshes.pdf)
 * [Example graph with refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-with-refreshes.pdf)
@@ -82,11 +89,17 @@ Run paramgen as follows:
 To generate microbatches and test them, first load the data with `load.sh`, then run:
 
 ```bash
+./transform.sh
 ./generate-batches.sh
-./load-and-apply-microbatches.sh
+./snapshot-load.sh
+./apply-batches.sh
 ```
 
-The `generate-batches.sh` script produces batches of a given timespan (e.g. one per year) in the `batches/` directory.
-The `./transform.sh` script . . .
-The `load-and-apply-microbatches.sh` script loads the initial data set and applies the batches sequentially.
-Each batch consist of deletes and insertes. These can be applied in any order, even interleaved.
+* The `transform.sh` script produces the initial snapshot of the data.
+* The `generate-batches.sh` script produces batches of a given timespan (e.g. one per year) in the `batches/` directory.
+* The `snapshot-load.sh` scripts load the initial snapshot of the data.
+* The `apply-batches.sh` script loads the initial data set and applies the batches sequentially. Each batch consist of deletes and inserts. These can be applied in any order, even interleaved. The script first applies the the deletes, then the inserts.
+
+On the example graph:
+* The data spans 4 years in the interval 2010-2013 (inclusive on both ends)
+* There is one batch per year.

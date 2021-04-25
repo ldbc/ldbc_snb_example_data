@@ -9,27 +9,9 @@ PATHVAR="data/csv-composite-merged-fk"
 HEADER=", HEADER"
 POSTFIX=".csv"
 DYNAMIC_PREFIX="dynamic/"
-DUCKDB_PATH=/home/szarnyasg/git/duck/duckdb/build/release
+DUCKDB_PATH="${DUCKDB_PATH:=.}"
 
-rm -f ldbc.duckdb
-cat schema/composite-merged-fk.sql | ${DUCKDB_PATH}/duckdb ldbc.duckdb
-cat schema/deletes.sql | ${DUCKDB_PATH}/duckdb ldbc.duckdb
-
-# initial snapshot
-cat sql/snb-load-composite-merged-fk-static.sql | \
-    sed "s|\${PATHVAR}|${PATHVAR}|g" | \
-    sed "s|\${POSTFIX}|${POSTFIX}|g" | \
-    sed "s|\${HEADER}|${HEADER}|g" | \
-    ${DUCKDB_PATH}/duckdb ldbc.duckdb
-
-cat sql/snb-load-composite-merged-fk-dynamic.sql | \
-    sed "s|\${PATHVAR}|${PATHVAR}|g" | \
-    sed "s|\${DYNAMIC_PREFIX}|${DYNAMIC_PREFIX}|g" | \
-    sed "s|\${POSTFIX}|${POSTFIX}|g" | \
-    sed "s|\${HEADER}|${HEADER}|g" | \
-    ${DUCKDB_PATH}/duckdb ldbc.duckdb
-
-# insert batches iteratively
+# apply batches iteratively
 for BATCH in batches/*; do
     echo "Batch in directory '${BATCH}'"
 
