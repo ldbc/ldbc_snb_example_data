@@ -4,7 +4,7 @@ start=`date +%s`
 
 echo "dropping tables"
 Rscript ./scripts/drop.R
-echo  "tables dropped"
+echo "tables dropped"
 
 echo "loading raw schema"
 Rscript ./scripts/raw_schema.R
