@@ -13,7 +13,8 @@ else
     HEADER=", HEADER"
 fi
 
-#./get.sh
+export DUCKDB_PATH="${DUCKDB_PATH:=.}"
+./get.sh
 
 DYNAMIC_PREFIX="dynamic/"
 POSTFIX="_0_0.csv"
