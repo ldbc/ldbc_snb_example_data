@@ -90,6 +90,12 @@ WHERE id IN (SELECT id FROM Delete_Candidates_Comment);
 -- cascading tree...
 
 -- DEL8
+-- DELETE FROM Person_knows_Person
+-- WHERE concat(Person1id, '->', Person2Id)
+--   IN (SELECT concat(src, '->', trg) FROM Delete_Candidates_Person_knows_Person);
+
 DELETE FROM Person_knows_Person
-WHERE concat(Person1id, '->', Person2Id)
-  IN (SELECT concat(src, '->', trg) FROM Delete_Candidates_Person_knows_Person);
+USING Delete_Candidates_Person_knows_Person
+WHERE (Person_knows_Person.Person1Id = Delete_Candidates_Person_knows_Person.src AND Person_knows_Person.Person2Id = Delete_Candidates_Person_knows_Person.trg)
+   OR (Person_knows_Person.Person1Id = Delete_Candidates_Person_knows_Person.trg AND Person_knows_Person.Person2Id = Delete_Candidates_Person_knows_Person.src)
+;

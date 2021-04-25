@@ -76,3 +76,17 @@ Run paramgen as follows:
 ./factor-tables.sh
 ./paramgen.sh
 ```
+
+## Microbatching
+
+To generate microbatches and test them, first load the data with `load.sh`, then run:
+
+```bash
+./generate-batches.sh
+./load-and-apply-microbatches.sh
+```
+
+The `generate-batches.sh` script produces batches of a given timespan (e.g. one per year) in the `batches/` directory.
+The `./transform.sh` script . . .
+The `load-and-apply-microbatches.sh` script loads the initial data set and applies the batches sequentially.
+Each batch consist of deletes and insertes. These can be applied in any order, even interleaved.
