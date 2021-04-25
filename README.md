@@ -92,6 +92,11 @@ To generate microbatches and test them, first load the data with a `load.sh` (pa
 ./load.sh
 ./transform.sh
 ./generate-batches.sh
+```
+
+### SQL (DuckDB)
+
+```bash
 ./snapshot-load.sh
 ./apply-batches.sh
 ```
@@ -99,8 +104,14 @@ To generate microbatches and test them, first load the data with a `load.sh` (pa
 * The `transform.sh` script produces the initial snapshot of the data.
 * The `generate-batches.sh` script produces batches of a given timespan (e.g. one per year) in the `batches/` directory.
 * The `snapshot-load.sh` scripts load the initial snapshot of the data.
-* The `apply-batches.sh` script loads the initial data set and applies the batches sequentially. Each batch consist of deletes and inserts. These can be applied in any order, even interleaved. The script first applies the the deletes, then the inserts.
+* The `apply-batches.sh` script loads the initial data set and applies the batches sequentially. Each batch consists of deletes and inserts. These can be applied in any order, even interleaved. The script first applies the the deletes, then the inserts.
 
 On the example graph:
 * The data spans 4 years in the interval 2010-2013 (inclusive on both ends)
 * There is one batch per year.
+
+### Cypher (Neo4j)
+
+```bash
+TODO
+```
