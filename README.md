@@ -86,9 +86,10 @@ Run paramgen as follows:
 
 ## Microbatching
 
-To generate microbatches and test them, first load the data with `load.sh`, then run:
+To generate microbatches and test them, first load the data with a `load.sh` (paramterized for your data set), then run the scripts for producing/loading the data set/batches.
 
 ```bash
+./load.sh
 ./transform.sh
 ./generate-batches.sh
 ./snapshot-load.sh

@@ -5,15 +5,15 @@ set -o pipefail
 
 # Usage: ./load.sh <PATHVAR> [--no-header]
 
-DUCKDB_PATH="${DUCKDB_PATH:=.}"
 PATHVAR=${1:-"`pwd`/data/raw/"}
+
 if [ "${2-}" = "--no-header" ]; then
     HEADER=
 else
     HEADER=", HEADER"
 fi
 
-./get.sh
+#./get.sh
 
 DYNAMIC_PREFIX="dynamic/"
 POSTFIX="_0_0.csv"
