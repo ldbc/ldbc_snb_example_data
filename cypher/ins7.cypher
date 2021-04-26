@@ -11,6 +11,6 @@ WITH
   toInteger(row.islocatedin_country) AS countryId
 MATCH (m:Message {id: parentMessageId}), (creator:Person {id: personId}), (country:Country {id: countryId})
 CREATE
-  (c:Comment {creationDate: creationDate, id: id, locationIP: locationIP, browserUsed: browserUsed, content: content, length: length}),
+  (c:Comment:Message {creationDate: creationDate, id: id, locationIP: locationIP, browserUsed: browserUsed, content: content, length: length}),
   (c)-[:HAS_CREATOR]->(creator),
   (c)-[:IS_LOCATED_IN]->(country);

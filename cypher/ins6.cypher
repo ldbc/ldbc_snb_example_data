@@ -13,6 +13,6 @@ WITH
   toInteger(row.islocatedin_country) AS countryId
 MATCH (f:Forum {id: forumId}), (creator:Person {id: personId}), (country:Country {id: countryId})
 CREATE
-  (post:Post {creationDate: creationDate, id: id, imageFile: imageFile, locationIP: locationIP, browserUsed: browserUsed, language: language, content: content})<-[:CONTAINER_OF]-(f),
+  (post:Post:Message {creationDate: creationDate, id: id, imageFile: imageFile, locationIP: locationIP, browserUsed: browserUsed, language: language, content: content})<-[:CONTAINER_OF]-(f),
   (post)-[:HAS_CREATOR]->(creator),
   (post)-[:IS_LOCATED_IN]->(country);
