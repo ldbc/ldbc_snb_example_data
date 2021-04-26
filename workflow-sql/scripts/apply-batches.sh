@@ -3,16 +3,18 @@
 set -eu
 set -o pipefail
 
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/.."
+
 # loads the updates in the `batches` directory
 # these files always have headers
-PATHVAR="data/csv-composite-merged-fk"
+PATHVAR="../data/csv-composite-merged-fk"
 HEADER=", HEADER"
 POSTFIX=".csv"
 DYNAMIC_PREFIX="dynamic/"
-DUCKDB_PATH="${DUCKDB_PATH:=.}"
+DUCKDB_PATH="${DUCKDB_PATH:=..}"
 
 # apply batches iteratively
-for BATCH in batches/*; do
+for BATCH in ../batches/*; do
     echo "Batch in directory '${BATCH}'"
 
     echo "-> Deletes"

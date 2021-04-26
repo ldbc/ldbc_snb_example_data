@@ -56,23 +56,6 @@ The `duckdb` directory contains Python and SQL scripts to convert data to other 
 * [`csv-only-ids-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-only-ids-merged-fk.zip)
 * [`csv-only-ids-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-only-ids-projected-fk.zip)
 
-## Test with Neo4j
-
-To test with Neo4j, run the following commands in this repository:
-
-```bash
-# set the env vars in this repository
-export NEO4J_CSV_DIR=`pwd`/data/csv-composite-projected-fk-legacy-filenames
-export NEO4J_CSV_POSTFIX=.csv
-```
-
-Then, go to the [`cypher/ directory in the ldbc_snb_implementations repository`](https://github.com/ldbc/ldbc_snb_implementations/tree/dev/cypher) and run:
-
-```bash
-. scripts/environment-variables-default.sh
-scripts/load-in-one-step.sh
-```
-
 ## Parameter generation
 
 Run paramgen as follows:
@@ -84,9 +67,16 @@ Run paramgen as follows:
 ./paramgen.sh
 ```
 
-## Microbatching
+## Workflows
 
-To generate microbatches and test them, first load the data with a `load.sh` (paramterized for your data set), then run the scripts for producing/loading the data set/batches.
+The `workflow-*` directories test the benchmark workflow, i.e. loading the initial data set, then applying the batches sequentially.
+Each batch consists of deletes and inserts.
+Currently, the scripts first apply the the deletes, then the inserts.
+Note however that the updates can be applied in any order, even interleaved.
+
+### Generating batches
+
+To generate batches and test them, first load the data with a `load.sh` (paramterized for your data set), then run the scripts for producing/loading the data set/batches.
 
 ```bash
 ./load.sh
@@ -94,24 +84,29 @@ To generate microbatches and test them, first load the data with a `load.sh` (pa
 ./generate-batches.sh
 ```
 
+* The `transform.sh` script produces the initial snapshot of the data.
+* The `generate-batches.sh` script produces batches of a given timespan (e.g. one per year) in the `batches/` directory.
+
+On the example graph:
+* The data spans 4 years in the interval 2010-2013 (inclusive on both ends).
+* There is one batch per year.
+
 ### SQL (DuckDB)
 
 ```bash
+cd workflow-sql
 ./snapshot-load.sh
 ./apply-batches.sh
 ```
 
-* The `transform.sh` script produces the initial snapshot of the data.
-* The `generate-batches.sh` script produces batches of a given timespan (e.g. one per year) in the `batches/` directory.
 * The `snapshot-load.sh` scripts load the initial snapshot of the data.
-* The `apply-batches.sh` script loads the initial data set and applies the batches sequentially. Each batch consists of deletes and inserts. These can be applied in any order, even interleaved. The script first applies the the deletes, then the inserts.
-
-On the example graph:
-* The data spans 4 years in the interval 2010-2013 (inclusive on both ends)
-* There is one batch per year.
+* The `apply-batches.sh` script loads the initial data set and applies the batches sequentially. 
 
 ### Cypher (Neo4j)
 
 ```bash
-TODO
+cd workflow-cypher
+. scripts/environment-variables-default.sh
+scripts/load-in-one-step.sh
 ```
+

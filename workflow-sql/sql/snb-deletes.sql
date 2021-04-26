@@ -65,8 +65,6 @@ SELECT Person_Delete_candidates.deletionDate AS deletionDate, Forum.id
     OR Forum.title LIKE 'Wall %';
 ;
 
--- hasModerator
-
 -- DEL2
 DELETE FROM Person_likes_Post
 USING Person_likes_Post_Delete_candidates
@@ -86,8 +84,6 @@ USING Forum_Delete_candidates;
 DELETE FROM Forum_hasMember_Person
 USING Forum_Delete_candidates
 WHERE Forum_Delete_candidates.id = Forum_hasMember_Person.id;
-
--- delete posts
 
 -- DEL5
 DELETE FROM Forum_hasMember_Person
@@ -196,9 +192,6 @@ USING (
   ) sub
 WHERE sub.id = Comment_hasTag_Tag.id
 ;
-
-
-
 
 -- DEL8
 DELETE FROM Person_knows_Person
