@@ -15,7 +15,7 @@ DUCKDB_PATH="${DUCKDB_PATH:=..}"
 
 rm -f ldbc.duckdb
 cat ../schema/composite-merged-fk.sql | ${DUCKDB_PATH}/duckdb ldbc.duckdb
-cat sql/deletes.sql | ${DUCKDB_PATH}/duckdb ldbc.duckdb
+cat sql/initialize-delete-candidate-tables.sql | ${DUCKDB_PATH}/duckdb ldbc.duckdb
 
 echo "Load initial snapshot"
 
