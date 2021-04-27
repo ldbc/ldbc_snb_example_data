@@ -90,23 +90,3 @@ To generate batches and test them, first load the data with a `load.sh` (paramte
 On the example graph:
 * The data spans 4 years in the interval 2010-2013 (inclusive on both ends).
 * There is one batch per year.
-
-### SQL (DuckDB)
-
-```bash
-cd workflow-sql
-./snapshot-load.sh
-./apply-batches.sh
-```
-
-* The `snapshot-load.sh` scripts load the initial snapshot of the data.
-* The `apply-batches.sh` script loads the initial data set and applies the batches sequentially. 
-
-### Cypher (Neo4j)
-
-```bash
-cd workflow-cypher
-. scripts/environment-variables-default.sh
-scripts/load-in-one-step.sh
-```
-
