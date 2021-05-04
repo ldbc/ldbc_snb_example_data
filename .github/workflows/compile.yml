@@ -16,6 +16,7 @@ jobs:
           ./rename.sh
           ./factor-tables.sh
           ./paramgen.sh
+          ./generate-batches.sh
       - name: Compress data sets
         run: |
           # get rid of .gitignore files
