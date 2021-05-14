@@ -17,6 +17,9 @@ jobs:
           ./factor-tables.sh
           ./paramgen.sh
           ./generate-batches.sh
+          cd workflow-sql
+          scripts/snapshot-load.sh
+          scripts/apply-batches.sh
       - name: Compress data sets
         run: |
           # get rid of .gitignore files
