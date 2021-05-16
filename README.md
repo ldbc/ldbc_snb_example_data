@@ -76,7 +76,7 @@ Note however that the updates can be applied in any order, even interleaved.
 
 ### Generating batches
 
-To generate batches and test them, first load the data with a `load.sh` (paramterized for your data set), then run the scripts for producing/loading the data set/batches.
+To generate batches and test them, first load the data with a `load.sh` (parameterized for your data set), then run the scripts for producing/loading the data set/batches.
 
 ```bash
 ./load.sh
