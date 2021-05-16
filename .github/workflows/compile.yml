@@ -41,6 +41,7 @@ jobs:
           zip -r ../compressed/static-data-projected-fk-separate-labels.zip    static-data-projected-fk-separate-labels/
           zip -r ../compressed/csv-composite-projected-fk-legacy-filenames.zip csv-composite-projected-fk-legacy-filenames/
           cd ..
+          echo "Generated data sets are available as described in the [README](https://github.com/ldbc/ldbc_snb_data_converter#deployed-data-sets)" > compressed/index.md
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.4.1
         with:
