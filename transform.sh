@@ -11,8 +11,3 @@ echo "transform data from raw to composite-merged-fk format"
 cat sql/snb-transform.sql | \
     sed "s|:bulkLoadTime|DATE '${BULK_LOAD_DATE}T00:00:00.000+00:00'|g" |
     ${DUCKDB_PATH}/duckdb ldbc.duckdb
-
-cat export/snb-export-composite-merged-fk.sql | \
-    ${DUCKDB_PATH}/duckdb ldbc.duckdb
-cat export/snb-export-composite-projected-fk.sql | \
-    ${DUCKDB_PATH}/duckdb ldbc.duckdb

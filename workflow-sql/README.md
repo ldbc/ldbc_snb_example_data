@@ -4,8 +4,7 @@ Generate the batches as described in the main [README](../README.md). Then:
 
 ```bash
 cd workflow-sql
-scripts/snapshot-load.sh
-scripts/apply-batches.sh
+scripts/run-sql-workflow.sh
 ```
 
 * The `snapshot-load.sh` scripts load the initial snapshot of the data.
