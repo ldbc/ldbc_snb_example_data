@@ -7,6 +7,8 @@ if [ $# -eq 0 ]; then
   echo "Usage: ./spark-concat.sh <LDBC_DATA_DIRECTORY>"
   echo
   echo "<LDBC_DATA_DIRECTORY> contains the static and dynamic directories for composite-merged-fk data"
+  echo
+  echo "Concatenates CSV files per type, e.g. the dynamic/Comment/part*.csv files to dynamic/Comment.csv"
   exit 1
 fi
 
