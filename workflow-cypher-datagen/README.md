@@ -1,11 +1,9 @@
 # Cypher workflow using Neo4j
 
 ```bash
-cd workflow-cypher-datagen
-
 # concat
-export DATA_DIR=~/git/snb/ldbc_snb_datagen/sf0.003/csv/bi/composite-projected-fk/initial_snapshot/
-../spark-concat.sh ${DATA_DIR}
+export DATA_DIR=~/git/snb/ldbc_snb_datagen/sf0.003/csv/bi/composite-projected-fk/
+../spark-concat.sh ${DATA_DIR}/initial_snapshot/
 
 # initialize vars
 . scripts/environment-variables-default.sh
