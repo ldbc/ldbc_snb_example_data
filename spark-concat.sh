@@ -7,6 +7,8 @@ if [ $# -eq 0 ]; then
   echo "Usage: ./spark-concat.sh <LDBC_DATA_DIRECTORY>"
   echo
   echo "<LDBC_DATA_DIRECTORY> contains the static and dynamic directories for composite-merged-fk data"
+  echo
+  echo "Concatenates CSV files per type, e.g. the dynamic/Comment/part*.csv files to dynamic/Comment.csv"
   exit 1
 fi
 
@@ -14,18 +16,14 @@ fi
 LDBC_DATA_DIRECTORY=$1
 cd ${LDBC_DATA_DIRECTORY}
 
-cd static
-rm -f *.csv
-for i in *; do
+rm -f static/*.csv
+for i in static/*; do
   echo $i
-  tail -qn +2 ${i}/*.csv > ${i}_0_0.csv
+  tail -qn +2 ${i}/*.csv > ${i}.csv
 done
-cd ..
 
-cd dynamic
-rm -f *.csv
-for i in *; do
+rm -f dynamic/*.csv
+for i in dynamic/*; do
   echo $i
-  tail -qn +2 ${i}/*.csv > ${i}_0_0.csv
+  tail -qn +2 ${i}/*.csv > ${i}.csv
 done
-cd ..
