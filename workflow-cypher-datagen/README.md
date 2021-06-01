@@ -13,5 +13,5 @@ export NEO4J_CSV_DIR=${DATA_DIR}
 scripts/load-in-one-step.sh
 
 # perform microbatch loading
-python3 batches-cypher.py ${DATA_DIR}/
+python3 batches-cypher.py ${DATA_DIR}/ | tee -a my.log
 ```

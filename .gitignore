@@ -8,3 +8,4 @@ duckdb*.zip
 degree/data/*
 :*
 batches/
+*.log
