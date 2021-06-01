@@ -7,4 +7,5 @@ CREATE (f:Forum {
     creationDate: creationDate,
     id: id,
     title: title
-  });
+  })
+RETURN count(*);

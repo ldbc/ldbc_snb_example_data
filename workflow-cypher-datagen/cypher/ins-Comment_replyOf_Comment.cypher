@@ -4,4 +4,5 @@ WITH
   toInteger(row.commentId) AS commentId,
   toInteger(row.parentCommentId) AS parentCommentId
 MATCH (comment:Comment {id: commentId}), (parentComment:Comment {id: parentCommentId})
-CREATE (comment)-[:REPLY_OF {creationDate: creationDate}]->(parentComment);
+CREATE (comment)-[:REPLY_OF {creationDate: creationDate}]->(parentComment)
+RETURN count(*)

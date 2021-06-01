@@ -4,4 +4,5 @@ WITH
   toInteger(row.postId) AS postId,
   toInteger(row.personId) AS personId
 MATCH (post:Post {id: postId}), (person:Person {id: personId})
-CREATE (post)-[:HAS_CREATOR {creationDate: creationDate}]->(person);
+CREATE (post)-[:HAS_CREATOR {creationDate: creationDate}]->(person)
+RETURN count(*)

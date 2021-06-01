@@ -13,4 +13,5 @@ CREATE (c:Comment:Message {
     browserUsed: browserUsed,
     content: content,
     length: length
-  });
+  })
+RETURN count(*)

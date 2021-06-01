@@ -8,15 +8,17 @@ import re
 import sys
 import os
 
-def query_fun(tx, query_spec, batch, csv_file):
+def write_txn_fun(tx, query_spec, batch, csv_file):
     result = tx.run(query_spec, batch=batch, csv_file=csv_file)
     return result.value()
 
 def run_update(session, query_spec, batch, csv_file):
     start = time.time()
-    result = session.write_transaction(query_fun, query_spec, batch, csv_file)
+    result = session.write_transaction(write_txn_fun, query_spec, batch, csv_file)
     end = time.time()
     duration = end - start
+    if result[0] == 0:
+        print("!!! No changes occured")
 
 if len(sys.argv) < 2:
     print("Usage: batches-cypher.py <INSERT_DIRECTORY>")
@@ -38,7 +40,6 @@ for i in range(1, 9):
 driver = GraphDatabase.driver("bolt://localhost:7687")
 session = driver.session()
 
-
 batch_dir = "batch_id=2012-09-15"
 data_dir = sys.argv[1]
 
@@ -54,6 +55,7 @@ for entity in nodes + edges:
         print(f"- dynamic/{entity}/{batch_dir}/{csv_file}")
         run_update(session, insert_queries[entity], batch_dir, csv_file)
 
+print()
 print("## Deletes")
 # TODO
 

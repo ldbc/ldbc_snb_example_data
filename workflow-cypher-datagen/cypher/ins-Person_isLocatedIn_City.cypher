@@ -4,4 +4,5 @@ WITH
   toInteger(row.personId) AS personId,
   toInteger(row.cityId) AS cityId
 MATCH (person:Person {id: personId}), (city:City {id: personId})
-CREATE (person)-[:LIKES {creationDate: creationDate}]->(city);
+CREATE (person)-[:LIKES {creationDate: creationDate}]->(city)
+RETURN count(*)

@@ -4,4 +4,5 @@ WITH
   toInteger(row.commentId) AS commentId,
   toInteger(row.countryId) AS countryId
 MATCH (comment:Comment {id: commentId}), (country:Country {id: countryId})
-CREATE (comment)-[:IS_LOCATED_IN {creationDate: creationDate}]->(country);
+CREATE (comment)-[:IS_LOCATED_IN {creationDate: creationDate}]->(country)
+RETURN count(*)

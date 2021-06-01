@@ -5,4 +5,5 @@ WITH
   toInteger(row.companyId) AS companyId,
   toInteger(row.workFrom) AS workFrom
 MATCH (person:Person {id: personId}), (company:Company {id: companyId})
-CREATE (person)-[:WORK_AT {creationDate: creationDate, workFrom: workFrom}]->(company);
+CREATE (person)-[:WORK_AT {creationDate: creationDate, workFrom: workFrom}]->(company)
+RETURN count(*)

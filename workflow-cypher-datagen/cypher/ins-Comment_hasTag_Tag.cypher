@@ -4,4 +4,5 @@ WITH
   toInteger(row.commentId) AS commentId,
   toInteger(row.tagId) AS tagId
 MATCH (comment:Comment {id: commentId}), (tag:Tag {id: tagId})
-CREATE (comment)-[:HAS_TAG {creationDate: creationDate}]->(tag);
+CREATE (comment)-[:HAS_TAG {creationDate: creationDate}]->(tag)
+RETURN count(*)

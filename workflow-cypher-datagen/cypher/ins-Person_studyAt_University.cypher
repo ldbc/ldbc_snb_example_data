@@ -5,4 +5,5 @@ WITH
   toInteger(row.universityId) AS universityId,
   toInteger(row.classYear) AS classYear
 MATCH (person:Person {id: personId}), (university:University {id: universityId})
-CREATE (person)-[:STUDY_AT {creationDate: creationDate, classYear: classYear}]->(university);
+CREATE (person)-[:STUDY_AT {creationDate: creationDate, classYear: classYear}]->(university)
+RETURN count(*)

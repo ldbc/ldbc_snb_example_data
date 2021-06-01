@@ -4,4 +4,5 @@ WITH
   toInteger(row.forumId) AS forumId,
   toInteger(row.tagId) AS tagId
 MATCH (forum:Forum {id: forumId}), (tag:Tag {id: tagId})
-CREATE (forum)-[:HAS_TAG {creationDate: creationDate}]->(tag);
+CREATE (forum)-[:HAS_TAG {creationDate: creationDate}]->(tag)
+RETURN count(*)

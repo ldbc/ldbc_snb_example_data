@@ -4,4 +4,5 @@ WITH
   toInteger(row.commentId) AS commentId,
   toInteger(row.personId) AS personId
 MATCH (comment:Comment {id: commentId}), (person:Person {id: personId})
-CREATE (comment)-[:HAS_CREATOR {creationDate: creationDate}]->(person);
+CREATE (comment)-[:HAS_CREATOR {creationDate: creationDate}]->(person)
+RETURN count(*)

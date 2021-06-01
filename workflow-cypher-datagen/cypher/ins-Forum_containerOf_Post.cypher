@@ -4,4 +4,5 @@ WITH
   toInteger(row.forumId) AS forumId,
   toInteger(row.postId) AS postId
 MATCH (forum:Forum {id: forumId}), (post:Post {id: postId})
-CREATE (forum)-[:CONTAINER_OF {creationDate: creationDate}]->(post);
+CREATE (forum)-[:CONTAINER_OF {creationDate: creationDate}]->(post)
+RETURN count(*)

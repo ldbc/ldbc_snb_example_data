@@ -16,4 +16,5 @@ CREATE (post:Post:Message {
     browserUsed: browserUsed,
     language: language,
     content: content
-  });
+  })
+RETURN count(*)

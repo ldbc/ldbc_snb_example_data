@@ -21,4 +21,5 @@ CREATE (p:Person {
     browserUsed: browserUsed,
     speaks: speaks,
     email: email
-  });
+  })
+RETURN count(*);

@@ -4,4 +4,5 @@ WITH
   toInteger(row.personId) AS personId,
   toInteger(row.tagId) AS tagId
 MATCH (person:Person {id: personId}), (tag:Tag {id: tagId})
-CREATE (person)-[:HAS_INTEREST {creationDate: creationDate}]->(tag);
+CREATE (person)-[:HAS_INTEREST {creationDate: creationDate}]->(tag)
+RETURN count(*)

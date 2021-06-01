@@ -4,4 +4,5 @@ WITH
   toInteger(row.forumId) AS forumId,
   toInteger(row.personId) AS personId
 MATCH (forum:Forum {id: forumId}), (person:Person {id: personId})
-CREATE (forum)-[:HAS_MEMBER {creationDate: creationDate}]->(person);
+CREATE (forum)-[:HAS_MEMBER {creationDate: creationDate}]->(person)
+RETURN count(*)
