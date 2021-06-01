@@ -12,18 +12,22 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+echo "Dropping headers and concatenating outputs..."
+
 # this directory should point to e.g. ~/git/snb/ldbc_snb_datagen/out/sf0.1-raw/csv/raw/composite-merged-fk
 LDBC_DATA_DIRECTORY=$1
 cd ${LDBC_DATA_DIRECTORY}
 
 rm -f static/*.csv
 for i in static/*; do
-  echo $i
+  echo "- $i"
   tail -qn +2 ${i}/*.csv > ${i}.csv
 done
 
 rm -f dynamic/*.csv
 for i in dynamic/*; do
-  echo $i
+  echo "- $i"
   tail -qn +2 ${i}/*.csv > ${i}.csv
 done
+
+echo "Done."
