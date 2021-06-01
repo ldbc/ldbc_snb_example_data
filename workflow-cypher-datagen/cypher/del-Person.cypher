@@ -6,3 +6,4 @@ OPTIONAL MATCH (person)<-[:HAS_MODERATOR]-(forum:Forum)-[:CONTAINER_OF]->(:Post)
 WHERE forum.title STARTS WITH 'Album '
    OR forum.title STARTS WITH 'Wall '
 DETACH DELETE person, forum, message1, message2
+RETURN count(*)

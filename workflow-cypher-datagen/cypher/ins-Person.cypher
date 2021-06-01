@@ -22,4 +22,4 @@ CREATE (p:Person {
     speaks: speaks,
     email: email
   })
-RETURN count(*);
+RETURN count(*)

@@ -19,27 +19,30 @@ def run_update(session, query_spec, batch, csv_file):
     duration = end - start
 
     num_changes = result[0]
-    if num_changes == 0:
-        print("!!! No changes occured")
-    else:
-        print(f"> {num_changes} changes")
+    return num_changes
 
 
 if len(sys.argv) < 2:
     print("Usage: batches-cypher.py <INSERT_DIRECTORY>")
     exit(1)
 
-nodes = ["Comment", "Forum", "Person", "Post"]
-edges = ["Comment_hasCreator_Person", "Comment_hasTag_Tag", "Comment_isLocatedIn_Country", "Comment_replyOf_Comment", "Comment_replyOf_Post", "Forum_containerOf_Post", "Forum_hasMember_Person", "Forum_hasModerator_Person", "Forum_hasTag_Tag", "Person_hasInterest_Tag", "Person_isLocatedIn_City", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post_hasCreator_Person", "Post_hasTag_Tag", "Post_isLocatedIn_Country"]
+# to ensure that all inserted edges have their endpoints at the time of their insertion, we insert nodes first and edges second
+insert_nodes = ["Comment", "Forum", "Person", "Post"]
+insert_edges = ["Comment_hasCreator_Person", "Comment_hasTag_Tag", "Comment_isLocatedIn_Country", "Comment_replyOf_Comment", "Comment_replyOf_Post", "Forum_containerOf_Post", "Forum_hasMember_Person", "Forum_hasModerator_Person", "Forum_hasTag_Tag", "Person_hasInterest_Tag", "Person_isLocatedIn_City", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post_hasCreator_Person", "Post_hasTag_Tag", "Post_isLocatedIn_Country"]
+insert_entities = insert_nodes + insert_edges
+
+delete_nodes = ["Comment", "Forum", "Person", "Post"]
+delete_edges = ["Forum_hasMember_Person", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post"]
+delete_entities = delete_nodes + delete_edges
 
 insert_queries = {}
-for entity in nodes + edges:
+for entity in insert_entities:
     with open(f"cypher/ins-{entity}.cypher", "r") as insert_query_file:
         insert_queries[entity] = insert_query_file.read()
 
 delete_queries = {}
-for i in range(1, 9):
-    with open(f"cypher/del{i}.cypher", "r") as delete_query_file:
+for entity in delete_entities:
+    with open(f"cypher/del-{entity}.cypher", "r") as delete_query_file:
         delete_queries[entity] = delete_query_file.read()
 
 driver = GraphDatabase.driver("bolt://localhost:7687")
@@ -47,51 +50,50 @@ session = driver.session()
 
 data_dir = sys.argv[1]
 
-for day in range(15, 31):
-    batch_dir = f"batch_id=2012-09-{day}"
-    print(f"# {batch_dir}")
+network_start_date = date(2012, 9, 13)
+network_end_date = date(2012, 12, 31)
+batch_size = relativedelta(days=1)
+
+batch_start_date = network_start_date
+while batch_start_date < network_end_date:
+    # format date to yyyy-mm-dd
+    batch_id = batch_start_date.strftime('%Y-%m-%d')
+    batch_dir = f"batch_id={batch_id}"
+    print(f"#################### {batch_dir} ####################")
 
     print("## Inserts")
-    for entity in nodes + edges:
-        print(f"{entity}:")
+    for entity in insert_entities:
         batch_path = f"{data_dir}/inserts/dynamic/{entity}/{batch_dir}"
-
         if not os.path.exists(batch_path):
             continue
 
+        print(f"{entity}:")
         for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
-            print(f"- dynamic/{entity}/{batch_dir}/{csv_file}")
-            run_update(session, insert_queries[entity], batch_dir, csv_file)
+            print(f"- inserts/dynamic/{entity}/{batch_dir}/{csv_file}")
+            num_changes = run_update(session, insert_queries[entity], batch_dir, csv_file)
+            if num_changes == 0:
+                print("!!! No changes occured")
+            else:
+                print(f"> {num_changes} changes")
             print()
 
+    print("## Deletes")
+    for entity in delete_entities:
+        batch_path = f"{data_dir}/deletes/dynamic/{entity}/{batch_dir}"
+        if not os.path.exists(batch_path):
+            continue
 
-# print()
-# print("## Deletes")
-# TODO
+        print(f"{entity}:")
+        for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
+            print(f"- deletes/dynamic/{entity}/{batch_dir}/{csv_file}")
+            num_changes = run_update(session, delete_queries[entity], batch_dir, csv_file)
+            if num_changes == 0:
+                print("!!! No changes occured")
+            else:
+                print(f"> {num_changes} changes")
+            print()
 
+    batch_start_date = batch_start_date + batch_size
 
-# network_start_date = date(2011, 1, 1)
-# network_end_date   = date(2014, 1, 1)
-# batch_size         = relativedelta(years=1)
-
-# batch_start_date = network_start_date
-# while batch_start_date < network_end_date:
-#     batch_end_date = batch_start_date + batch_size
-
-#     interval = [batch_start_date, batch_end_date]
-#     print(f"batches/{batch_start_date}/")
-
-#     for i in range(1, 9):
-#         print(f"DEL{i}")
-#         with open(f"cypher/del{i}.cypher", "r") as query_file:
-#             run_query(session, query_file.read(), str(batch_start_date))
-
-#     for i in range(1, 15):
-#         print(f"INS{i}")
-#         with open(f"cypher/ins{i}.cypher", "r") as query_file:
-#             run_query(session, query_file.read(), str(batch_start_date))
-
-#     batch_start_date = batch_end_date
-
-# session.close()
-# driver.close()
+session.close()
+driver.close()

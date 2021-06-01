@@ -2,3 +2,4 @@ LOAD CSV WITH HEADERS FROM 'file:///deletes/dynamic/Comment/' + $batch + '/' + $
 WITH toInteger(row.id) AS id
 MATCH (:Comment {id: id})<-[:REPLY_OF*0..]-(comment:Comment)
 DETACH DELETE comment
+RETURN count(*)
