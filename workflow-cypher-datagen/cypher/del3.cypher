@@ -1,4 +1,6 @@
-LOAD CSV WITH HEADERS FROM 'file:///' + $batch + '/deletes/Person_likes_Comment.csv' AS row FIELDTERMINATOR '|'
-WITH toInteger(row.src) AS srcId, toInteger(row.trg) AS trgId
-MATCH (:Person {id: srcId})-[likes:LIKES]->(:Comment {id: trgId})
+LOAD CSV WITH HEADERS FROM 'file:///deletes/dynamic/Person_likes_Comment/' + $batch + '/' + $csv_file AS row FIELDTERMINATOR '|'
+WITH
+  toInteger(row.personId) AS personId,
+  toInteger(row.commentId) AS commentId
+MATCH (:Person {id: personId})-[likes:LIKES]->(:Comment {id: commentId})
 DELETE likes

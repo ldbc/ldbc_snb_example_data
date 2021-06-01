@@ -1,4 +1,6 @@
-LOAD CSV WITH HEADERS FROM 'file:///' + $batch + '/deletes/Forum_hasMember_Person.csv' AS row FIELDTERMINATOR '|'
-WITH toInteger(row.src) AS srcId, toInteger(row.trg) AS trgId
-MATCH (:Person {id: srcId})-[hm:HAS_MEMBER]->(:Forum {id: trgId})
-DELETE hm
+LOAD CSV WITH HEADERS FROM 'file:///deletes/dynamic/Forum_hasMember_Person/' + $batch + '/' + $csv_file AS row FIELDTERMINATOR '|'
+WITH
+  toInteger(row.forumId) AS forumId,
+  toInteger(row.personId) AS personId
+MATCH (:Forum {id: forumId})-[hasMember:HAS_MEMBER]->(:Person {id: personId})
+DELETE hasMember

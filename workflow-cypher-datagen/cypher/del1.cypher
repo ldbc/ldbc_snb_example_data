@@ -1,4 +1,4 @@
-LOAD CSV WITH HEADERS FROM 'file:///' + $batch + '/deletes/Person.csv' AS row FIELDTERMINATOR '|'
+LOAD CSV WITH HEADERS FROM 'file:///deletes/dynamic/Person/' + $batch + '/' + $csv_file AS row FIELDTERMINATOR '|'
 WITH toInteger(row.id) AS id
 MATCH (person:Person {id: id})
 OPTIONAL MATCH (person)<-[:HAS_CREATOR]-(:Message)<-[:REPLY_OF*0..]-(message1:Message) // DEL 6/7
