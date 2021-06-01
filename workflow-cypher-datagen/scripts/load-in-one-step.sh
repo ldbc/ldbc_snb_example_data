@@ -29,5 +29,4 @@ echo ===========================================================================
 ./delete-neo4j-database.sh
 ./import-to-neo4j.sh
 ./start-neo4j.sh
-#./create-indices.sh
-# TODO: turn back create-indices script
+./create-indices.sh
