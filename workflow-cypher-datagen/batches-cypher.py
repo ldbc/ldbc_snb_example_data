@@ -17,8 +17,13 @@ def run_update(session, query_spec, batch, csv_file):
     result = session.write_transaction(write_txn_fun, query_spec, batch, csv_file)
     end = time.time()
     duration = end - start
-    if result[0] == 0:
+
+    num_changes = result[0]
+    if num_changes == 0:
         print("!!! No changes occured")
+    else:
+        print(f"> {num_changes} changes")
+
 
 if len(sys.argv) < 2:
     print("Usage: batches-cypher.py <INSERT_DIRECTORY>")
@@ -40,23 +45,28 @@ for i in range(1, 9):
 driver = GraphDatabase.driver("bolt://localhost:7687")
 session = driver.session()
 
-batch_dir = "batch_id=2012-09-15"
 data_dir = sys.argv[1]
 
-print("## Inserts")
-for entity in nodes + edges:
-    print(f"{entity}:")
-    batch_path = f"{data_dir}/inserts/dynamic/{entity}/{batch_dir}"
+for day in range(15, 31):
+    batch_dir = f"batch_id=2012-09-{day}"
+    print(f"# {batch_dir}")
 
-    if not os.path.exists(batch_path):
-        continue
+    print("## Inserts")
+    for entity in nodes + edges:
+        print(f"{entity}:")
+        batch_path = f"{data_dir}/inserts/dynamic/{entity}/{batch_dir}"
 
-    for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
-        print(f"- dynamic/{entity}/{batch_dir}/{csv_file}")
-        run_update(session, insert_queries[entity], batch_dir, csv_file)
+        if not os.path.exists(batch_path):
+            continue
 
-print()
-print("## Deletes")
+        for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
+            print(f"- dynamic/{entity}/{batch_dir}/{csv_file}")
+            run_update(session, insert_queries[entity], batch_dir, csv_file)
+            print()
+
+
+# print()
+# print("## Deletes")
 # TODO
 
 
