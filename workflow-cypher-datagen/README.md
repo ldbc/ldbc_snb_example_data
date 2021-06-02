@@ -14,7 +14,7 @@ export SF=0.003
 export DATA_DIR=~/git/snb/ldbc_snb_datagen/sf${SF}/csv/bi/composite-projected-fk/
 
 # concat initial CSV files for loading
-../spark-concat.sh ${DATA_DIR}/initial_snapshot/
+./spark-concat.sh ${DATA_DIR}/initial_snapshot/
 
 # initialize vars
 . scripts/environment-variables-default.sh
@@ -24,5 +24,5 @@ export NEO4J_CSV_DIR=${DATA_DIR}
 scripts/load-in-one-step.sh
 
 # perform microbatch loading
-python3 batches-cypher.py ${DATA_DIR}/ | tee my.log
+python3 batches-cypher.py ${DATA_DIR} | tee my.log
 ```
