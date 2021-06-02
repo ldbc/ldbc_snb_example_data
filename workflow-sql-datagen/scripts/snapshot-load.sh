@@ -16,7 +16,7 @@ DYNAMIC_PREFIX="dynamic/"
 DUCKDB_PATH="${DUCKDB_PATH:=../}"
 
 rm -f ldbc-sql-workflow-test.duckdb
-cat ../schema/composite-merged-fk.sql | ${DUCKDB_PATH}duckdb ldbc-sql-workflow-test.duckdb
+cat sql/schema-composite-merged-fk.sql | ${DUCKDB_PATH}duckdb ldbc-sql-workflow-test.duckdb
 cat sql/initialize-delete-candidate-tables.sql | ${DUCKDB_PATH}duckdb ldbc-sql-workflow-test.duckdb
 
 echo "Load initial snapshot"
