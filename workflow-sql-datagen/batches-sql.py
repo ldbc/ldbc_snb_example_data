@@ -8,21 +8,10 @@ import re
 import sys
 import os
 
-# def write_txn_fun(tx, query_spec, batch, csv_file):
-#     result = tx.run(query_spec, batch=batch, csv_file=csv_file)
-#     return result.value()
-
-# def run_update(session, query_spec, batch, csv_file):
-#     start = time.time()
-#     result = session.write_transaction(write_txn_fun, query_spec, batch, csv_file)
-#     end = time.time()
-#     duration = end - start
-
-#     num_changes = result[0]
-#     return num_changes
+print("Datagen / apply batches using SQL")
 
 if len(sys.argv) < 2:
-    print("Usage: batches-cypher.py <INSERT_DIRECTORY>")
+    print("Usage: batches-sql.py <DATA_DIRECTORY>")
     exit(1)
 
 entities = ["Comment", "Comment_hasTag_Tag", "Forum", "Forum_hasMember_Person", "Forum_hasTag_Tag", "Person", "Person_hasInterest_Tag", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post", "Post_hasTag_Tag"]
@@ -83,8 +72,10 @@ while batch_start_date < network_end_date:
             print(f"- {csv_path}")
             con.execute(f"COPY {entity}_Delete_candidates FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
 
+    print("invoking delete script")
     # Invoke delete script which makes use of the {entity}_Delete_candidates tables
     con.execute(delete_script)
+    print("//invoking delete script")
 
     batch_start_date = batch_start_date + batch_size
 
