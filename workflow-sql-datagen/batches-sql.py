@@ -37,6 +37,10 @@ delete_entities = delete_nodes + delete_edges
 
 data_dir = sys.argv[1]
 
+with open(f"sql/snb-deletes.sql", "r") as delete_script_file:
+    delete_script = delete_script_file.read()
+
+
 con = duckdb.connect(database='ldbc-sql-workflow-test.duckdb')
 
 network_start_date = date(2012, 9, 13)
@@ -51,7 +55,6 @@ while batch_start_date < network_end_date:
     print(f"#################### {batch_dir} ####################")
 
     print("## Inserts")
-
     for entity in insert_entities:
         batch_path = f"{data_dir}/inserts/dynamic/{entity}/{batch_dir}"
         if not os.path.exists(batch_path):
@@ -63,16 +66,25 @@ while batch_start_date < network_end_date:
             print(f"- {csv_path}")
             con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
 
-    # print("## Deletes")
-    # for entity in delete_entities:
-    #     batch_path = f"{data_dir}/deletes/dynamic/{entity}/{batch_dir}"
-    #     if not os.path.exists(batch_path):
-    #         continue
+    print("## Deletes")
+    # Deletes are implemented using a SQL script which use auxiliary tables.
+    # Entities to be deleted are first put into {entity}_Delete_candidate tables.
+    # These are cleaned up before running the delete script.
+    for entity in delete_entities:
+        con.execute(f"DELETE FROM {entity}_Delete_candidates")
 
-    #     print(f"{entity}:")
-    #     for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
-    #         print(f"- deletes/dynamic/{entity}/{batch_dir}/{csv_file}")
+        batch_path = f"{data_dir}/deletes/dynamic/{entity}/{batch_dir}"
+        if not os.path.exists(batch_path):
+            continue
 
+        print(f"{entity}:")
+        for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
+            csv_path = f"{batch_path}/{csv_file}"
+            print(f"- {csv_path}")
+            con.execute(f"COPY {entity}_Delete_candidates FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+
+    # Invoke delete script which makes use of the {entity}_Delete_candidates tables
+    con.execute(delete_script)
 
     batch_start_date = batch_start_date + batch_size
 
