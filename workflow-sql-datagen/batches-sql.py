@@ -72,10 +72,10 @@ while batch_start_date < network_end_date:
             print(f"- {csv_path}")
             con.execute(f"COPY {entity}_Delete_candidates FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
 
-    print("invoking delete script")
+    print("<running delete script>")
     # Invoke delete script which makes use of the {entity}_Delete_candidates tables
     con.execute(delete_script)
-    print("//invoking delete script")
+    print("<finished delete script>")
 
     batch_start_date = batch_start_date + batch_size
 
