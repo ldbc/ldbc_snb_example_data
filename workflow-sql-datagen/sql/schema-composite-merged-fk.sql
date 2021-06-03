@@ -85,7 +85,7 @@ CREATE TABLE Forum (
     creationDate timestamp without time zone not null,
     id bigint not null,
     title varchar(256) not null,
-    hasModerator_Person bigint not null
+    hasModerator_Person bigint
 );
 
 CREATE TABLE Post (
