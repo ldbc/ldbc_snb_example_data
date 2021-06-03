@@ -12,7 +12,6 @@ POSTFIX=".csv"
 HEADER=""
 #HEADER=${HEADER:=", HEADER"}
 
-DYNAMIC_PREFIX="dynamic/"
 DUCKDB_PATH="${DUCKDB_PATH:=../}"
 
 rm -f ldbc-sql-workflow-test.duckdb
@@ -32,7 +31,7 @@ cat sql/snb-load-composite-merged-fk-static.sql | \
 echo "-> Dynamic entities"
 cat sql/snb-load-composite-merged-fk-dynamic.sql | \
     sed "s|\${PATHVAR}|${PATHVAR}/initial_snapshot/|g" | \
-    sed "s|\${DYNAMIC_PREFIX}|${DYNAMIC_PREFIX}|g" | \
+    sed "s|\${DYNAMIC_PREFIX}|dynamic/|g" | \
     sed "s|\${POSTFIX}|${POSTFIX}|g" | \
     sed "s|\${HEADER}|${HEADER}|g" | \
     ${DUCKDB_PATH}duckdb ldbc-sql-workflow-test.duckdb
