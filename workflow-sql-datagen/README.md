@@ -8,6 +8,8 @@ rm -rf sf${SF}/
 tools/run.py ./target/ldbc_snb_datagen_${PLATFORM_VERSION}-${DATAGEN_VERSION}.jar -- --format csv --scale-factor ${SF} --mode bi --output-dir ${SF} 2>&1 | tee log
 ```
 
+TODO: avoid concatenating, it's not required by most SQL systems
+
 ```bash
 # set to the desired scale factor and source directory
 export SF=0.003

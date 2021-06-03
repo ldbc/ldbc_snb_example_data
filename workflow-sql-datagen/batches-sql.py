@@ -8,6 +8,8 @@ import re
 import sys
 import os
 
+print(f"Running DuckDB version {duckdb.__version__}")
+
 print("Datagen / apply batches using SQL")
 
 if len(sys.argv) < 2:
