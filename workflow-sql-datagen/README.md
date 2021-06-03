@@ -19,6 +19,6 @@ export DATA_DIR=~/git/snb/ldbc_snb_datagen/sf${SF}/csv/bi/composite-merged-fk/
 ./spark-concat.sh ${DATA_DIR}/initial_snapshot/
 
 # load and apply microbatches
-time scripts/snapshot-load.sh
+python3 load.py ${DATA_DIR}
 python3 batches-sql.py ${DATA_DIR}
 ```
