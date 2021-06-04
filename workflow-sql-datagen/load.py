@@ -1,4 +1,5 @@
 import duckdb
+import psycopg2
 import sys
 import os
 
@@ -10,7 +11,11 @@ if len(sys.argv) < 2:
     print("Usage: load.py <DATA_DIRECTORY>")
     exit(1)
 
-con = duckdb.connect(database='ldbc-sql-workflow-test.duckdb')
+#con = duckdb.connect(database="ldbc-sql-workflow-test.duckdb")
+### PG
+pg_con = psycopg2.connect(database="ldbcsnb", host="localhost", user="postgres", password="mysecretpassword",  port=5432)
+con = pg_con.cursor()
+
 
 def load_script(filename):
     with open(filename, "r") as f:
@@ -36,7 +41,11 @@ for entity in static_entities:
     for csv_file in [f for f in os.listdir(f"{static_path}/{entity}") if f.endswith(".csv")]:
         csv_path = f"{static_path}/{entity}/{csv_file}"
         print(f"- {csv_path}")
-        con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER)")
+        #con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER)")
+        ### PG
+        #print(f"COPY {entity} FROM '/data/initial_snapshot/static/{entity}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
+        con.execute(f"COPY {entity} FROM '/data/initial_snapshot/static/{entity}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
+        pg_con.commit()
 
 print("## Dynamic entities")
 
@@ -44,7 +53,11 @@ for entity in dynamic_entities:
     for csv_file in [f for f in os.listdir(f"{dynamic_path}/{entity}") if f.endswith(".csv")]:
         csv_path = f"{dynamic_path}/{entity}/{csv_file}"
         print(f"- {csv_path}")
-        con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+        #con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+        ### PG
+        #print(f"COPY {entity} FROM '/data/initial_snapshot/dynamic/{entity}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
+        con.execute(f"COPY {entity} FROM '/data/initial_snapshot/dynamic/{entity}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
+        pg_con.commit()
 
 # ALTER TABLE is not yet supported in DuckDB
 # schema_constraints = load_script("sql/schema-constraints.sql")

@@ -1,4 +1,5 @@
 import duckdb
+import psycopg2
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 import time
@@ -24,10 +25,18 @@ delete_entities = delete_nodes + delete_edges
 
 data_dir = sys.argv[1]
 
+with open(f"sql/schema-delete-candidates.sql", "r") as schema_delete_candidates_script_file:
+    schema_delete_candidates_script = schema_delete_candidates_script_file.read()
+
 with open(f"sql/snb-deletes.sql", "r") as delete_script_file:
     delete_script = delete_script_file.read()
 
-con = duckdb.connect(database='ldbc-sql-workflow-test.duckdb')
+#con = duckdb.connect(database='ldbc-sql-workflow-test.duckdb')
+### PG
+pg_con = psycopg2.connect(database="ldbcsnb", host="localhost", user="postgres", password="mysecretpassword",  port=5432)
+con = pg_con.cursor()
+
+con.execute(schema_delete_candidates_script)
 
 network_start_date = date(2012, 9, 13)
 network_end_date = date(2012, 12, 31)
@@ -50,8 +59,11 @@ while batch_start_date < network_end_date:
         print(f"{entity}:")
         for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
             csv_path = f"{batch_path}/{csv_file}"
-            print(f"- {csv_path}")
-            con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+            #print(f"- {csv_path}")
+            #con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+            ### PG
+            con.execute(f"COPY {entity} FROM '/data/inserts/dynamic/{entity}/{batch_dir}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
+            pg_con.commit()
 
     print("## Deletes")
     # Deletes are implemented using a SQL script which use auxiliary tables.
@@ -68,7 +80,10 @@ while batch_start_date < network_end_date:
         for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
             csv_path = f"{batch_path}/{csv_file}"
             print(f"- {csv_path}")
-            con.execute(f"COPY {entity}_Delete_candidates FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+            #con.execute(f"COPY {entity}_Delete_candidates FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
+            ### PG
+            con.execute(f"COPY {entity}_Delete_candidates FROM '/data/deletes/dynamic/{entity}/{batch_dir}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
+            pg_con.commit()
 
     print("<running delete script>")
     # Invoke delete script which makes use of the {entity}_Delete_candidates tables
