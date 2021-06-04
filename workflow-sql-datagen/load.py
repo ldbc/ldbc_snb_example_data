@@ -7,7 +7,7 @@ print(f"Running DuckDB version {duckdb.__version__}")
 print("Datagen / load initial data set using SQL")
 
 if len(sys.argv) < 2:
-    print("Usage: batches-sql.py <DATA_DIRECTORY>")
+    print("Usage: load.py <DATA_DIRECTORY>")
     exit(1)
 
 con = duckdb.connect(database='ldbc-sql-workflow-test.duckdb')

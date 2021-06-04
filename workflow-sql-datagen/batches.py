@@ -13,7 +13,7 @@ print(f"Running DuckDB version {duckdb.__version__}")
 print("Datagen / apply batches using SQL")
 
 if len(sys.argv) < 2:
-    print("Usage: batches-sql.py <DATA_DIRECTORY>")
+    print("Usage: batches.py <DATA_DIRECTORY>")
     exit(1)
 
 insert_entities = ["Comment", "Comment_hasTag_Tag", "Forum", "Forum_hasMember_Person", "Forum_hasTag_Tag", "Person", "Person_hasInterest_Tag", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post", "Post_hasTag_Tag"]
