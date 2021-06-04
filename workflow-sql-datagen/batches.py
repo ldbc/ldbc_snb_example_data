@@ -16,11 +16,7 @@ if len(sys.argv) < 2:
     print("Usage: batches-sql.py <DATA_DIRECTORY>")
     exit(1)
 
-entities = ["Comment", "Comment_hasTag_Tag", "Forum", "Forum_hasMember_Person", "Forum_hasTag_Tag", "Person", "Person_hasInterest_Tag", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post", "Post_hasTag_Tag"]
-
-insert_nodes = ["Comment", "Forum", "Person", "Post"]
-insert_edges = ["Comment_hasCreator_Person", "Comment_hasTag_Tag", "Comment_isLocatedIn_Country", "Comment_replyOf_Comment", "Comment_replyOf_Post", "Forum_containerOf_Post", "Forum_hasMember_Person", "Forum_hasModerator_Person", "Forum_hasTag_Tag", "Person_hasInterest_Tag", "Person_isLocatedIn_City", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post_hasCreator_Person", "Post_hasTag_Tag", "Post_isLocatedIn_Country"]
-insert_entities = insert_nodes + insert_edges
+insert_entities = ["Comment", "Comment_hasTag_Tag", "Forum", "Forum_hasMember_Person", "Forum_hasTag_Tag", "Person", "Person_hasInterest_Tag", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post", "Post_hasTag_Tag"]
 
 delete_nodes = ["Comment", "Forum", "Person", "Post"]
 delete_edges = ["Forum_hasMember_Person", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post"]
@@ -31,11 +27,11 @@ data_dir = sys.argv[1]
 with open(f"sql/snb-deletes.sql", "r") as delete_script_file:
     delete_script = delete_script_file.read()
 
-
 con = duckdb.connect(database='ldbc-sql-workflow-test.duckdb')
 
 network_start_date = date(2012, 9, 13)
 network_end_date = date(2012, 12, 31)
+#network_end_date = date(2012, 9, 15)
 batch_size = relativedelta(days=1)
 
 batch_start_date = network_start_date

@@ -22,25 +22,32 @@ con.execute(load_script("sql/schema-delete-candidates.sql"))
 print("Load initial snapshot")
 
 # initial snapshot
-print("-> Static entities")
 
-PATHVAR="/home/szarnyasg/git/snb/ldbc_snb_datagen/sf1/csv/bi/composite-merged-fk/"
+data_dir = sys.argv[1]
+static_path = f"{data_dir}/initial_snapshot/static"
+dynamic_path = f"{data_dir}/initial_snapshot/dynamic"
 
-load_static = load_script("sql/snb-load-composite-merged-fk-static.sql") \
-    .replace("${PATHVAR}", f"{PATHVAR}/initial_snapshot") \
-    .replace("${POSTFIX}", f".csv") \
-    .replace("${HEADER}", "")
+static_entities = ["Organisation", "Place", "Tag", "TagClass"]
+dynamic_entities = ["Comment", "Comment_hasTag_Tag", "Forum", "Forum_hasMember_Person", "Forum_hasTag_Tag", "Person", "Person_hasInterest_Tag", "Person_knows_Person", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post", "Post_hasTag_Tag"]
 
-con.execute(load_static)
+print("## Static entities")
 
-print("-> Dynamic entities")
+for entity in static_entities:
+    for csv_file in [f for f in os.listdir(f"{static_path}/{entity}") if f.endswith(".csv")]:
+        csv_path = f"{static_path}/{entity}/{csv_file}"
+        print(f"- {csv_path}")
+        con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER)")
 
-load_static = load_script("sql/snb-load-composite-merged-fk-dynamic.sql") \
-    .replace("${PATHVAR}", f"{PATHVAR}/initial_snapshot") \
-    .replace("${POSTFIX}", f".csv") \
-    .replace("${DYNAMIC_PREFIX}", "dynamic/") \
-    .replace("${HEADER}", "")
+print("## Dynamic entities")
 
-con.execute(load_static)
+for entity in dynamic_entities:
+    for csv_file in [f for f in os.listdir(f"{dynamic_path}/{entity}") if f.endswith(".csv")]:
+        csv_path = f"{dynamic_path}/{entity}/{csv_file}"
+        print(f"- {csv_path}")
+        con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
 
-print("-> Loaded initial snapshot")
+# ALTER TABLE is not yet supported in DuckDB
+# schema_constraints = load_script("sql/schema-constraints.sql")
+# con.execute(schema_constraints)
+
+print("Loaded initial snapshot")

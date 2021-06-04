@@ -1,0 +1,24 @@
+ALTER TABLE Organisation ADD PRIMARY KEY (id);
+ALTER TABLE Place ADD PRIMARY KEY (id);
+ALTER TABLE Tag ADD PRIMARY KEY (id);
+ALTER TABLE TagClass ADD PRIMARY KEY (id);
+ALTER TABLE Company ADD PRIMARY KEY (id);
+ALTER TABLE University ADD PRIMARY KEY (id);
+ALTER TABLE Continent ADD PRIMARY KEY (id);
+ALTER TABLE Country ADD PRIMARY KEY (id);
+ALTER TABLE City ADD PRIMARY KEY (id);
+ALTER TABLE Comment ADD PRIMARY KEY (id);
+ALTER TABLE Forum ADD PRIMARY KEY (id);
+ALTER TABLE Post ADD PRIMARY KEY (id);
+ALTER TABLE Person ADD PRIMARY KEY (id);
+
+ALTER TABLE Comment_hasTag_Tag ADD PRIMARY KEY (id, hasTag_Tag);
+ALTER TABLE Post_hasTag_Tag ADD PRIMARY KEY (id, hasTag_Tag);
+ALTER TABLE Forum_hasMember_Person ADD PRIMARY KEY (id, hasMember_Person);
+ALTER TABLE Forum_hasTag_Tag ADD PRIMARY KEY (id, hasTag_Tag);
+ALTER TABLE Person_hasInterest_Tag ADD PRIMARY KEY (id, hasInterest_Tag);
+ALTER TABLE Person_likes_Comment ADD PRIMARY KEY (id, likes_Comment);
+ALTER TABLE Person_likes_Post ADD PRIMARY KEY (id, likes_Post);
+ALTER TABLE Person_studyAt_University ADD PRIMARY KEY (id, studyAt_University);
+ALTER TABLE Person_workAt_Company ADD PRIMARY KEY (id, workAt_Company);
+ALTER TABLE Person_knows_Person ADD PRIMARY KEY (Person1id, Person2id);
