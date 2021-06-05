@@ -63,3 +63,13 @@ CREATE INDEX Person_workAt_Company_CompanyId ON Person_workAt_Company(CompanyId)
 
 CREATE INDEX Person_knows_Person_Person1id ON Person_knows_Person(Person1id);
 CREATE INDEX Person_knows_Person_Person2id ON Person_knows_Person(Person2id);
+
+-- views
+
+CREATE VIEW Message AS
+    SELECT creationDate, id, content, NULL AS imageFile, locationIP, browserUsed, NULL AS language, length, CreatorPersonId, NULL AS ContainerForumId, LocationCountryId, coalesce(ParentPostId, ParentCommentId) AS ParentMessageId
+    FROM Comment
+    UNION ALL
+    SELECT creationDate, id, content, imageFile, locationIP, browserUsed, language, length, CreatorPersonId, ContainerForumId, LocationCountryId, NULL AS ParentMessageId
+    FROM Post
+;

@@ -65,5 +65,6 @@ for entity in dynamic_entities:
 ### PG
 schema_constraints = load_script("sql/schema-constraints.sql")
 con.execute(schema_constraints)
+pg_con.commit()
 
 print("Loaded initial snapshot")
