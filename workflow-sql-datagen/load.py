@@ -3,7 +3,9 @@ import psycopg2
 import sys
 import os
 
-print(f"Running DuckDB version {duckdb.__version__}")
+#print(f"Running DuckDB version {duckdb.__version__}")
+### PG
+print("Running Postgres / psycopg2")
 
 print("Datagen / load initial data set using SQL")
 
@@ -60,7 +62,8 @@ for entity in dynamic_entities:
         pg_con.commit()
 
 # ALTER TABLE is not yet supported in DuckDB
-# schema_constraints = load_script("sql/schema-constraints.sql")
-# con.execute(schema_constraints)
+### PG
+schema_constraints = load_script("sql/schema-constraints.sql")
+con.execute(schema_constraints)
 
 print("Loaded initial snapshot")

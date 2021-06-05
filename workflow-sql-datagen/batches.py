@@ -59,7 +59,7 @@ while batch_start_date < network_end_date:
         print(f"{entity}:")
         for csv_file in [f for f in os.listdir(batch_path) if f.endswith(".csv")]:
             csv_path = f"{batch_path}/{csv_file}"
-            #print(f"- {csv_path}")
+            print(f"- {csv_path}")
             #con.execute(f"COPY {entity} FROM '{csv_path}' (DELIMITER '|', HEADER, TIMESTAMPFORMAT '%Y-%m-%dT%H:%M:%S.%g+00:00')")
             ### PG
             con.execute(f"COPY {entity} FROM '/data/inserts/dynamic/{entity}/{batch_dir}/{csv_file}' (DELIMITER '|', HEADER, FORMAT csv)")
