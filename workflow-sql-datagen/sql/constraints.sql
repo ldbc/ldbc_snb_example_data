@@ -24,10 +24,6 @@ ALTER TABLE Person_studyAt_University ADD PRIMARY KEY (id, UniversityId);
 ALTER TABLE Person_workAt_Company ADD PRIMARY KEY (id, CompanyId);
 ALTER TABLE Person_knows_Person ADD PRIMARY KEY (Person1Id, Person2Id);
 
--- Analyze
-
-VACUUM ANALYZE;
-
 -- Indexes for FKs
 
 CREATE INDEX Organisation_LocationPlaceId ON Organisation (LocationPlaceId);
@@ -76,4 +72,28 @@ CREATE VIEW Message AS
     UNION ALL
     SELECT creationDate, id, content, imageFile, locationIP, browserUsed, language, length, CreatorPersonId, ContainerForumId, LocationCountryId, NULL AS ParentMessageId
     FROM Post
+;
+
+CREATE VIEW Person_likes_Message AS
+    SELECT creationDate, id, CommentId AS MessageId FROM Person_likes_Comment
+    UNION ALL
+    SELECT creationDate, id, PostId AS MessageId FROM Person_likes_Post
+;
+
+CREATE VIEW Message_hasTag_Tag AS
+    SELECT creationDate, id, TagId FROM Comment_hasTag_Tag
+    UNION ALL
+    SELECT creationDate, id, TagId FROM Post_hasTag_Tag
+;
+
+CREATE VIEW Country AS
+    SELECT id, name, url, PartOfPlaceId
+    FROM Place
+    WHERE type = 'Country'
+;
+
+CREATE VIEW City AS
+    SELECT id, name, url, PartOfPlaceId
+    FROM Place
+    WHERE type = 'City'
 ;
