@@ -117,13 +117,13 @@ CREATE TABLE Person (
 );
 
 -- edges
-CREATE TABLE Comment_hasTag_Tag        (creationDate timestamp without time zone not null, id bigint not null, TagId bigint not null);
-CREATE TABLE Post_hasTag_Tag           (creationDate timestamp without time zone not null, id bigint not null, TagId bigint not null);
-CREATE TABLE Forum_hasMember_Person    (creationDate timestamp without time zone not null, id bigint not null, PersonId bigint not null);
-CREATE TABLE Forum_hasTag_Tag          (creationDate timestamp without time zone not null, id bigint not null, TagId bigint not null);
-CREATE TABLE Person_hasInterest_Tag    (creationDate timestamp without time zone not null, id bigint not null, TagId bigint not null);
-CREATE TABLE Person_likes_Comment      (creationDate timestamp without time zone not null, id bigint not null, CommentId bigint not null);
-CREATE TABLE Person_likes_Post         (creationDate timestamp without time zone not null, id bigint not null, PostId bigint not null);
-CREATE TABLE Person_studyAt_University (creationDate timestamp without time zone not null, id bigint not null, UniversityId bigint not null, classYear int not null);
-CREATE TABLE Person_workAt_Company     (creationDate timestamp without time zone not null, id bigint not null, CompanyId bigint not null, workFrom  int not null);
+CREATE TABLE Comment_hasTag_Tag        (creationDate timestamp without time zone not null, CommentId bigint not null, TagId bigint not null);
+CREATE TABLE Post_hasTag_Tag           (creationDate timestamp without time zone not null, PostId bigint not null,    TagId bigint not null);
+CREATE TABLE Forum_hasMember_Person    (creationDate timestamp without time zone not null, ForumId bigint not null,   PersonId bigint not null);
+CREATE TABLE Forum_hasTag_Tag          (creationDate timestamp without time zone not null, ForumId bigint not null,   TagId bigint not null);
+CREATE TABLE Person_hasInterest_Tag    (creationDate timestamp without time zone not null, PersonId bigint not null,  TagId bigint not null);
+CREATE TABLE Person_likes_Comment      (creationDate timestamp without time zone not null, PersonId bigint not null,  CommentId bigint not null);
+CREATE TABLE Person_likes_Post         (creationDate timestamp without time zone not null, PersonId bigint not null,  PostId bigint not null);
+CREATE TABLE Person_studyAt_University (creationDate timestamp without time zone not null, PersonId bigint not null,  UniversityId bigint not null, classYear int not null);
+CREATE TABLE Person_workAt_Company     (creationDate timestamp without time zone not null, PersonId bigint not null,  CompanyId bigint not null, workFrom  int not null);
 CREATE TABLE Person_knows_Person       (creationDate timestamp without time zone not null, Person1id bigint not null, Person2id bigint not null);
