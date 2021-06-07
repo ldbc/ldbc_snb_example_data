@@ -24,7 +24,11 @@ ALTER TABLE Person_studyAt_University ADD PRIMARY KEY (id, UniversityId);
 ALTER TABLE Person_workAt_Company ADD PRIMARY KEY (id, CompanyId);
 ALTER TABLE Person_knows_Person ADD PRIMARY KEY (Person1Id, Person2Id);
 
--- FKs
+-- Analyze
+
+VACUUM ANALYZE;
+
+-- Indexes for FKs
 
 CREATE INDEX Organisation_LocationPlaceId ON Organisation (LocationPlaceId);
 CREATE INDEX Place_PartOfPlaceId ON Place (PartOfPlaceId);
