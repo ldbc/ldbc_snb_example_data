@@ -63,8 +63,8 @@ for entity in dynamic_entities:
 
 # ALTER TABLE is not yet supported in DuckDB
 ### PG
-schema_constraints = load_script("sql/schema-constraints.sql")
-con.execute(schema_constraints)
+constraints = load_script("sql/constraints.sql")
+con.execute(constraints)
 pg_con.commit()
 
 print("Loaded initial snapshot")
