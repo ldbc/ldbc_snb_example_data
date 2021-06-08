@@ -1,3 +1,11 @@
+-- the 'contraints.sql' file serves multiple goals:
+-- it inserts PK constraints, FK indexes, views, and bidirectional edges
+
+-- bidirectional Person_knows_Person edges
+INSERT INTO Person_knows_Person (creationDate, Person1Id, Person2Id)
+SELECT creationDate, Person2Id, Person1Id
+FROM Person_knows_Person;
+
 -- PKs
 
 -- static nodes
@@ -24,7 +32,7 @@ ALTER TABLE Person_studyAt_University ADD PRIMARY KEY (PersonId, UniversityId);
 ALTER TABLE Person_workAt_Company ADD PRIMARY KEY (PersonId, CompanyId);
 ALTER TABLE Person_knows_Person ADD PRIMARY KEY (Person1Id, Person2Id);
 
--- views
+-- Views
 
 CREATE VIEW Message AS
     SELECT creationDate, id, content, NULL AS imageFile, locationIP, browserUsed, NULL AS language, length, CreatorPersonId, NULL AS ContainerForumId, LocationCountryId, coalesce(ParentPostId, ParentCommentId) AS ParentMessageId
@@ -47,13 +55,13 @@ CREATE VIEW Message_hasTag_Tag AS
 ;
 
 CREATE VIEW Country AS
-    SELECT id, name, url, PartOfPlaceId
+    SELECT id, name, url, PartOfPlaceId AS PartOfContinentId
     FROM Place
     WHERE type = 'Country'
 ;
 
 CREATE VIEW City AS
-    SELECT id, name, url, PartOfPlaceId
+    SELECT id, name, url, PartOfPlaceId AS PartOfCountryId
     FROM Place
     WHERE type = 'City'
 ;
