@@ -31,35 +31,35 @@ docker run --rm \
     neo4j:${NEO4J_VERSION} \
     neo4j-admin import \
     --id-type=INTEGER \
-    --nodes=Place="/headers/static/Place.csv,/import/initial_snapshot/static/Place${NEO4J_CSV_POSTFIX}" \
-    --nodes=Organisation="/headers/static/Organisation.csv,/import/initial_snapshot/static/Organisation${NEO4J_CSV_POSTFIX}" \
-    --nodes=TagClass="/headers/static/TagClass.csv,/import/initial_snapshot/static/TagClass${NEO4J_CSV_POSTFIX}" \
-    --nodes=Tag="/headers/static/Tag.csv,/import/initial_snapshot/static/Tag${NEO4J_CSV_POSTFIX}" \
-    --nodes=Forum="/headers/dynamic/Forum.csv,/import/initial_snapshot/dynamic/Forum${NEO4J_CSV_POSTFIX}" \
-    --nodes=Person="/headers/dynamic/Person.csv,/import/initial_snapshot/dynamic/Person${NEO4J_CSV_POSTFIX}" \
-    --nodes=Message:Comment="/headers/dynamic/Comment.csv,/import/initial_snapshot/dynamic/Comment${NEO4J_CSV_POSTFIX}" \
-    --nodes=Message:Post="/headers/dynamic/Post.csv,/import/initial_snapshot/dynamic/Post${NEO4J_CSV_POSTFIX}" \
-    --relationships=IS_PART_OF="/headers/static/Place_isPartOf_Place.csv,/import/initial_snapshot/static/Place_isPartOf_Place${NEO4J_CSV_POSTFIX}" \
-    --relationships=IS_SUBCLASS_OF="/headers/static/TagClass_isSubclassOf_TagClass.csv,/import/initial_snapshot/static/TagClass_isSubclassOf_TagClass${NEO4J_CSV_POSTFIX}" \
-    --relationships=IS_LOCATED_IN="/headers/static/Organisation_isLocatedIn_Place.csv,/import/initial_snapshot/static/Organisation_isLocatedIn_Place${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_TYPE="/headers/static/Tag_hasType_TagClass.csv,/import/initial_snapshot/static/Tag_hasType_TagClass${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_CREATOR="/headers/dynamic/Comment_hasCreator_Person.csv,/import/initial_snapshot/dynamic/Comment_hasCreator_Person${NEO4J_CSV_POSTFIX}" \
-    --relationships=IS_LOCATED_IN="/headers/dynamic/Comment_isLocatedIn_Country.csv,/import/initial_snapshot/dynamic/Comment_isLocatedIn_Country${NEO4J_CSV_POSTFIX}" \
-    --relationships=REPLY_OF="/headers/dynamic/Comment_replyOf_Comment.csv,/import/initial_snapshot/dynamic/Comment_replyOf_Comment${NEO4J_CSV_POSTFIX}" \
-    --relationships=REPLY_OF="/headers/dynamic/Comment_replyOf_Post.csv,/import/initial_snapshot/dynamic/Comment_replyOf_Post${NEO4J_CSV_POSTFIX}" \
-    --relationships=CONTAINER_OF="/headers/dynamic/Forum_containerOf_Post.csv,/import/initial_snapshot/dynamic/Forum_containerOf_Post${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_MEMBER="/headers/dynamic/Forum_hasMember_Person.csv,/import/initial_snapshot/dynamic/Forum_hasMember_Person${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_MODERATOR="/headers/dynamic/Forum_hasModerator_Person.csv,/import/initial_snapshot/dynamic/Forum_hasModerator_Person${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_TAG="/headers/dynamic/Forum_hasTag_Tag.csv,/import/initial_snapshot/dynamic/Forum_hasTag_Tag${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_INTEREST="/headers/dynamic/Person_hasInterest_Tag.csv,/import/initial_snapshot/dynamic/Person_hasInterest_Tag${NEO4J_CSV_POSTFIX}" \
-    --relationships=IS_LOCATED_IN="/headers/dynamic/Person_isLocatedIn_City.csv,/import/initial_snapshot/dynamic/Person_isLocatedIn_City${NEO4J_CSV_POSTFIX}" \
-    --relationships=KNOWS="/headers/dynamic/Person_knows_Person.csv,/import/initial_snapshot/dynamic/Person_knows_Person${NEO4J_CSV_POSTFIX}" \
-    --relationships=LIKES="/headers/dynamic/Person_likes_Comment.csv,/import/initial_snapshot/dynamic/Person_likes_Comment${NEO4J_CSV_POSTFIX}" \
-    --relationships=LIKES="/headers/dynamic/Person_likes_Post.csv,/import/initial_snapshot/dynamic/Person_likes_Post${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_CREATOR="/headers/dynamic/Post_hasCreator_Person.csv,/import/initial_snapshot/dynamic/Post_hasCreator_Person${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_TAG="/headers/dynamic/Comment_hasTag_Tag.csv,/import/initial_snapshot/dynamic/Comment_hasTag_Tag${NEO4J_CSV_POSTFIX}" \
-    --relationships=HAS_TAG="/headers/dynamic/Post_hasTag_Tag.csv,/import/initial_snapshot/dynamic/Post_hasTag_Tag${NEO4J_CSV_POSTFIX}" \
-    --relationships=IS_LOCATED_IN="/headers/dynamic/Post_isLocatedIn_Country.csv,/import/initial_snapshot/dynamic/Post_isLocatedIn_Country${NEO4J_CSV_POSTFIX}" \
-    --relationships=STUDY_AT="/headers/dynamic/Person_studyAt_University.csv,/import/initial_snapshot/dynamic/Person_studyAt_University${NEO4J_CSV_POSTFIX}" \
-    --relationships=WORK_AT="/headers/dynamic/Person_workAt_Company.csv,/import/initial_snapshot/dynamic/Person_workAt_Company${NEO4J_CSV_POSTFIX}" \
+    --nodes=Place="/headers/static/Place.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/Place -type f -name '*.csv' -printf ',/import/initial_snapshot/static/Place/%f'`" \
+    --nodes=Organisation="/headers/static/Organisation.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/Organisation -type f -name '*.csv' -printf ',/import/initial_snapshot/static/Organisation/%f'`" \
+    --nodes=TagClass="/headers/static/TagClass.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/TagClass -type f -name '*.csv' -printf ',/import/initial_snapshot/static/TagClass/%f'`" \
+    --nodes=Tag="/headers/static/Tag.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/Tag -type f -name '*.csv' -printf ',/import/initial_snapshot/static/Tag/%f'`" \
+    --nodes=Forum="/headers/dynamic/Forum.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Forum -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Forum/%f'`" \
+    --nodes=Person="/headers/dynamic/Person.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person/%f'`" \
+    --nodes=Message:Comment="/headers/dynamic/Comment.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Comment -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Comment/%f'`" \
+    --nodes=Message:Post="/headers/dynamic/Post.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Post -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Post/%f'`" \
+    --relationships=IS_PART_OF="/headers/static/Place_isPartOf_Place.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/Place_isPartOf_Place -type f -name '*.csv' -printf ',/import/initial_snapshot/static/Place_isPartOf_Place/%f'`" \
+    --relationships=IS_SUBCLASS_OF="/headers/static/TagClass_isSubclassOf_TagClass.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/TagClass_isSubclassOf_TagClass -type f -name '*.csv' -printf ',/import/initial_snapshot/static/TagClass_isSubclassOf_TagClass/%f'`" \
+    --relationships=IS_LOCATED_IN="/headers/static/Organisation_isLocatedIn_Place.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/Organisation_isLocatedIn_Place -type f -name '*.csv' -printf ',/import/initial_snapshot/static/Organisation_isLocatedIn_Place/%f'`" \
+    --relationships=HAS_TYPE="/headers/static/Tag_hasType_TagClass.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/static/Tag_hasType_TagClass -type f -name '*.csv' -printf ',/import/initial_snapshot/static/Tag_hasType_TagClass/%f'`" \
+    --relationships=HAS_CREATOR="/headers/dynamic/Comment_hasCreator_Person.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Comment_hasCreator_Person -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Comment_hasCreator_Person/%f'`" \
+    --relationships=IS_LOCATED_IN="/headers/dynamic/Comment_isLocatedIn_Country.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Comment_isLocatedIn_Country -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Comment_isLocatedIn_Country/%f'`" \
+    --relationships=REPLY_OF="/headers/dynamic/Comment_replyOf_Comment.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Comment_replyOf_Comment -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Comment_replyOf_Comment/%f'`" \
+    --relationships=REPLY_OF="/headers/dynamic/Comment_replyOf_Post.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Comment_replyOf_Post -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Comment_replyOf_Post/%f'`" \
+    --relationships=CONTAINER_OF="/headers/dynamic/Forum_containerOf_Post.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Forum_containerOf_Post -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Forum_containerOf_Post/%f'`" \
+    --relationships=HAS_MEMBER="/headers/dynamic/Forum_hasMember_Person.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Forum_hasMember_Person -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Forum_hasMember_Person/%f'`" \
+    --relationships=HAS_MODERATOR="/headers/dynamic/Forum_hasModerator_Person.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Forum_hasModerator_Person -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Forum_hasModerator_Person/%f'`" \
+    --relationships=HAS_TAG="/headers/dynamic/Forum_hasTag_Tag.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Forum_hasTag_Tag -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Forum_hasTag_Tag/%f'`" \
+    --relationships=HAS_INTEREST="/headers/dynamic/Person_hasInterest_Tag.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_hasInterest_Tag -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_hasInterest_Tag/%f'`" \
+    --relationships=IS_LOCATED_IN="/headers/dynamic/Person_isLocatedIn_City.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_isLocatedIn_City -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_isLocatedIn_City/%f'`" \
+    --relationships=KNOWS="/headers/dynamic/Person_knows_Person.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_knows_Person -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_knows_Person/%f'`" \
+    --relationships=LIKES="/headers/dynamic/Person_likes_Comment.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_likes_Comment -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_likes_Comment/%f'`" \
+    --relationships=LIKES="/headers/dynamic/Person_likes_Post.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_likes_Post -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_likes_Post/%f'`" \
+    --relationships=HAS_CREATOR="/headers/dynamic/Post_hasCreator_Person.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Post_hasCreator_Person -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Post_hasCreator_Person/%f'`" \
+    --relationships=HAS_TAG="/headers/dynamic/Comment_hasTag_Tag.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Comment_hasTag_Tag -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Comment_hasTag_Tag/%f'`" \
+    --relationships=HAS_TAG="/headers/dynamic/Post_hasTag_Tag.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Post_hasTag_Tag -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Post_hasTag_Tag/%f'`" \
+    --relationships=IS_LOCATED_IN="/headers/dynamic/Post_isLocatedIn_Country.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Post_isLocatedIn_Country -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Post_isLocatedIn_Country/%f'`" \
+    --relationships=STUDY_AT="/headers/dynamic/Person_studyAt_University.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_studyAt_University -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_studyAt_University/%f'`" \
+    --relationships=WORK_AT="/headers/dynamic/Person_workAt_Company.csv`find ${NEO4J_CSV_DIR}/initial_snapshot/dynamic/Person_workAt_Company -type f -name '*.csv' -printf ',/import/initial_snapshot/dynamic/Person_workAt_Company/%f'`" \
     --delimiter '|'
