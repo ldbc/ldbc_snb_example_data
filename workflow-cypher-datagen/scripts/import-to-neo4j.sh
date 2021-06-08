@@ -20,13 +20,15 @@ mkdir -p ${NEO4J_CONTAINER_ROOT}/{logs,import,plugins}
 mkdir -p ${NEO4J_DATA_DIR}
 rm -rf ${NEO4J_DATA_DIR}/*
 
-# We run a `find` command in the shell of the host machine to list the `part-*.csv` files in each entity's directory under ${NEO4_CSV_DIR}/initial_snapshot/{static,dynamic}.
+# We run a `find` command in the shell of the host machine to list the `part-*.csv` files in each entity's directory under ${NEO4_CSV_DIR}/initial_snapshot/{static,dynamic}/${ENTITY}.
 #
-# The paths are mapped to the directory structure inside the container (/import/initial_snapshot/...) and concatenated to a comma-separated string such as ",/import/initial_snapshot/static/Place/part1.csv,/import/initial_snapshot/static/Place/part2.csv".
+# The paths are mapped to the directory structure inside the container (/import/initial_snapshot/...) and concatenated to a comma-separated string, e.g.
+# ",/import/initial_snapshot/static/Place/part1.csv,/import/initial_snapshot/static/Place/part2.csv"
+#
 # This string is prepended with the path of the header file in the container's /headers directory, yielding e.g.:
-# "/headers/static/Place.csv,/import/initial_snapshot/static/Place/part1.csv,,/import/initial_snapshot/static/Place/part2.csv"
+# "/headers/static/Place.csv,/import/initial_snapshot/static/Place/part1.csv,/import/initial_snapshot/static/Place/part2.csv"
 #
-# The average path length is around 110 characters. Depending on the maximum length of the argument list, which is usually between 131072 and 2097152 [1],
+# The average path length in the container is around 110 characters. Depending on the maximum length of the argument list, which is usually between 131072 and 2097152 [1],
 # this is sufficient for between 1200 and 19000 files, respectively.
 #
 # It's also important to consider the length of MAX_ARG_STRLEN that limits the length of a single argument which is usually (?) 131072. [2]
