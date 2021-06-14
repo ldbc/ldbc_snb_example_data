@@ -3,7 +3,7 @@
 set -eu
 set -o pipefail
 
-DUCKDB_VERSION=v0.2.6
+DUCKDB_VERSION=v0.2.7
 DUCKDB_PATH="${DUCKDB_PATH:=.}"
 
 if [ ! -f ${DUCKDB_PATH}/duckdb ]; then
