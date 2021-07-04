@@ -185,16 +185,16 @@ INSERT INTO Companies_numEmployees
 
 -- show some data from the views
 
-SELECT '---> Companies_numEmployees <----' AS 'factor table'; SELECT * FROM Companies_numEmployees  LIMIT 10;
-SELECT '---> Country_numMessages <-------' AS 'factor table'; SELECT * FROM Country_numMessages     LIMIT 10;
-SELECT '---> Country_numPersons <--------' AS 'factor table'; SELECT * FROM Country_numPersons      LIMIT 10;
-SELECT '---> CountryPairs_numFriends <---' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
-SELECT '---> CountryPairs_numFriends <---' AS 'factor table'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
-SELECT '---> Message_creationDates <-----' AS 'factor table'; SELECT * FROM Message_creationDates   LIMIT 10;
-SELECT '---> Message_creationDays <------' AS 'factor table'; SELECT * FROM Message_creationDays    LIMIT 10;
-SELECT '---> Message_length <------------' AS 'factor table'; SELECT * FROM Message_length          LIMIT 10;
-SELECT '---> Message_TagClasses <--------' AS 'factor table'; SELECT * FROM Message_TagClasses      LIMIT 10;
-SELECT '---> Message_Tags <--------------' AS 'factor table'; SELECT * FROM Message_Tags            LIMIT 10;
-SELECT '---> Person_numFriends <---------' AS 'factor table'; SELECT * FROM Person_numFriends       LIMIT 10;
-SELECT '---> Post_languages <------------' AS 'factor table'; SELECT * FROM Post_languages          LIMIT 10;
-SELECT '---> TagClass_numTags <----------' AS 'factor table'; SELECT * FROM TagClass_numTags        LIMIT 10;
+.print '---> Companies_numEmployees <----'; SELECT * FROM Companies_numEmployees  LIMIT 10;
+.print '---> Country_numMessages <-------'; SELECT * FROM Country_numMessages     LIMIT 10;
+.print '---> Country_numPersons <--------'; SELECT * FROM Country_numPersons      LIMIT 10;
+.print '---> CountryPairs_numFriends <---'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
+.print '---> CountryPairs_numFriends <---'; SELECT * FROM CountryPairs_numFriends LIMIT 10;
+.print '---> Message_creationDates <-----'; SELECT * FROM Message_creationDates   LIMIT 10;
+.print '---> Message_creationDays <------'; SELECT * FROM Message_creationDays    LIMIT 10;
+.print '---> Message_length <------------'; SELECT * FROM Message_length          LIMIT 10;
+.print '---> Message_TagClasses <--------'; SELECT * FROM Message_TagClasses      LIMIT 10;
+.print '---> Message_Tags <--------------'; SELECT * FROM Message_Tags            LIMIT 10;
+.print '---> Person_numFriends <---------'; SELECT * FROM Person_numFriends       LIMIT 10;
+.print '---> Post_languages <------------'; SELECT * FROM Post_languages          LIMIT 10;
+.print '---> TagClass_numTags <----------'; SELECT * FROM TagClass_numTags        LIMIT 10;
