@@ -54,6 +54,26 @@ INSERT INTO Country_numMessages
     GROUP BY countryId
     ORDER BY frequency DESC, countryId ASC;
 
+INSERT INTO CityPairs_numFriends
+    SELECT
+        City1.id AS city1Id,
+        City2.id AS city2Id,
+        City1.name AS city1Name,
+        City2.name AS city2Name,
+        count(*) AS frequency
+    FROM Person_knows_Person
+    JOIN Person Person1
+      ON Person1.id = Person_knows_Person.Person1Id
+    JOIN City City1
+      ON City1.id = Person1.isLocatedIn_City
+    JOIN Person Person2
+      ON Person2.id = Person_knows_Person.Person2Id
+    JOIN City City2
+      ON City2.id = Person2.isLocatedIn_City
+    WHERE City1.id < City2.id
+    GROUP BY city1Id, city2Id, city1Name, city2Name
+    ORDER BY frequency DESC, city1Id ASC, city2Id ASC;
+
 INSERT INTO CountryPairs_numFriends
     SELECT
         Country1.id AS country1Id,
@@ -77,26 +97,6 @@ INSERT INTO CountryPairs_numFriends
     WHERE Country1.id < Country2.id
     GROUP BY country1Id, country2Id, country1Name, country2Name
     ORDER BY frequency DESC, country1Id ASC, country2Id ASC;
-
-INSERT INTO CityPairs_numFriends
-    SELECT
-        City1.id AS city1Id,
-        City2.id AS city2Id,
-        City1.name AS city1Name,
-        City2.name AS city2Name,
-        count(*) AS frequency
-    FROM Person_knows_Person
-    JOIN Person Person1
-      ON Person1.id = Person_knows_Person.Person1Id
-    JOIN City City1
-      ON Person1.isLocatedIn_City = City1.id
-    JOIN Person Person2
-      ON Person2.id = Person_knows_Person.Person2Id
-    JOIN City City2
-      ON Person2.isLocatedIn_City = City2.id
-    WHERE City1.id < City2.id
-    GROUP BY city1Id, city2Id, city1Name, city2Name
-    ORDER BY frequency DESC, city1Id ASC, city2Id ASC;
 
 -- Message
 
