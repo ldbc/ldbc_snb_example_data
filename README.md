@@ -15,8 +15,8 @@ If you want to use a custom-built DuckDB binary:
 
 The example data set in this repository reflects the toy graphs used in the LDBC SNB:
 
-* [Example graph without refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-without-refreshes.pdf)
-* [Example graph with refresh operations](https://ldbc.github.io/ldbc_snb_docs/example-graph-with-refreshes.pdf)
+* [Example graph without refresh operations](https://ldbcouncil.org/ldbc_snb_docs/example-graph-without-refreshes.pdf)
+* [Example graph with refresh operations](https://ldbcouncil.org/ldbc_snb_docs/example-graph-with-refreshes.pdf)
 
 The example graph is serialized using the `raw` serializer (composite-merged-fk layout) which contains the entire temporal graph without filtering/batching.
 
@@ -46,15 +46,15 @@ The `duckdb` directory contains Python and SQL scripts to convert data to other 
 
 ## Deployed data sets
 
-* [`raw.zip`](https://ldbc.github.io/ldbc_snb_data_converter/raw.zip)
-* [`csv-composite-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-merged-fk.zip)
-* [`csv-composite-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-projected-fk.zip)
-* [`csv-composite-projected-fk-legacy-filenames.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-composite-projected-fk-legacy-filenames.zip)
-* [`csv-singular-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-merged-fk.zip)
-* [`csv-singular-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-singular-projected-fk.zip)
-* [`static-data-projected-fk-separate-labels.zip`](https://ldbc.github.io/ldbc_snb_data_converter/static-data-projected-fk-separate-labels.zip)
-* [`csv-only-ids-merged-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-only-ids-merged-fk.zip)
-* [`csv-only-ids-projected-fk.zip`](https://ldbc.github.io/ldbc_snb_data_converter/csv-only-ids-projected-fk.zip)
+* [`raw.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/raw.zip)
+* [`csv-composite-merged-fk.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-composite-merged-fk.zip)
+* [`csv-composite-projected-fk.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-composite-projected-fk.zip)
+* [`csv-composite-projected-fk-legacy-filenames.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-composite-projected-fk-legacy-filenames.zip)
+* [`csv-singular-merged-fk.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-singular-merged-fk.zip)
+* [`csv-singular-projected-fk.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-singular-projected-fk.zip)
+* [`static-data-projected-fk-separate-labels.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/static-data-projected-fk-separate-labels.zip)
+* [`csv-only-ids-merged-fk.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-only-ids-merged-fk.zip)
+* [`csv-only-ids-projected-fk.zip`](https://ldbcouncil.org/ldbc_snb_data_converter/csv-only-ids-projected-fk.zip)
 
 ## Parameter generation
 
