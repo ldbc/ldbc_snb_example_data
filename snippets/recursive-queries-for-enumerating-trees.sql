@@ -1,13 +1,13 @@
-WITH RECURSIVE extended_tags(subTagClassId, superTagClassId) AS (
+WITH RECURSIVE extended_tagclasses(subTagClassId, superTagClassId) AS (
     SELECT id, id
     FROM TagClass
     UNION
     SELECT tc.id, et.superTagClassId
-    FROM TagClass tc, extended_tags et
+    FROM TagClass tc, extended_tagclasses et
     WHERE tc.isSubclassOf_TagClass = et.superTagClassId
 )
 SELECT *
-FROM extended_tags
+FROM extended_tagclasses
 ORDER BY subTagClassId, superTagClassId
 ;
 
