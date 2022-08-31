@@ -15,8 +15,8 @@ If you want to use a custom-built DuckDB binary:
 
 The example data set in this repository reflects the toy graphs used in the LDBC SNB:
 
-* [Example graph without refresh operations](https://ldbcouncil.org/ldbc_snb_docs/example-graph-without-refreshes.pdf)
-* [Example graph with refresh operations](https://ldbcouncil.org/ldbc_snb_docs/example-graph-with-refreshes.pdf)
+* [Example graph without updates operations](https://ldbcouncil.org/ldbc_snb_docs/example-graph-without-updates.pdf)
+* [Example graph with updates operations](https://ldbcouncil.org/ldbc_snb_docs/example-graph-with-updates.pdf)
 
 The example graph is serialized using the `raw` serializer (composite-merged-fk layout) which contains the entire temporal graph without filtering/batching.
 
